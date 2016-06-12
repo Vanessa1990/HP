@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WWLoadVC">
+            <connections>
+                <outlet property="loadBtn" destination="OfO-MC-i1h" id="QJz-w9-6Uz"/>
+                <outlet property="loadTrailing" destination="vWg-rD-HaZ" id="PLN-jT-TSh"/>
+                <outlet property="phoneTextField" destination="uSr-Vg-qJy" id="gkW-0I-Fqf"/>
+                <outlet property="pwdTextField" destination="P7L-sf-Eht" id="PyC-VT-iVl"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_register_background" translatesAutoresizingMaskIntoConstraints="NO" id="rqm-uR-5Hf">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zvD-42-8wM" userLabel="登陆界面">
+                    <rect key="frame" x="0.0" y="150" width="375" height="180"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_rgister_textfield_bg" translatesAutoresizingMaskIntoConstraints="NO" id="m35-Zl-dgV">
+                            <rect key="frame" x="30" y="0.0" width="315" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="AWS-fH-Ecj"/>
+                            </constraints>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="P7L-sf-Eht" customClass="WWLoadTextField">
+                            <rect key="frame" x="40" y="40" width="295" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="v8P-Ok-E9M"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OfO-MC-i1h">
+                            <rect key="frame" x="30" y="90" width="315" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="zDQ-Xi-avM"/>
+                            </constraints>
+                            <state key="normal" title="登录" backgroundImage="login_register_button"/>
+                            <state key="highlighted" backgroundImage="login_register_button_click"/>
+                            <connections>
+                                <action selector="loadClick:" destination="-1" eventType="touchUpInside" id="siG-IG-FHR"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uSr-Vg-qJy" customClass="WWLoadTextField">
+                            <rect key="frame" x="40" y="0.0" width="295" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="3VZ-l1-syq"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="m35-Zl-dgV" secondAttribute="trailing" constant="30" id="67V-4o-zkx"/>
+                        <constraint firstItem="P7L-sf-Eht" firstAttribute="top" secondItem="uSr-Vg-qJy" secondAttribute="bottom" id="7tw-ho-vvz"/>
+                        <constraint firstAttribute="trailing" secondItem="P7L-sf-Eht" secondAttribute="trailing" constant="40" id="9Ov-2a-KfI"/>
+                        <constraint firstItem="uSr-Vg-qJy" firstAttribute="top" secondItem="zvD-42-8wM" secondAttribute="top" id="Fom-1m-hgC"/>
+                        <constraint firstItem="OfO-MC-i1h" firstAttribute="top" secondItem="P7L-sf-Eht" secondAttribute="bottom" constant="10" id="I2V-eo-gEV"/>
+                        <constraint firstItem="m35-Zl-dgV" firstAttribute="centerX" secondItem="zvD-42-8wM" secondAttribute="centerX" id="ISb-70-Ln4"/>
+                        <constraint firstItem="m35-Zl-dgV" firstAttribute="leading" secondItem="zvD-42-8wM" secondAttribute="leading" constant="30" id="JUO-qZ-jT1"/>
+                        <constraint firstItem="m35-Zl-dgV" firstAttribute="top" secondItem="zvD-42-8wM" secondAttribute="top" id="LGt-7G-vLE"/>
+                        <constraint firstItem="OfO-MC-i1h" firstAttribute="leading" secondItem="zvD-42-8wM" secondAttribute="leading" constant="30" id="Meh-dw-nET"/>
+                        <constraint firstItem="uSr-Vg-qJy" firstAttribute="leading" secondItem="zvD-42-8wM" secondAttribute="leading" constant="40" id="R6U-nG-SgQ"/>
+                        <constraint firstItem="P7L-sf-Eht" firstAttribute="leading" secondItem="zvD-42-8wM" secondAttribute="leading" constant="40" id="alt-Z9-Yw8"/>
+                        <constraint firstAttribute="trailing" secondItem="OfO-MC-i1h" secondAttribute="trailing" constant="30" id="cfv-d7-alf"/>
+                        <constraint firstAttribute="trailing" secondItem="uSr-Vg-qJy" secondAttribute="trailing" constant="40" id="tOg-v5-lrw"/>
+                        <constraint firstAttribute="height" constant="180" id="ye0-aX-8xj"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ISb-70-Ln4"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="zvD-42-8wM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="150" id="81g-1V-HXr"/>
+                <constraint firstAttribute="bottom" secondItem="rqm-uR-5Hf" secondAttribute="bottom" id="LUQ-fU-zAf"/>
+                <constraint firstAttribute="trailing" secondItem="zvD-42-8wM" secondAttribute="trailing" id="PPG-NC-BZE"/>
+                <constraint firstItem="rqm-uR-5Hf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Z0k-fM-FQ0"/>
+                <constraint firstAttribute="trailing" secondItem="rqm-uR-5Hf" secondAttribute="trailing" id="f2O-Ry-BdC"/>
+                <constraint firstItem="rqm-uR-5Hf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qvo-A6-vAY"/>
+                <constraint firstItem="zvD-42-8wM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vWg-rD-HaZ"/>
+                <constraint firstItem="zvD-42-8wM" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="voq-w4-fRp"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="PPG-NC-BZE"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="269.5" y="184.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="login_register_background" width="320" height="568"/>
+        <image name="login_register_button" width="87" height="40"/>
+        <image name="login_register_button_click" width="87" height="40"/>
+        <image name="login_rgister_textfield_bg" width="266" height="92"/>
+    </resources>
+</document>

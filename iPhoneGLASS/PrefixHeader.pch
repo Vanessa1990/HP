@@ -1,0 +1,26 @@
+//
+//  PrefixHeader.pch
+//
+//
+//  Created by xiaomage on 15/9/1.
+//  Copyright (c) 2015年 Vanessa. All rights reserved.
+//
+
+#ifndef _________PrefixHeader_pch
+#define _________PrefixHeader_pch
+
+// 日志输出
+#ifdef DEBUG // 开发阶段-DEBUG阶段:使用Log
+#define HPLog(...) NSLog(__VA_ARGS__)
+#else // 发布阶段-上线阶段:移除Log
+#define HPLog(...)
+#endif
+
+// 方法输出
+#define HPLogFunc XMGLog(@"%s", __func__)
+
+#define HP_Screen_Width [UIScreen mainScreen].bounds.size.width
+
+#define HP_Delegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
+
+#endif
