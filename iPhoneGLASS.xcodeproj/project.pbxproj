@@ -53,6 +53,11 @@
 		7F0E99121CFED9B90051C503 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E98FD1CFED9B90051C503 /* UIScrollView+MJExtension.m */; };
 		7F0E99131CFED9B90051C503 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E98FF1CFED9B90051C503 /* UIScrollView+MJRefresh.m */; };
 		7F0E99141CFED9B90051C503 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E99011CFED9B90051C503 /* UIView+MJExtension.m */; };
+		7F23D0421D100DB1002DB08D /* HeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F23D0411D100DB1002DB08D /* HeadView.m */; };
+		7F23D0441D100DBB002DB08D /* HeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F23D0431D100DBB002DB08D /* HeadView.xib */; };
+		7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F49C16A1D11096000E56023 /* GlassTableViewCell.m */; };
+		7F49C16D1D11096000E56023 /* GlassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */; };
+		7F49C1751D123D5800E56023 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C1741D123D5800E56023 /* call.png */; };
 		7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */; };
 		7F9904471CEB03B40039AAD5 /* ListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904461CEB03B40039AAD5 /* ListTVC.m */; };
 		7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */; };
@@ -174,6 +179,13 @@
 		7F0E98FF1CFED9B90051C503 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		7F0E99001CFED9B90051C503 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		7F0E99011CFED9B90051C503 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		7F23D0401D100DB1002DB08D /* HeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadView.h; sourceTree = "<group>"; };
+		7F23D0411D100DB1002DB08D /* HeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadView.m; sourceTree = "<group>"; };
+		7F23D0431D100DBB002DB08D /* HeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeadView.xib; sourceTree = "<group>"; };
+		7F49C1691D11096000E56023 /* GlassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlassTableViewCell.h; sourceTree = "<group>"; };
+		7F49C16A1D11096000E56023 /* GlassTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlassTableViewCell.m; sourceTree = "<group>"; };
+		7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlassTableViewCell.xib; sourceTree = "<group>"; };
+		7F49C1741D123D5800E56023 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
 		7F99043E1CEAFF080039AAD5 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 		7F9904451CEB03B40039AAD5 /* ListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTVC.h; sourceTree = "<group>"; };
@@ -272,6 +284,7 @@
 		7F06A6AC1CE05ADD006B9CA4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7F49C1741D123D5800E56023 /* call.png */,
 				7F0E98D01CFEBCC20051C503 /* cellbg.jpg */,
 				7F0E98BB1CFE8F9B0051C503 /* scan.jpg */,
 				7F06A6AD1CE05ADD006B9CA4 /* main.m */,
@@ -326,6 +339,12 @@
 		7F06A6E21CEAEB77006B9CA4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7F23D0401D100DB1002DB08D /* HeadView.h */,
+				7F23D0411D100DB1002DB08D /* HeadView.m */,
+				7F23D0431D100DBB002DB08D /* HeadView.xib */,
+				7F49C1691D11096000E56023 /* GlassTableViewCell.h */,
+				7F49C16A1D11096000E56023 /* GlassTableViewCell.m */,
+				7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -688,13 +707,16 @@
 				7F06A6F01CEAF101006B9CA4 /* WWLoadVC.xib in Resources */,
 				7F06A6BC1CE05ADD006B9CA4 /* LaunchScreen.storyboard in Resources */,
 				7F0E98CF1CFEB1800051C503 /* ResultCell.xib in Resources */,
+				7F49C16D1D11096000E56023 /* GlassTableViewCell.xib in Resources */,
 				7F06A6B91CE05ADD006B9CA4 /* Assets.xcassets in Resources */,
 				7F0E98C51CFE90DC0051C503 /* ScanViewController.xib in Resources */,
 				7F06A6EB1CEAEF12006B9CA4 /* AccountViewController.xib in Resources */,
 				7FC224CB1CFD84F400CCBD85 /* SearchTVC.storyboard in Resources */,
 				7F0E99101CFED9B90051C503 /* MJRefresh.bundle in Resources */,
 				7F0E98D11CFEBCC20051C503 /* cellbg.jpg in Resources */,
+				7F49C1751D123D5800E56023 /* call.png in Resources */,
 				7F0E98CA1CFEAFF10051C503 /* ResultViewController.xib in Resources */,
+				7F23D0441D100DBB002DB08D /* HeadView.xib in Resources */,
 				7F0E98BC1CFE8F9B0051C503 /* scan.jpg in Resources */,
 				7FC224C01CFD68A700CCBD85 /* ListTableViewCell.xib in Resources */,
 				7FC224B61CFD60FD00CCBD85 /* List.plist in Resources */,
@@ -752,8 +774,10 @@
 				7F06A6EF1CEAF101006B9CA4 /* WWLoadVC.m in Sources */,
 				7F0E99111CFED9B90051C503 /* MJRefreshConst.m in Sources */,
 				7F0E990D1CFED9B90051C503 /* MJRefreshGifHeader.m in Sources */,
+				7F23D0421D100DB1002DB08D /* HeadView.m in Sources */,
 				7F0E990B1CFED9B90051C503 /* MJRefreshBackNormalFooter.m in Sources */,
 				7FC224B91CFD651100CCBD85 /* ListHeadView.m in Sources */,
+				7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */,
 				7F0E99141CFED9B90051C503 /* UIView+MJExtension.m in Sources */,
 				7F0E99131CFED9B90051C503 /* UIScrollView+MJRefresh.m in Sources */,
 				7F0E98C91CFEAFF10051C503 /* ResultViewController.m in Sources */,
@@ -855,7 +879,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -893,7 +917,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -906,10 +930,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iPhoneGLASS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1111.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -918,10 +944,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iPhoneGLASS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1111.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
