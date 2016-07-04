@@ -58,6 +58,16 @@
 		7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F49C16A1D11096000E56023 /* GlassTableViewCell.m */; };
 		7F49C16D1D11096000E56023 /* GlassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */; };
 		7F49C1751D123D5800E56023 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C1741D123D5800E56023 /* call.png */; };
+		7F49C1771D12779000E56023 /* add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C1761D12779000E56023 /* add_green.png */; };
+		7F49C17B1D12818400E56023 /* OrderPreViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F49C1791D12818400E56023 /* OrderPreViewViewController.m */; };
+		7F49C17C1D12818400E56023 /* OrderPreViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */; };
+		7F60CC531D2A35BD00A53799 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC491D2A35BD00A53799 /* FMDatabase.m */; };
+		7F60CC541D2A35BD00A53799 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4B1D2A35BD00A53799 /* FMDatabaseAdditions.m */; };
+		7F60CC551D2A35BD00A53799 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4D1D2A35BD00A53799 /* FMDatabasePool.m */; };
+		7F60CC561D2A35BD00A53799 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4F1D2A35BD00A53799 /* FMDatabaseQueue.m */; };
+		7F60CC571D2A35BD00A53799 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC521D2A35BD00A53799 /* FMResultSet.m */; };
+		7F60CC5A1D2A35C400A53799 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC591D2A35C400A53799 /* YTKKeyValueStore.m */; };
+		7F60CC5E1D2A360E00A53799 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */; };
 		7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */; };
 		7F9904471CEB03B40039AAD5 /* ListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904461CEB03B40039AAD5 /* ListTVC.m */; };
 		7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */; };
@@ -186,6 +196,24 @@
 		7F49C16A1D11096000E56023 /* GlassTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlassTableViewCell.m; sourceTree = "<group>"; };
 		7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlassTableViewCell.xib; sourceTree = "<group>"; };
 		7F49C1741D123D5800E56023 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
+		7F49C1761D12779000E56023 /* add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_green.png; sourceTree = "<group>"; };
+		7F49C1781D12818400E56023 /* OrderPreViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPreViewViewController.h; sourceTree = "<group>"; };
+		7F49C1791D12818400E56023 /* OrderPreViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPreViewViewController.m; sourceTree = "<group>"; };
+		7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderPreViewViewController.xib; sourceTree = "<group>"; };
+		7F60CC481D2A35BD00A53799 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		7F60CC491D2A35BD00A53799 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		7F60CC4A1D2A35BD00A53799 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		7F60CC4B1D2A35BD00A53799 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		7F60CC4C1D2A35BD00A53799 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		7F60CC4D1D2A35BD00A53799 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		7F60CC4E1D2A35BD00A53799 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		7F60CC4F1D2A35BD00A53799 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		7F60CC501D2A35BD00A53799 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		7F60CC511D2A35BD00A53799 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		7F60CC521D2A35BD00A53799 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		7F60CC581D2A35C400A53799 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTKKeyValueStore.h; sourceTree = "<group>"; };
+		7F60CC591D2A35C400A53799 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTKKeyValueStore.m; sourceTree = "<group>"; };
+		7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		7F99043E1CEAFF080039AAD5 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 		7F9904451CEB03B40039AAD5 /* ListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTVC.h; sourceTree = "<group>"; };
@@ -215,6 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F60CC5E1D2A360E00A53799 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +267,7 @@
 		7F06A6A01CE05ADD006B9CA4 = {
 			isa = PBXGroup;
 			children = (
+				7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */,
 				7F06A6AB1CE05ADD006B9CA4 /* iPhoneGLASS */,
 				7F06A6C51CE05ADD006B9CA4 /* iPhoneGLASSTests */,
 				7F06A6D01CE05ADD006B9CA4 /* iPhoneGLASSUITests */,
@@ -258,6 +288,7 @@
 		7F06A6AB1CE05ADD006B9CA4 /* iPhoneGLASS */ = {
 			isa = PBXGroup;
 			children = (
+				7F60CC471D2A35BD00A53799 /* FMDB */,
 				7F0E98D51CFED9B80051C503 /* MJRefresh */,
 				7F0E98D21CFED2EA0051C503 /* MBProgressHUD.h */,
 				7F0E98D31CFED2EA0051C503 /* MBProgressHUD.m */,
@@ -284,6 +315,7 @@
 		7F06A6AC1CE05ADD006B9CA4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7F49C1761D12779000E56023 /* add_green.png */,
 				7F49C1741D123D5800E56023 /* call.png */,
 				7F0E98D01CFEBCC20051C503 /* cellbg.jpg */,
 				7F0E98BB1CFE8F9B0051C503 /* scan.jpg */,
@@ -325,6 +357,9 @@
 			children = (
 				7F06A6E31CEAEB90006B9CA4 /* OrderTVC.h */,
 				7F06A6E41CEAEB90006B9CA4 /* OrderTVC.m */,
+				7F49C1781D12818400E56023 /* OrderPreViewViewController.h */,
+				7F49C1791D12818400E56023 /* OrderPreViewViewController.m */,
+				7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -518,6 +553,26 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
+		7F60CC471D2A35BD00A53799 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				7F60CC581D2A35C400A53799 /* YTKKeyValueStore.h */,
+				7F60CC591D2A35C400A53799 /* YTKKeyValueStore.m */,
+				7F60CC481D2A35BD00A53799 /* FMDatabase.h */,
+				7F60CC491D2A35BD00A53799 /* FMDatabase.m */,
+				7F60CC4A1D2A35BD00A53799 /* FMDatabaseAdditions.h */,
+				7F60CC4B1D2A35BD00A53799 /* FMDatabaseAdditions.m */,
+				7F60CC4C1D2A35BD00A53799 /* FMDatabasePool.h */,
+				7F60CC4D1D2A35BD00A53799 /* FMDatabasePool.m */,
+				7F60CC4E1D2A35BD00A53799 /* FMDatabaseQueue.h */,
+				7F60CC4F1D2A35BD00A53799 /* FMDatabaseQueue.m */,
+				7F60CC501D2A35BD00A53799 /* FMDB.h */,
+				7F60CC511D2A35BD00A53799 /* FMResultSet.h */,
+				7F60CC521D2A35BD00A53799 /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
 		7F9904411CEB039B0039AAD5 /* List */ = {
 			isa = PBXGroup;
 			children = (
@@ -703,6 +758,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F49C17C1D12818400E56023 /* OrderPreViewViewController.xib in Resources */,
 				7FC224BB1CFD651A00CCBD85 /* ListHeadView.xib in Resources */,
 				7F06A6F01CEAF101006B9CA4 /* WWLoadVC.xib in Resources */,
 				7F06A6BC1CE05ADD006B9CA4 /* LaunchScreen.storyboard in Resources */,
@@ -713,6 +769,7 @@
 				7F06A6EB1CEAEF12006B9CA4 /* AccountViewController.xib in Resources */,
 				7FC224CB1CFD84F400CCBD85 /* SearchTVC.storyboard in Resources */,
 				7F0E99101CFED9B90051C503 /* MJRefresh.bundle in Resources */,
+				7F49C1771D12779000E56023 /* add_green.png in Resources */,
 				7F0E98D11CFEBCC20051C503 /* cellbg.jpg in Resources */,
 				7F49C1751D123D5800E56023 /* call.png in Resources */,
 				7F0E98CA1CFEAFF10051C503 /* ResultViewController.xib in Resources */,
@@ -747,6 +804,8 @@
 			files = (
 				7F9904511CEB19EF0039AAD5 /* MoreTVC.m in Sources */,
 				7F0E990F1CFED9B90051C503 /* MJRefreshStateHeader.m in Sources */,
+				7F60CC541D2A35BD00A53799 /* FMDatabaseAdditions.m in Sources */,
+				7F60CC561D2A35BD00A53799 /* FMDatabaseQueue.m in Sources */,
 				7FC224C91CFD84A100CCBD85 /* SearchTVC.m in Sources */,
 				7FC224BF1CFD68A700CCBD85 /* ListTableViewCell.m in Sources */,
 				7F0E99121CFED9B90051C503 /* UIScrollView+MJExtension.m in Sources */,
@@ -757,10 +816,12 @@
 				7F0E99021CFED9B90051C503 /* MJRefreshAutoFooter.m in Sources */,
 				7F0E99061CFED9B90051C503 /* MJRefreshHeader.m in Sources */,
 				7F0E99071CFED9B90051C503 /* MJRefreshAutoGifFooter.m in Sources */,
+				7F60CC551D2A35BD00A53799 /* FMDatabasePool.m in Sources */,
 				7FC224C31CFD6A7900CCBD85 /* ListModel.m in Sources */,
 				7FC224C61CFD6AC600CCBD85 /* NSDictionary+PropertyCode.m in Sources */,
 				7F0E98D41CFED2EA0051C503 /* MBProgressHUD.m in Sources */,
 				7F0E98B81CFE7F5E0051C503 /* STConst.m in Sources */,
+				7F60CC5A1D2A35C400A53799 /* YTKKeyValueStore.m in Sources */,
 				7F06A6B11CE05ADD006B9CA4 /* AppDelegate.m in Sources */,
 				7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */,
 				7F0E98AC1CFE7E8F0051C503 /* NSCalendar+ST.m in Sources */,
@@ -771,10 +832,12 @@
 				7F0E98B11CFE7F120051C503 /* STToolbar.m in Sources */,
 				7F0E99031CFED9B90051C503 /* MJRefreshBackFooter.m in Sources */,
 				7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */,
+				7F49C17B1D12818400E56023 /* OrderPreViewViewController.m in Sources */,
 				7F06A6EF1CEAF101006B9CA4 /* WWLoadVC.m in Sources */,
 				7F0E99111CFED9B90051C503 /* MJRefreshConst.m in Sources */,
 				7F0E990D1CFED9B90051C503 /* MJRefreshGifHeader.m in Sources */,
 				7F23D0421D100DB1002DB08D /* HeadView.m in Sources */,
+				7F60CC531D2A35BD00A53799 /* FMDatabase.m in Sources */,
 				7F0E990B1CFED9B90051C503 /* MJRefreshBackNormalFooter.m in Sources */,
 				7FC224B91CFD651100CCBD85 /* ListHeadView.m in Sources */,
 				7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */,
@@ -784,6 +847,7 @@
 				7F0E98CE1CFEB1800051C503 /* ResultCell.m in Sources */,
 				7F0E98AD1CFE7E8F0051C503 /* STPickerDate.m in Sources */,
 				7F0E98B91CFE7F5E0051C503 /* STUI.m in Sources */,
+				7F60CC571D2A35BD00A53799 /* FMResultSet.m in Sources */,
 				7F06A6EA1CEAEF12006B9CA4 /* AccountViewController.m in Sources */,
 				7F0E99041CFED9B90051C503 /* MJRefreshComponent.m in Sources */,
 				7F0E98BA1CFE7F5E0051C503 /* UIView+ST.m in Sources */,
@@ -933,7 +997,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iPhoneGLASS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.1111.www;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2222.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -947,7 +1011,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iPhoneGLASS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.1111.www;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2222.www;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

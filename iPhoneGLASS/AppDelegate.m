@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainTabBarController.h"
 #import "WWLoadVC.h"
+#import "YTKKeyValueStore.h"
 
 @interface AppDelegate ()
 
@@ -18,12 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    self.logged = [user boolForKey:@"logged"];
-    self.name = [user stringForKey:@"name"];
-    self.pwd = [user stringForKey:@"pwd"];
+    // Override point for customization after application launch
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
@@ -37,6 +33,13 @@
         //进入主界面
         MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
         self.window.rootViewController = mainTVC;
+        
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        self.logged = [user boolForKey:@"logged"];
+        self.phoneNumber = [user valueForKey:@"phoneNumber"];
+        self.name = [user valueForKey:@"name"];
+        self.pwd = [user valueForKey:@"pwd"];
+        
     }
     [self.window makeKeyAndVisible];
     return YES;

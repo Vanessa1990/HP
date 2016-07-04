@@ -11,11 +11,13 @@
 #import "ListModel.h"
 #import "GlassTableViewCell.h"
 #import "MBProgressHUD.h"
+#import "OrderPreViewViewController.h"
 
-@interface OrderTVC ()<HeadViewDelegate>
+@interface OrderTVC ()<HeadViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 //型号
 @property(nonatomic,strong) NSArray *headArray;
+@property(nonatomic,strong) UIButton *addOrderPicture;
 //key:型号 value:数组
 @property(nonatomic,strong) NSMutableDictionary *glassDic;
 @property(nonatomic, strong) NSIndexPath *selectedIndexPath;
@@ -40,6 +42,13 @@
     
     [super viewWillAppear:animated];
     
+    [[UIApplication sharedApplication].keyWindow addSubview:self.addOrderPicture];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    [self.addOrderPicture removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,6 +74,66 @@
         [hud hideAnimated:YES];
     });
 }
+
+-(void)addPictureClick:(UIButton *)button {
+    
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    anim.toValue = [NSNumber numberWithFloat: M_PI * 0.5 ];
+    anim.duration = 0.5;
+    anim.cumulative = YES;
+    anim.repeatCount = 1;
+    [button.layer addAnimation:anim forKey:nil];
+    
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:nil message:@"选择图片" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"图片", nil];
+    [alertV show];
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        if(buttonIndex == 1) {
+            [self addPhotoForTopic:UIImagePickerControllerSourceTypeCamera];
+        } else if(buttonIndex == 2) {
+            [self addPhotoForTopic:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
+    } else {
+        if(buttonIndex == 1) {
+            [self addPhotoForTopic:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
+    }
+}
+
+- (void)addPhotoForTopic:(UIImagePickerControllerSourceType)type
+{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.navigationBar.tintColor = [UIColor colorWithRed:72.0/255.0 green:106.0/255.0 blue:154.0/255.0 alpha:1.0];
+    imagePickerController.sourceType = type;
+    imagePickerController.videoQuality = UIImagePickerControllerQualityTypeMedium;
+    imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = NO;
+    
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+    
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    OrderPreViewViewController *vc = [[OrderPreViewViewController alloc]init];
+    [self dismissViewControllerAnimated:NO completion:nil];
+    vc.image = image;
+    [self presentViewController:vc animated:YES completion:nil];
+    
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - Table view data source
 
@@ -144,6 +213,17 @@
         _glassDic = [NSMutableDictionary dictionary];
     }
     return _glassDic;
+}
+
+- (UIButton *)addOrderPicture {
+    
+    if (_addOrderPicture == nil) {
+        _addOrderPicture = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_addOrderPicture setImage:[UIImage imageNamed:@"add_green.png"] forState:UIControlStateNormal];
+        _addOrderPicture.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 60, [UIScreen mainScreen].bounds.size.height - 109, 35,35);
+        [_addOrderPicture addTarget:self action:@selector(addPictureClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _addOrderPicture;
 }
 
 @end

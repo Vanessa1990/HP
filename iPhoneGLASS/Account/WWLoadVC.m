@@ -58,7 +58,9 @@
     //成功保存数据
     NSString *name = @"龙腾";
     NSString *pwd = self.pwdTextField.text;
+    
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [user setValue:self.phoneTextField.text forKey:@"phoneNumber"];
     [user setBool:YES forKey:@"logged"];
     [user setValue:name forKey:@"name"];
     [user setValue:pwd forKey:@"pwd"];

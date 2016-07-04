@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) NSString *name;
 
+@property (strong, nonatomic) NSString *phoneNumber;
+
 @property (nonatomic,assign) BOOL logged;
 
 @property (nonatomic, strong) NSString *pwd;

@@ -17,10 +17,11 @@
 #endif
 
 // 方法输出
-#define HPLogFunc XMGLog(@"%s", __func__)
 
 #define HP_Screen_Width [UIScreen mainScreen].bounds.size.width
 
 #define HP_Delegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
+
+#import "YTKKeyValueStore.h"
 
 #endif
