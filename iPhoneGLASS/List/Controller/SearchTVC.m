@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "STPickerDate.h"
 #import "ListModel.h"
+#import "ScanViewController.h"
 
 @interface SearchTVC ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *beginDate;
@@ -45,6 +46,8 @@
     }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(sure)];
     [self.finishState addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventValueChanged];
+    
+  
     
 }
 
@@ -94,6 +97,7 @@
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
     if (textField == self.beginDate || textField == self.endDate ) {
+        [self.view endEditing:YES];
         STPickerDate *pickView = [[STPickerDate alloc]initWithType:PickerTypeDate];
         pickView.finishBlock = ^(NSString *date){
             textField.text = date;
@@ -101,6 +105,7 @@
         [pickView show];
         return NO;
     }else if (textField == self.thick){
+        [self.view endEditing:YES];
         STPickerDate *pickView = [[STPickerDate alloc]initWithType:PickerTypeThick];
         pickView.finishBlock = ^(NSString *date){
             textField.text = date;
@@ -110,6 +115,17 @@
     }else {
         return YES;
     }
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    //    if ([HP_Delegate.name isEqualToString:@"和平钢化"]) {
+    if (indexPath.section == 3 || indexPath.row == 0) {
+        ScanViewController *scanVC = [[ScanViewController alloc]init];
+        [self.navigationController pushViewController:scanVC animated:YES];
+    }
+    //    }
     
 }
 

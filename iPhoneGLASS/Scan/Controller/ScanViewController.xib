@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScanViewController">
             <connections>
-                <outlet property="scanView" destination="IHT-BZ-jPd" id="GbM-XT-w86"/>
+                <outlet property="scanView" destination="IHT-BZ-jPd" id="52T-kX-2Wb"/>
                 <outlet property="searchBar" destination="ODd-Rh-p8Q" id="HXg-uv-cJb"/>
                 <outlet property="searchDisplayController" destination="CDx-nS-eil" id="6BK-cZ-URC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -30,7 +30,53 @@
                 </searchBar>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IHT-BZ-jPd" userLabel="scan_place">
                     <rect key="frame" x="0.0" y="108" width="375" height="559"/>
-                    <color key="backgroundColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="41o-Dv-PGI">
+                            <rect key="frame" x="87" y="180" width="200" height="200"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="8b4-Z5-Gwi"/>
+                                <constraint firstAttribute="width" constant="200" id="KYb-qr-f4Q"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baa-wg-DaX">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                            <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.7240571120689655" colorSpace="calibratedRGB"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pup-O4-ZSY">
+                            <rect key="frame" x="0.0" y="380" width="375" height="179"/>
+                            <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.7240571120689655" colorSpace="calibratedRGB"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pz5-1G-TZO">
+                            <rect key="frame" x="0.0" y="180" width="87" height="200"/>
+                            <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.7240571120689655" colorSpace="calibratedRGB"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFa-i2-X7r">
+                            <rect key="frame" x="287" y="180" width="88" height="200"/>
+                            <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.7240571120689655" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="baa-wg-DaX" firstAttribute="leading" secondItem="IHT-BZ-jPd" secondAttribute="leading" id="1Kk-Ik-29x"/>
+                        <constraint firstItem="Pup-O4-ZSY" firstAttribute="leading" secondItem="IHT-BZ-jPd" secondAttribute="leading" id="NLH-bE-cWR"/>
+                        <constraint firstAttribute="trailing" secondItem="Pup-O4-ZSY" secondAttribute="trailing" id="NNX-If-WDr"/>
+                        <constraint firstItem="baa-wg-DaX" firstAttribute="top" secondItem="IHT-BZ-jPd" secondAttribute="top" id="OVq-pd-Xws"/>
+                        <constraint firstItem="pz5-1G-TZO" firstAttribute="top" secondItem="baa-wg-DaX" secondAttribute="bottom" id="PRv-DQ-zLB"/>
+                        <constraint firstItem="41o-Dv-PGI" firstAttribute="centerX" secondItem="IHT-BZ-jPd" secondAttribute="centerX" id="UmD-Sa-CPR"/>
+                        <constraint firstItem="Pup-O4-ZSY" firstAttribute="top" secondItem="UFa-i2-X7r" secondAttribute="bottom" id="YBH-DF-xEU"/>
+                        <constraint firstItem="Pup-O4-ZSY" firstAttribute="top" secondItem="41o-Dv-PGI" secondAttribute="bottom" id="bo5-cz-GMn"/>
+                        <constraint firstAttribute="trailing" secondItem="baa-wg-DaX" secondAttribute="trailing" id="gLu-Bl-D38"/>
+                        <constraint firstAttribute="bottom" secondItem="Pup-O4-ZSY" secondAttribute="bottom" id="gln-hd-WmR"/>
+                        <constraint firstItem="UFa-i2-X7r" firstAttribute="leading" secondItem="41o-Dv-PGI" secondAttribute="trailing" id="lq8-dy-97e"/>
+                        <constraint firstItem="pz5-1G-TZO" firstAttribute="leading" secondItem="IHT-BZ-jPd" secondAttribute="leading" id="oHn-Ec-l9J"/>
+                        <constraint firstItem="UFa-i2-X7r" firstAttribute="top" secondItem="baa-wg-DaX" secondAttribute="bottom" id="pHi-Zj-8Qk"/>
+                        <constraint firstItem="41o-Dv-PGI" firstAttribute="centerY" secondItem="IHT-BZ-jPd" secondAttribute="centerY" id="u3P-Ew-tD9"/>
+                        <constraint firstItem="41o-Dv-PGI" firstAttribute="leading" secondItem="pz5-1G-TZO" secondAttribute="trailing" id="v4T-2L-kqJ"/>
+                        <constraint firstItem="41o-Dv-PGI" firstAttribute="top" secondItem="baa-wg-DaX" secondAttribute="bottom" id="y5A-2v-Pwk"/>
+                        <constraint firstAttribute="trailing" secondItem="UFa-i2-X7r" secondAttribute="trailing" id="yDA-Cr-rI4"/>
+                        <constraint firstItem="Pup-O4-ZSY" firstAttribute="top" secondItem="pz5-1G-TZO" secondAttribute="bottom" id="yWN-Pz-Fr4"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -44,7 +90,7 @@
                 <constraint firstItem="IHT-BZ-jPd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nmI-lt-pNy"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="316" y="257"/>
+            <point key="canvasLocation" x="432.5" y="246.5"/>
         </view>
         <searchDisplayController id="CDx-nS-eil">
             <connections>

@@ -43,7 +43,9 @@
     //tableview设置
     [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(beginRefresh)];
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(beginRefresh)];
+    header.stateLabel.hidden = YES;
+    self.tableView.mj_header = header;
     [self.tableView.mj_header beginRefreshing];
    
 }
@@ -66,9 +68,6 @@
     
     self.title = @"列表";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
-//    if ([HP_Delegate.name isEqualToString:@"和平钢化"]) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"scan.jpg"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]  style:UIBarButtonItemStylePlain target:self action:@selector(scan)];
-//    }
 }
 
 -(void)beginRefresh {

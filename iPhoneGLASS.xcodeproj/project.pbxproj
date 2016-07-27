@@ -149,8 +149,8 @@
 		7F0E98CC1CFEB1800051C503 /* ResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCell.m; sourceTree = "<group>"; };
 		7F0E98CD1CFEB1800051C503 /* ResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultCell.xib; sourceTree = "<group>"; };
 		7F0E98D01CFEBCC20051C503 /* cellbg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cellbg.jpg; sourceTree = "<group>"; };
-		7F0E98D21CFED2EA0051C503 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		7F0E98D31CFED2EA0051C503 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		7F0E98D21CFED2EA0051C503 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = ../MBProgressHUD.h; sourceTree = "<group>"; };
+		7F0E98D31CFED2EA0051C503 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = ../MBProgressHUD.m; sourceTree = "<group>"; };
 		7F0E98D71CFED9B80051C503 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		7F0E98D81CFED9B80051C503 /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
 		7F0E98D91CFED9B80051C503 /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
@@ -264,6 +264,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A7B7CB81D47553B00EC797E /* others */ = {
+			isa = PBXGroup;
+			children = (
+				7F60CC471D2A35BD00A53799 /* FMDB */,
+				7F0E98D51CFED9B80051C503 /* MJRefresh */,
+				7F0E98D21CFED2EA0051C503 /* MBProgressHUD.h */,
+				7F0E98D31CFED2EA0051C503 /* MBProgressHUD.m */,
+			);
+			path = others;
+			sourceTree = "<group>";
+		};
 		7F06A6A01CE05ADD006B9CA4 = {
 			isa = PBXGroup;
 			children = (
@@ -288,10 +299,7 @@
 		7F06A6AB1CE05ADD006B9CA4 /* iPhoneGLASS */ = {
 			isa = PBXGroup;
 			children = (
-				7F60CC471D2A35BD00A53799 /* FMDB */,
-				7F0E98D51CFED9B80051C503 /* MJRefresh */,
-				7F0E98D21CFED2EA0051C503 /* MBProgressHUD.h */,
-				7F0E98D31CFED2EA0051C503 /* MBProgressHUD.m */,
+				6A7B7CB81D47553B00EC797E /* others */,
 				7F06A6E61CEAEEEF006B9CA4 /* Account */,
 				7F06A6DF1CEAEB77006B9CA4 /* Order */,
 				7F9904411CEB039B0039AAD5 /* List */,
@@ -476,7 +484,8 @@
 				7F0E99001CFED9B90051C503 /* UIView+MJExtension.h */,
 				7F0E99011CFED9B90051C503 /* UIView+MJExtension.m */,
 			);
-			path = MJRefresh;
+			name = MJRefresh;
+			path = ../MJRefresh;
 			sourceTree = "<group>";
 		};
 		7F0E98D61CFED9B80051C503 /* Base */ = {
@@ -570,7 +579,8 @@
 				7F60CC511D2A35BD00A53799 /* FMResultSet.h */,
 				7F60CC521D2A35BD00A53799 /* FMResultSet.m */,
 			);
-			path = FMDB;
+			name = FMDB;
+			path = ../FMDB;
 			sourceTree = "<group>";
 		};
 		7F9904411CEB039B0039AAD5 /* List */ = {
