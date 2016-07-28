@@ -22,6 +22,8 @@
 
 @property (nonatomic ,strong) NSString *number;
 
+@property (nonatomic ,strong) NSString *totalNumber;
+
 @property (nonatomic ,strong) NSString *width;
 
 @property (nonatomic ,strong) NSString *height;
@@ -29,5 +31,7 @@
 @property (nonatomic ,assign) BOOL wind;//弯钢
 
 @property (nonatomic ,assign) BOOL isFinish;//完成
+
+
 
 @end

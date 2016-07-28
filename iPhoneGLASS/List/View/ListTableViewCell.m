@@ -45,9 +45,9 @@
     }else {
         self.thickLable.text = [NSString stringWithFormat:@"%@ 福特蓝",[listModel.thick substringToIndex:1]];
     }
-    self.sizeLable.text = [NSString stringWithFormat:@"%@ * %@ * %@",listModel.width,listModel.height,listModel.number];
-    self.finishLable.text = listModel.isFinish?@"是":@"否";
-    self.finishLable.textColor = listModel.isFinish?[UIColor redColor]:[UIColor blackColor];
+    self.sizeLable.text = [NSString stringWithFormat:@"%@ * %@ * %@",listModel.width,listModel.height,listModel.totalNumber];
+    self.finishLable.text = ([listModel.number integerValue] == [listModel.totalNumber integerValue])?@"是":[NSString stringWithFormat:@"%@/%@",listModel.number,listModel.totalNumber];
+    self.finishLable.textColor = ([listModel.number integerValue] == [listModel.totalNumber integerValue])?[UIColor redColor]:[UIColor blackColor];
 }
 
 

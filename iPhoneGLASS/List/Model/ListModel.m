@@ -10,11 +10,6 @@
 
 @implementation ListModel
 
-/*
- 2016-05-31 14:47:48.242 iPhoneGLASS[24110:3347258] color __NSCFNumber
- 2016-05-31 14:47:48.242 iPhoneGLASS[24110:3347258] wind __NSCFBoolean
- 2016-05-31 14:47:48.242 iPhoneGLASS[24110:3347258] isFinish __NSCFBoolean
- */
 
 +(ListModel *)modelWithDict:(NSDictionary *)dict {
     
@@ -22,6 +17,7 @@
     model.name = dict[@"name"];
     model.thick = dict[@"thick"];
     model.number = dict[@"number"];
+    model.totalNumber = dict[@"totalNumber"];
     model.date = dict[@"date"];
     model.width = dict[@"width"];
     model.height = dict[@"height"];
