@@ -19,6 +19,7 @@
 // 方法输出
 
 #define HP_Screen_Width [UIScreen mainScreen].bounds.size.width
+#define HP_Screen_Height [UIScreen mainScreen].bounds.size.height
 
 #define HP_Delegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
 
