@@ -65,6 +65,9 @@
 		7F49C1771D12779000E56023 /* add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C1761D12779000E56023 /* add_green.png */; };
 		7F49C17B1D12818400E56023 /* OrderPreViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F49C1791D12818400E56023 /* OrderPreViewViewController.m */; };
 		7F49C17C1D12818400E56023 /* OrderPreViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */; };
+		7F4C9F061D49E0760072F43C /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C9F051D49E0760072F43C /* AboutViewController.m */; };
+		7F4C9F081D49EDAD0072F43C /* logoBG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F4C9F071D49EDAD0072F43C /* logoBG.jpg */; };
+		7F4C9F0A1D49EE1E0072F43C /* buttomBG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F4C9F091D49EE1E0072F43C /* buttomBG.jpg */; };
 		7F60CC531D2A35BD00A53799 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC491D2A35BD00A53799 /* FMDatabase.m */; };
 		7F60CC541D2A35BD00A53799 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4B1D2A35BD00A53799 /* FMDatabaseAdditions.m */; };
 		7F60CC551D2A35BD00A53799 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4D1D2A35BD00A53799 /* FMDatabasePool.m */; };
@@ -212,6 +215,10 @@
 		7F49C1781D12818400E56023 /* OrderPreViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPreViewViewController.h; sourceTree = "<group>"; };
 		7F49C1791D12818400E56023 /* OrderPreViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPreViewViewController.m; sourceTree = "<group>"; };
 		7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderPreViewViewController.xib; sourceTree = "<group>"; };
+		7F4C9F041D49E0760072F43C /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		7F4C9F051D49E0760072F43C /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		7F4C9F071D49EDAD0072F43C /* logoBG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logoBG.jpg; sourceTree = "<group>"; };
+		7F4C9F091D49EE1E0072F43C /* buttomBG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = buttomBG.jpg; sourceTree = "<group>"; };
 		7F60CC481D2A35BD00A53799 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		7F60CC491D2A35BD00A53799 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		7F60CC4A1D2A35BD00A53799 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -351,6 +358,8 @@
 		7F06A6AC1CE05ADD006B9CA4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7F4C9F091D49EE1E0072F43C /* buttomBG.jpg */,
+				7F4C9F071D49EDAD0072F43C /* logoBG.jpg */,
 				7F49C1761D12779000E56023 /* add_green.png */,
 				7F49C1741D123D5800E56023 /* call.png */,
 				7F0E98D01CFEBCC20051C503 /* cellbg.jpg */,
@@ -674,6 +683,8 @@
 			children = (
 				7F99044F1CEB19EF0039AAD5 /* MoreTVC.h */,
 				7F9904501CEB19EF0039AAD5 /* MoreTVC.m */,
+				7F4C9F041D49E0760072F43C /* AboutViewController.h */,
+				7F4C9F051D49E0760072F43C /* AboutViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -803,9 +814,11 @@
 				7F0E98CF1CFEB1800051C503 /* ResultCell.xib in Resources */,
 				7F49C16D1D11096000E56023 /* GlassTableViewCell.xib in Resources */,
 				7F06A6B91CE05ADD006B9CA4 /* Assets.xcassets in Resources */,
+				7F4C9F0A1D49EE1E0072F43C /* buttomBG.jpg in Resources */,
 				7F0E98C51CFE90DC0051C503 /* ScanViewController.xib in Resources */,
 				7F06A6EB1CEAEF12006B9CA4 /* AccountViewController.xib in Resources */,
 				7FC224CB1CFD84F400CCBD85 /* SearchTVC.storyboard in Resources */,
+				7F4C9F081D49EDAD0072F43C /* logoBG.jpg in Resources */,
 				7F0E99101CFED9B90051C503 /* MJRefresh.bundle in Resources */,
 				7F49C1771D12779000E56023 /* add_green.png in Resources */,
 				7F0E98D11CFEBCC20051C503 /* cellbg.jpg in Resources */,
@@ -894,6 +907,7 @@
 				7F0E99041CFED9B90051C503 /* MJRefreshComponent.m in Sources */,
 				7F0E98BA1CFE7F5E0051C503 /* UIView+ST.m in Sources */,
 				7F06A6AE1CE05ADD006B9CA4 /* main.m in Sources */,
+				7F4C9F061D49E0760072F43C /* AboutViewController.m in Sources */,
 				7F9904471CEB03B40039AAD5 /* ListTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

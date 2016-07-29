@@ -10,7 +10,7 @@
 #import "PrefixHeader.pch"
 #import "AppDelegate.h"
 #import "WWLoadVC.h"
-
+#import "AboutViewController.h"
 
 @interface MoreTVC ()
 
@@ -29,6 +29,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
  
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 #pragma mark - Table view data source
@@ -82,6 +88,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
+        AboutViewController *aboutVC = [[AboutViewController alloc]init];
+        [self.navigationController pushViewController:aboutVC animated:YES];
         
     } else {
         
