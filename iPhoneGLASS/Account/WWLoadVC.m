@@ -59,6 +59,8 @@
     NSString *name = @"龙腾";
     NSString *pwd = self.pwdTextField.text;
     
+    YYCache *yy = [YYCache cacheWithName:@"userInfo"];
+    //未完待续......
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setValue:self.phoneTextField.text forKey:@"phoneNumber"];
     [user setBool:YES forKey:@"logged"];

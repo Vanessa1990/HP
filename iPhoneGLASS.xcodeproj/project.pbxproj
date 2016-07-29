@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A9127711D4B42C6000E065D /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A91276A1D4B42C6000E065D /* YYCache.m */; };
+		6A9127721D4B42C6000E065D /* YYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A91276C1D4B42C6000E065D /* YYDiskCache.m */; };
+		6A9127731D4B42C6000E065D /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A91276E1D4B42C6000E065D /* YYKVStorage.m */; };
+		6A9127741D4B42C6000E065D /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A9127701D4B42C6000E065D /* YYMemoryCache.m */; };
 		7F06A6AE1CE05ADD006B9CA4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6AD1CE05ADD006B9CA4 /* main.m */; };
 		7F06A6B11CE05ADD006B9CA4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6B01CE05ADD006B9CA4 /* AppDelegate.m */; };
 		7F06A6B71CE05ADD006B9CA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F06A6B51CE05ADD006B9CA4 /* Main.storyboard */; };
@@ -101,6 +105,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A9127691D4B42C6000E065D /* YYCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCache.h; sourceTree = "<group>"; };
+		6A91276A1D4B42C6000E065D /* YYCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYCache.m; sourceTree = "<group>"; };
+		6A91276B1D4B42C6000E065D /* YYDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYDiskCache.h; sourceTree = "<group>"; };
+		6A91276C1D4B42C6000E065D /* YYDiskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYDiskCache.m; sourceTree = "<group>"; };
+		6A91276D1D4B42C6000E065D /* YYKVStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVStorage.h; sourceTree = "<group>"; };
+		6A91276E1D4B42C6000E065D /* YYKVStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVStorage.m; sourceTree = "<group>"; };
+		6A91276F1D4B42C6000E065D /* YYMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYMemoryCache.h; sourceTree = "<group>"; };
+		6A9127701D4B42C6000E065D /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
 		7F06A6A91CE05ADD006B9CA4 /* iPhoneGLASS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneGLASS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F06A6AD1CE05ADD006B9CA4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7F06A6AF1CE05ADD006B9CA4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -275,9 +287,25 @@
 			path = others;
 			sourceTree = "<group>";
 		};
+		6A9127681D4B42C6000E065D /* YYCache */ = {
+			isa = PBXGroup;
+			children = (
+				6A9127691D4B42C6000E065D /* YYCache.h */,
+				6A91276A1D4B42C6000E065D /* YYCache.m */,
+				6A91276B1D4B42C6000E065D /* YYDiskCache.h */,
+				6A91276C1D4B42C6000E065D /* YYDiskCache.m */,
+				6A91276D1D4B42C6000E065D /* YYKVStorage.h */,
+				6A91276E1D4B42C6000E065D /* YYKVStorage.m */,
+				6A91276F1D4B42C6000E065D /* YYMemoryCache.h */,
+				6A9127701D4B42C6000E065D /* YYMemoryCache.m */,
+			);
+			path = YYCache;
+			sourceTree = "<group>";
+		};
 		7F06A6A01CE05ADD006B9CA4 = {
 			isa = PBXGroup;
 			children = (
+				6A9127681D4B42C6000E065D /* YYCache */,
 				7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */,
 				7F06A6AB1CE05ADD006B9CA4 /* iPhoneGLASS */,
 				7F06A6C51CE05ADD006B9CA4 /* iPhoneGLASSTests */,
@@ -824,12 +852,15 @@
 				7F0E98C41CFE90DC0051C503 /* ScanViewController.m in Sources */,
 				7F0E990C1CFED9B90051C503 /* MJRefreshBackStateFooter.m in Sources */,
 				7F0E99021CFED9B90051C503 /* MJRefreshAutoFooter.m in Sources */,
+				6A9127731D4B42C6000E065D /* YYKVStorage.m in Sources */,
 				7F0E99061CFED9B90051C503 /* MJRefreshHeader.m in Sources */,
 				7F0E99071CFED9B90051C503 /* MJRefreshAutoGifFooter.m in Sources */,
 				7F60CC551D2A35BD00A53799 /* FMDatabasePool.m in Sources */,
 				7FC224C31CFD6A7900CCBD85 /* ListModel.m in Sources */,
 				7FC224C61CFD6AC600CCBD85 /* NSDictionary+PropertyCode.m in Sources */,
+				6A9127741D4B42C6000E065D /* YYMemoryCache.m in Sources */,
 				7F0E98D41CFED2EA0051C503 /* MBProgressHUD.m in Sources */,
+				6A9127711D4B42C6000E065D /* YYCache.m in Sources */,
 				7F0E98B81CFE7F5E0051C503 /* STConst.m in Sources */,
 				7F60CC5A1D2A35C400A53799 /* YTKKeyValueStore.m in Sources */,
 				7F06A6B11CE05ADD006B9CA4 /* AppDelegate.m in Sources */,
@@ -857,6 +888,7 @@
 				7F0E98CE1CFEB1800051C503 /* ResultCell.m in Sources */,
 				7F0E98AD1CFE7E8F0051C503 /* STPickerDate.m in Sources */,
 				7F0E98B91CFE7F5E0051C503 /* STUI.m in Sources */,
+				6A9127721D4B42C6000E065D /* YYDiskCache.m in Sources */,
 				7F60CC571D2A35BD00A53799 /* FMResultSet.m in Sources */,
 				7F06A6EA1CEAEF12006B9CA4 /* AccountViewController.m in Sources */,
 				7F0E99041CFED9B90051C503 /* MJRefreshComponent.m in Sources */,
