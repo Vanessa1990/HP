@@ -47,8 +47,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(sure)];
     [self.finishState addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventValueChanged];
     
-  
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
