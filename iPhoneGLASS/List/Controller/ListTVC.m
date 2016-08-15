@@ -23,6 +23,7 @@
 @interface ListTVC ()<SearchTVCDelegate>
 
 @property (nonatomic, strong) NSMutableArray *itemArray;
+@property(nonatomic,assign) int pullNum;
 
 @end
 
@@ -36,9 +37,13 @@
     //tableview设置
     [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(beginRefresh)];
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.pullNum = 0;
+        [self beginRefresh];
+    }];
     header.stateLabel.hidden = YES;
     self.tableView.mj_header = header;
+
     
     //列表数据初始化
     NSArray *array = [NSArray array];
@@ -49,6 +54,7 @@
     array = [store getObjectById:@"list" fromTable:tableName];
     if (array.count != 0) {
         NSLog(@"有数据");
+        self.pullNum ++;
         for (NSDictionary *dict in array) {
             ListModel *model = [ListModel modelWithDict:dict];
             [self.itemArray addObject:model];
@@ -59,6 +65,13 @@
     }else {
         [self.tableView.mj_header beginRefreshing];
     }
+
+    MJRefreshAutoNormalFooter *footer= [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self beginRefresh];
+    }];
+    [footer setTitle:@"点击或者上拉加载更多" forState:MJRefreshStateIdle];
+    self.tableView.mj_footer = footer;
+   
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -82,16 +95,20 @@
 }
 
 -(void)beginRefresh {
-    
+
+    self.pullNum ++;
     self.firstIn = NO;
     //列表数据初始化
     NSArray *array = [NSArray array];
-    
+   
     array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
     YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
     NSString *tableName = @"hp_glass_table";
     [store putObject:array withId:@"list" intoTable:tableName];
 
+    if (self.pullNum == 1) {
+        [self.itemArray removeAllObjects];
+    }
     for (NSDictionary *dict in array) {
         ListModel *model = [ListModel modelWithDict:dict];
         [self.itemArray addObject:model];
@@ -100,8 +117,10 @@
     //列表数据初始化
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [self.tableView reloadData];
     });
+    
     
 }
 
@@ -145,7 +164,6 @@
     
     return 50;
 }
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -159,9 +177,9 @@
     
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listcellID"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    cell.listModel = self.itemArray[indexPath.row];
-    
+    if (indexPath.row < self.itemArray.count) {
+        cell.listModel = self.itemArray[indexPath.row];
+    }
     return cell;
 }
 
