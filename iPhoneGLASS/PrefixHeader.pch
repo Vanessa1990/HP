@@ -29,4 +29,6 @@
 
 #import "YYCache.h"
 
+#define HP_UserInfo @"userInfo"
+
 #endif

@@ -17,6 +17,7 @@
 #import "SearchTVC.h"
 #import "ScanViewController.h"
 #import "MJRefresh.h"
+#import "YTKKeyValueStore.h"
 
 
 @interface ListTVC ()<SearchTVCDelegate>
@@ -31,23 +32,33 @@
     [super viewDidLoad];
     
     [self initNav];
-    
-    //列表数据初始化
-    NSArray *array = [NSArray array];
-    self.itemArray = [NSMutableArray array];
-    array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
-    for (NSDictionary *dict in array) {
-        ListModel *model = [ListModel modelWithDict:dict];
-        [self.itemArray addObject:model];
-    }
+
     //tableview设置
     [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(beginRefresh)];
     header.stateLabel.hidden = YES;
     self.tableView.mj_header = header;
-    [self.tableView.mj_header beginRefreshing];
-   
+    
+    //列表数据初始化
+    NSArray *array = [NSArray array];
+    self.itemArray = [NSMutableArray array];
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
+    NSString *tableName = @"hp_glass_table";
+    // 获得所有数据
+    array = [store getObjectById:@"list" fromTable:tableName];
+    if (array.count != 0) {
+        NSLog(@"有数据");
+        for (NSDictionary *dict in array) {
+            ListModel *model = [ListModel modelWithDict:dict];
+            [self.itemArray addObject:model];
+        }
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView reloadData];
+    }else {
+        [self.tableView.mj_header beginRefreshing];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -75,14 +86,17 @@
     self.firstIn = NO;
     //列表数据初始化
     NSArray *array = [NSArray array];
-    self.itemArray = [NSMutableArray array];
+    
     array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
-    [self.itemArray removeAllObjects];
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
+    NSString *tableName = @"hp_glass_table";
+    [store putObject:array withId:@"list" intoTable:tableName];
+
     for (NSDictionary *dict in array) {
         ListModel *model = [ListModel modelWithDict:dict];
         [self.itemArray addObject:model];
     }
-
+    
     //列表数据初始化
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tableView.mj_header endRefreshing];

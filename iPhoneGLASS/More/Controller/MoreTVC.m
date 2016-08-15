@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.telLable.text = HP_Delegate.name;
 }
 
 - (void)didReceiveMemoryWarning {

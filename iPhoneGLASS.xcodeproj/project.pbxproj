@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A6AEB8D1D61A2D200265420 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6AEB8C1D61A2D200265420 /* YTKKeyValueStore.m */; };
 		6A9127711D4B42C6000E065D /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A91276A1D4B42C6000E065D /* YYCache.m */; };
 		6A9127721D4B42C6000E065D /* YYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A91276C1D4B42C6000E065D /* YYDiskCache.m */; };
 		6A9127731D4B42C6000E065D /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A91276E1D4B42C6000E065D /* YYKVStorage.m */; };
@@ -19,8 +20,6 @@
 		7F06A6C71CE05ADD006B9CA4 /* iPhoneGLASSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6C61CE05ADD006B9CA4 /* iPhoneGLASSTests.m */; };
 		7F06A6D21CE05ADD006B9CA4 /* iPhoneGLASSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6D11CE05ADD006B9CA4 /* iPhoneGLASSUITests.m */; };
 		7F06A6E51CEAEB90006B9CA4 /* OrderTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6E41CEAEB90006B9CA4 /* OrderTVC.m */; };
-		7F06A6EA1CEAEF12006B9CA4 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6E81CEAEF12006B9CA4 /* AccountViewController.m */; };
-		7F06A6EB1CEAEF12006B9CA4 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F06A6E91CEAEF12006B9CA4 /* AccountViewController.xib */; };
 		7F06A6EF1CEAF101006B9CA4 /* WWLoadVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6ED1CEAF101006B9CA4 /* WWLoadVC.m */; };
 		7F06A6F01CEAF101006B9CA4 /* WWLoadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F06A6EE1CEAF101006B9CA4 /* WWLoadVC.xib */; };
 		7F0E98AC1CFE7E8F0051C503 /* NSCalendar+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E98A91CFE7E8F0051C503 /* NSCalendar+ST.m */; };
@@ -73,7 +72,6 @@
 		7F60CC551D2A35BD00A53799 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4D1D2A35BD00A53799 /* FMDatabasePool.m */; };
 		7F60CC561D2A35BD00A53799 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4F1D2A35BD00A53799 /* FMDatabaseQueue.m */; };
 		7F60CC571D2A35BD00A53799 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC521D2A35BD00A53799 /* FMResultSet.m */; };
-		7F60CC5A1D2A35C400A53799 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC591D2A35C400A53799 /* YTKKeyValueStore.m */; };
 		7F60CC5E1D2A360E00A53799 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */; };
 		7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */; };
 		7F9904471CEB03B40039AAD5 /* ListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904461CEB03B40039AAD5 /* ListTVC.m */; };
@@ -108,6 +106,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A6AEB8B1D61A2D200265420 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTKKeyValueStore.h; path = ../others/YTKKeyValueStore.h; sourceTree = "<group>"; };
+		6A6AEB8C1D61A2D200265420 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YTKKeyValueStore.m; path = ../others/YTKKeyValueStore.m; sourceTree = "<group>"; };
 		6A9127691D4B42C6000E065D /* YYCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCache.h; sourceTree = "<group>"; };
 		6A91276A1D4B42C6000E065D /* YYCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYCache.m; sourceTree = "<group>"; };
 		6A91276B1D4B42C6000E065D /* YYDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYDiskCache.h; sourceTree = "<group>"; };
@@ -132,9 +132,6 @@
 		7F06A6D31CE05ADD006B9CA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F06A6E31CEAEB90006B9CA4 /* OrderTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTVC.h; sourceTree = "<group>"; };
 		7F06A6E41CEAEB90006B9CA4 /* OrderTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTVC.m; sourceTree = "<group>"; };
-		7F06A6E71CEAEF12006B9CA4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
-		7F06A6E81CEAEF12006B9CA4 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
-		7F06A6E91CEAEF12006B9CA4 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
 		7F06A6EC1CEAF101006B9CA4 /* WWLoadVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWLoadVC.h; sourceTree = "<group>"; };
 		7F06A6ED1CEAF101006B9CA4 /* WWLoadVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWLoadVC.m; sourceTree = "<group>"; };
 		7F06A6EE1CEAF101006B9CA4 /* WWLoadVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WWLoadVC.xib; sourceTree = "<group>"; };
@@ -230,8 +227,6 @@
 		7F60CC501D2A35BD00A53799 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
 		7F60CC511D2A35BD00A53799 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		7F60CC521D2A35BD00A53799 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		7F60CC581D2A35C400A53799 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTKKeyValueStore.h; sourceTree = "<group>"; };
-		7F60CC591D2A35C400A53799 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTKKeyValueStore.m; sourceTree = "<group>"; };
 		7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		7F99043E1CEAFF080039AAD5 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
@@ -435,9 +430,6 @@
 				7F06A6EC1CEAF101006B9CA4 /* WWLoadVC.h */,
 				7F06A6ED1CEAF101006B9CA4 /* WWLoadVC.m */,
 				7F06A6EE1CEAF101006B9CA4 /* WWLoadVC.xib */,
-				7F06A6E71CEAEF12006B9CA4 /* AccountViewController.h */,
-				7F06A6E81CEAEF12006B9CA4 /* AccountViewController.m */,
-				7F06A6E91CEAEF12006B9CA4 /* AccountViewController.xib */,
 				7F9904481CEB04D50039AAD5 /* WWLoadTextField.h */,
 				7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */,
 			);
@@ -602,8 +594,8 @@
 		7F60CC471D2A35BD00A53799 /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
-				7F60CC581D2A35C400A53799 /* YTKKeyValueStore.h */,
-				7F60CC591D2A35C400A53799 /* YTKKeyValueStore.m */,
+				6A6AEB8B1D61A2D200265420 /* YTKKeyValueStore.h */,
+				6A6AEB8C1D61A2D200265420 /* YTKKeyValueStore.m */,
 				7F60CC481D2A35BD00A53799 /* FMDatabase.h */,
 				7F60CC491D2A35BD00A53799 /* FMDatabase.m */,
 				7F60CC4A1D2A35BD00A53799 /* FMDatabaseAdditions.h */,
@@ -816,7 +808,6 @@
 				7F06A6B91CE05ADD006B9CA4 /* Assets.xcassets in Resources */,
 				7F4C9F0A1D49EE1E0072F43C /* buttomBG.jpg in Resources */,
 				7F0E98C51CFE90DC0051C503 /* ScanViewController.xib in Resources */,
-				7F06A6EB1CEAEF12006B9CA4 /* AccountViewController.xib in Resources */,
 				7FC224CB1CFD84F400CCBD85 /* SearchTVC.storyboard in Resources */,
 				7F4C9F081D49EDAD0072F43C /* logoBG.jpg in Resources */,
 				7F0E99101CFED9B90051C503 /* MJRefresh.bundle in Resources */,
@@ -875,7 +866,6 @@
 				7F0E98D41CFED2EA0051C503 /* MBProgressHUD.m in Sources */,
 				6A9127711D4B42C6000E065D /* YYCache.m in Sources */,
 				7F0E98B81CFE7F5E0051C503 /* STConst.m in Sources */,
-				7F60CC5A1D2A35C400A53799 /* YTKKeyValueStore.m in Sources */,
 				7F06A6B11CE05ADD006B9CA4 /* AppDelegate.m in Sources */,
 				7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */,
 				7F0E98AC1CFE7E8F0051C503 /* NSCalendar+ST.m in Sources */,
@@ -901,9 +891,9 @@
 				7F0E98CE1CFEB1800051C503 /* ResultCell.m in Sources */,
 				7F0E98AD1CFE7E8F0051C503 /* STPickerDate.m in Sources */,
 				7F0E98B91CFE7F5E0051C503 /* STUI.m in Sources */,
+				6A6AEB8D1D61A2D200265420 /* YTKKeyValueStore.m in Sources */,
 				6A9127721D4B42C6000E065D /* YYDiskCache.m in Sources */,
 				7F60CC571D2A35BD00A53799 /* FMResultSet.m in Sources */,
-				7F06A6EA1CEAEF12006B9CA4 /* AccountViewController.m in Sources */,
 				7F0E99041CFED9B90051C503 /* MJRefreshComponent.m in Sources */,
 				7F0E98BA1CFE7F5E0051C503 /* UIView+ST.m in Sources */,
 				7F06A6AE1CE05ADD006B9CA4 /* main.m in Sources */,

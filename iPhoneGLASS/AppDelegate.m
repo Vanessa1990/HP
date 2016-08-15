@@ -42,6 +42,11 @@
         
     }
     [self.window makeKeyAndVisible];
+    
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
+    NSString *tableName = @"hp_glass_table";
+    [store createTableWithName:tableName];
+    
     return YES;
 }
 
