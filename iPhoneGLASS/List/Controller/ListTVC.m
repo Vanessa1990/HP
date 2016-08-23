@@ -18,6 +18,7 @@
 #import "ScanViewController.h"
 #import "MJRefresh.h"
 #import "YTKKeyValueStore.h"
+#import "HPNetworkingTool.h"
 
 
 @interface ListTVC ()<SearchTVCDelegate>
@@ -43,28 +44,18 @@
     }];
     header.stateLabel.hidden = YES;
     self.tableView.mj_header = header;
-
+    self.itemArray = [NSMutableArray array];
     
     //列表数据初始化
-    NSArray *array = [NSArray array];
-    self.itemArray = [NSMutableArray array];
-    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
-    NSString *tableName = @"hp_glass_table";
-    // 获得所有数据
-    array = [store getObjectById:@"list" fromTable:tableName];
-    if (array.count != 0) {
-        NSLog(@"有数据");
-        self.pullNum ++;
-        for (NSDictionary *dict in array) {
-            ListModel *model = [ListModel modelWithDict:dict];
-            [self.itemArray addObject:model];
+    [[HPNetworkingTool shareNetworkingTool] getLocalListArray:^(NSArray *array) {
+        if (array.count == 0) {
+            [self.tableView.mj_header beginRefreshing];
+        } else {
+            self.pullNum ++;
+            [self.itemArray addObjectsFromArray:array];
+            [self.tableView reloadData];
         }
-        
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView reloadData];
-    }else {
-        [self.tableView.mj_header beginRefreshing];
-    }
+    }];
 
     MJRefreshAutoNormalFooter *footer= [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [self beginRefresh];
@@ -78,9 +69,7 @@
     
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:NO];
-    if (self.firstIn) {
-        [self.tableView.mj_header beginRefreshing];
-    }
+//    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,13 +92,15 @@
    
     array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
     YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
+   
     NSString *tableName = @"hp_glass_table";
-    [store putObject:array withId:@"list" intoTable:tableName];
-
+    
     if (self.pullNum == 1) {
         [self.itemArray removeAllObjects];
     }
     for (NSDictionary *dict in array) {
+        [store putObject:dict withId:dict[@"glassID"] intoTable:tableName];
+        
         ListModel *model = [ListModel modelWithDict:dict];
         [self.itemArray addObject:model];
     }
@@ -120,8 +111,6 @@
         [self.tableView.mj_footer endRefreshing];
         [self.tableView reloadData];
     });
-    
-    
 }
 
 #pragma mark - event

@@ -24,6 +24,7 @@
     model.isFinish = [dict[@"isFinish"] boolValue];
     model.wind = [dict[@"wind"] boolValue];
     model.color = [dict[@"color"] integerValue];
+    model.glassID = dict[@"glassID"];
     
     return model;
 }

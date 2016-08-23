@@ -73,6 +73,15 @@
 		7F60CC561D2A35BD00A53799 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4F1D2A35BD00A53799 /* FMDatabaseQueue.m */; };
 		7F60CC571D2A35BD00A53799 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC521D2A35BD00A53799 /* FMResultSet.m */; };
 		7F60CC5E1D2A360E00A53799 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */; };
+		7F667A0B1D6AF678009E0105 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6679FF1D6AF678009E0105 /* AFHTTPSessionManager.m */; };
+		7F667A0C1D6AF678009E0105 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A021D6AF678009E0105 /* AFNetworkReachabilityManager.m */; };
+		7F667A0D1D6AF678009E0105 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A041D6AF678009E0105 /* AFSecurityPolicy.m */; };
+		7F667A0E1D6AF678009E0105 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A061D6AF678009E0105 /* AFURLRequestSerialization.m */; };
+		7F667A0F1D6AF678009E0105 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A081D6AF678009E0105 /* AFURLResponseSerialization.m */; };
+		7F667A101D6AF678009E0105 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A0A1D6AF678009E0105 /* AFURLSessionManager.m */; };
+		7F667A131D6BDD35009E0105 /* HPNetworkingTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A121D6BDD35009E0105 /* HPNetworkingTool.m */; };
+		7F667A191D6BE296009E0105 /* LocalService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A181D6BE296009E0105 /* LocalService.m */; };
+		7F667A1C1D6BE2AB009E0105 /* NetService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A1B1D6BE2AB009E0105 /* NetService.m */; };
 		7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */; };
 		7F9904471CEB03B40039AAD5 /* ListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904461CEB03B40039AAD5 /* ListTVC.m */; };
 		7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */; };
@@ -228,6 +237,25 @@
 		7F60CC511D2A35BD00A53799 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		7F60CC521D2A35BD00A53799 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		7F60CC5D1D2A360E00A53799 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		7F6679FE1D6AF678009E0105 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		7F6679FF1D6AF678009E0105 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		7F667A001D6AF678009E0105 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		7F667A011D6AF678009E0105 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		7F667A021D6AF678009E0105 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		7F667A031D6AF678009E0105 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		7F667A041D6AF678009E0105 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		7F667A051D6AF678009E0105 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		7F667A061D6AF678009E0105 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		7F667A071D6AF678009E0105 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		7F667A081D6AF678009E0105 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		7F667A091D6AF678009E0105 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		7F667A0A1D6AF678009E0105 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		7F667A111D6BDD35009E0105 /* HPNetworkingTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPNetworkingTool.h; sourceTree = "<group>"; };
+		7F667A121D6BDD35009E0105 /* HPNetworkingTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPNetworkingTool.m; sourceTree = "<group>"; };
+		7F667A171D6BE296009E0105 /* LocalService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalService.h; sourceTree = "<group>"; };
+		7F667A181D6BE296009E0105 /* LocalService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalService.m; sourceTree = "<group>"; };
+		7F667A1A1D6BE2AB009E0105 /* NetService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetService.h; sourceTree = "<group>"; };
+		7F667A1B1D6BE2AB009E0105 /* NetService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetService.m; sourceTree = "<group>"; };
 		7F99043E1CEAFF080039AAD5 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 		7F9904451CEB03B40039AAD5 /* ListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTVC.h; sourceTree = "<group>"; };
@@ -281,6 +309,7 @@
 		6A7B7CB81D47553B00EC797E /* others */ = {
 			isa = PBXGroup;
 			children = (
+				7F6679FD1D6AF678009E0105 /* AFNetworking */,
 				7F60CC471D2A35BD00A53799 /* FMDB */,
 				7F0E98D51CFED9B80051C503 /* MJRefresh */,
 				7F0E98D21CFED2EA0051C503 /* MBProgressHUD.h */,
@@ -612,6 +641,32 @@
 			path = ../FMDB;
 			sourceTree = "<group>";
 		};
+		7F6679FD1D6AF678009E0105 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				7F667A111D6BDD35009E0105 /* HPNetworkingTool.h */,
+				7F667A121D6BDD35009E0105 /* HPNetworkingTool.m */,
+				7F667A1A1D6BE2AB009E0105 /* NetService.h */,
+				7F667A1B1D6BE2AB009E0105 /* NetService.m */,
+				7F667A171D6BE296009E0105 /* LocalService.h */,
+				7F667A181D6BE296009E0105 /* LocalService.m */,
+				7F6679FE1D6AF678009E0105 /* AFHTTPSessionManager.h */,
+				7F6679FF1D6AF678009E0105 /* AFHTTPSessionManager.m */,
+				7F667A001D6AF678009E0105 /* AFNetworking.h */,
+				7F667A011D6AF678009E0105 /* AFNetworkReachabilityManager.h */,
+				7F667A021D6AF678009E0105 /* AFNetworkReachabilityManager.m */,
+				7F667A031D6AF678009E0105 /* AFSecurityPolicy.h */,
+				7F667A041D6AF678009E0105 /* AFSecurityPolicy.m */,
+				7F667A051D6AF678009E0105 /* AFURLRequestSerialization.h */,
+				7F667A061D6AF678009E0105 /* AFURLRequestSerialization.m */,
+				7F667A071D6AF678009E0105 /* AFURLResponseSerialization.h */,
+				7F667A081D6AF678009E0105 /* AFURLResponseSerialization.m */,
+				7F667A091D6AF678009E0105 /* AFURLSessionManager.h */,
+				7F667A0A1D6AF678009E0105 /* AFURLSessionManager.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
 		7F9904411CEB039B0039AAD5 /* List */ = {
 			isa = PBXGroup;
 			children = (
@@ -875,9 +930,13 @@
 				7F0E99081CFED9B90051C503 /* MJRefreshAutoNormalFooter.m in Sources */,
 				7F0E98B11CFE7F120051C503 /* STToolbar.m in Sources */,
 				7F0E99031CFED9B90051C503 /* MJRefreshBackFooter.m in Sources */,
+				7F667A1C1D6BE2AB009E0105 /* NetService.m in Sources */,
 				7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */,
+				7F667A0E1D6AF678009E0105 /* AFURLRequestSerialization.m in Sources */,
 				7F49C17B1D12818400E56023 /* OrderPreViewViewController.m in Sources */,
+				7F667A0F1D6AF678009E0105 /* AFURLResponseSerialization.m in Sources */,
 				7F06A6EF1CEAF101006B9CA4 /* WWLoadVC.m in Sources */,
+				7F667A191D6BE296009E0105 /* LocalService.m in Sources */,
 				7F0E99111CFED9B90051C503 /* MJRefreshConst.m in Sources */,
 				7F0E990D1CFED9B90051C503 /* MJRefreshGifHeader.m in Sources */,
 				7F23D0421D100DB1002DB08D /* HeadView.m in Sources */,
@@ -887,12 +946,17 @@
 				7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */,
 				7F0E99141CFED9B90051C503 /* UIView+MJExtension.m in Sources */,
 				7F0E99131CFED9B90051C503 /* UIScrollView+MJRefresh.m in Sources */,
+				7F667A0C1D6AF678009E0105 /* AFNetworkReachabilityManager.m in Sources */,
 				7F0E98C91CFEAFF10051C503 /* ResultViewController.m in Sources */,
 				7F0E98CE1CFEB1800051C503 /* ResultCell.m in Sources */,
 				7F0E98AD1CFE7E8F0051C503 /* STPickerDate.m in Sources */,
 				7F0E98B91CFE7F5E0051C503 /* STUI.m in Sources */,
+				7F667A0B1D6AF678009E0105 /* AFHTTPSessionManager.m in Sources */,
+				7F667A131D6BDD35009E0105 /* HPNetworkingTool.m in Sources */,
 				6A6AEB8D1D61A2D200265420 /* YTKKeyValueStore.m in Sources */,
+				7F667A0D1D6AF678009E0105 /* AFSecurityPolicy.m in Sources */,
 				6A9127721D4B42C6000E065D /* YYDiskCache.m in Sources */,
+				7F667A101D6AF678009E0105 /* AFURLSessionManager.m in Sources */,
 				7F60CC571D2A35BD00A53799 /* FMResultSet.m in Sources */,
 				7F0E99041CFED9B90051C503 /* MJRefreshComponent.m in Sources */,
 				7F0E98BA1CFE7F5E0051C503 /* UIView+ST.m in Sources */,

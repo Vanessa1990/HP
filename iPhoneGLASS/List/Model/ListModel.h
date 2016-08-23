@@ -32,6 +32,6 @@
 
 @property (nonatomic ,assign) BOOL isFinish;//完成
 
-
+@property(nonatomic,strong) NSString *glassID;
 
 @end

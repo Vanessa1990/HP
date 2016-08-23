@@ -23,6 +23,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>500</string>
+		<key>glassID</key>
+		<string>00000001</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -45,6 +47,8 @@
 		<string>200</string>
 		<key>height</key>
 		<string>300</string>
+		<key>glassID</key>
+		<string>00000002</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -67,6 +71,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>200</string>
+		<key>glassID</key>
+		<string>00000003</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -89,6 +95,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>500</string>
+		<key>glassID</key>
+		<string>00000004</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -111,6 +119,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>500</string>
+		<key>glassID</key>
+		<string>00000005</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -133,6 +143,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>500</string>
+		<key>glassID</key>
+		<string>00000006</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -155,6 +167,8 @@
 		<string>220</string>
 		<key>height</key>
 		<string>100</string>
+		<key>glassID</key>
+		<string>00000007</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -177,6 +191,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>500</string>
+		<key>glassID</key>
+		<string>00000008</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -199,6 +215,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>500</string>
+		<key>glassID</key>
+		<string>00000009</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -221,6 +239,8 @@
 		<string>200</string>
 		<key>height</key>
 		<string>200</string>
+		<key>glassID</key>
+		<string>000000010</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -243,6 +263,8 @@
 		<string>1100</string>
 		<key>height</key>
 		<string>500</string>
+		<key>glassID</key>
+		<string>000000011</string>
 	</dict>
 </array>
 </plist>

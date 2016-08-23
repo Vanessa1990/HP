@@ -13,6 +13,9 @@
 #import "ListTVC.h"
 #import "MJRefresh.h"
 #import "MainTabBarController.h"
+#import "AFNetworking.h"
+#import "HPNetworkingTool.h"
+#import "MBProgressHUD.h"
 
 @interface WWLoadVC ()
 
@@ -22,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loadTrailing;
 @property (weak, nonatomic) IBOutlet WWLoadTextField *phoneTextField;
 @property (weak, nonatomic) IBOutlet WWLoadTextField *pwdTextField;
+@property(nonatomic,strong) MBProgressHUD *hud;
 
 @end
 
@@ -41,6 +45,13 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSDictionary *userdict = [user objectForKey:@"user"];
+    if ([userdict objectForKey:@"name"]) {
+        //进入主界面
+        MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
+        HP_Delegate.window.rootViewController = mainTVC;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -53,23 +64,41 @@
 
 - (IBAction)loadClick:(id)sender {
     
-    //登录
+    NSDictionary *dict = @{
+                           @"username":self.phoneTextField.text,
+                           @"password":self.pwdTextField.text
+                           };
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    //成功保存数据
-    NSString *name = self.phoneTextField.text;
-    NSString *pwd = self.pwdTextField.text;
+    [[HPNetworkingTool shareNetworkingTool] getlogin:@"assetApp/login" parameters:dict finish:^(NSDictionary *dict) {
+        if ([[dict objectForKey:@"status" ] isEqualToString:@"OK"]) {
+            //成功保存数据
+            NSString *name = [dict objectForKey:@"name"];
+            NSString *pwd = [dict objectForKey:@"pwd"];
+            
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            [user setValue:dict forKey:@"user"];
+            
+            HP_Delegate.name = name;
+            HP_Delegate.pwd = pwd;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                _hud.labelText = @"登陆成功";
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                //进入主界面
+                MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
+                HP_Delegate.window.rootViewController = mainTVC;
+            });
+        }
+    } failure:^{
+        _hud.labelText = @"账号或密码错误!请重新输入!!!";
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
+    }];
+    
+   
+    
  
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    [user setValue:self.phoneTextField.text forKey:@"phoneNumber"];
-    [user setBool:YES forKey:@"logged"];
-    [user setValue:name forKey:@"name"];
-    [user setValue:pwd forKey:@"pwd"];
-    
-    HP_Delegate.name = name;
-    HP_Delegate.pwd = pwd;
-    //进入主界面
-    MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
-    HP_Delegate.window.rootViewController = mainTVC;
 }
 
 @end

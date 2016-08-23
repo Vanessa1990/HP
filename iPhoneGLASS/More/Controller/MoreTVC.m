@@ -100,9 +100,7 @@
         NSString *name = @"";
         NSString *pwd = @"";
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-        [user setBool:NO forKey:@"logged"];
-        [user setValue:name forKey:@"name"];
-        [user setValue:pwd forKey:@"pwd"];
+        [user setObject:nil forKey:@"user"];
         
         HP_Delegate.name = name;
         HP_Delegate.pwd = pwd;
