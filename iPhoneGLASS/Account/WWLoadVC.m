@@ -65,19 +65,20 @@
 - (IBAction)loadClick:(id)sender {
     
     NSDictionary *dict = @{
-                           @"username":self.phoneTextField.text,
+                           @"phoneNumber":self.phoneTextField.text,
                            @"password":self.pwdTextField.text
                            };
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    [[HPNetworkingTool shareNetworkingTool] getlogin:@"assetApp/login" parameters:dict finish:^(NSDictionary *dict) {
+    [[HPNetworkingTool shareNetworkingTool] getlogin:@"glassApp/login" parameters:dict finish:^(NSDictionary *dict) {
         if ([[dict objectForKey:@"status" ] isEqualToString:@"OK"]) {
             //成功保存数据
-            NSString *name = [dict objectForKey:@"name"];
-            NSString *pwd = [dict objectForKey:@"pwd"];
+            NSDictionary *data = [dict objectForKey:@"data"];
+            NSString *name = [data objectForKey:@"name"];
+            NSString *pwd = [data objectForKey:@"pwd"];
             
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setValue:dict forKey:@"user"];
+            [user setValue:data forKey:@"user"];
             
             HP_Delegate.name = name;
             HP_Delegate.pwd = pwd;

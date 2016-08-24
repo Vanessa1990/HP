@@ -17,7 +17,7 @@
     model.name = dict[@"name"];
     model.thick = dict[@"thick"];
     model.number = dict[@"number"];
-    model.totalNumber = dict[@"totalNumber"];
+    model.totalNumber = dict[@"totleNumber"];
     model.date = dict[@"date"];
     model.width = dict[@"width"];
     model.height = dict[@"height"];

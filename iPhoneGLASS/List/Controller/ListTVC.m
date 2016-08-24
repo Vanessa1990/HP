@@ -87,30 +87,37 @@
 
     self.pullNum ++;
     self.firstIn = NO;
-    //列表数据初始化
-    NSArray *array = [NSArray array];
-   
-    array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
-    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
-   
-    NSString *tableName = @"hp_glass_table";
-    
-    if (self.pullNum == 1) {
-        [self.itemArray removeAllObjects];
-    }
-    for (NSDictionary *dict in array) {
-        [store putObject:dict withId:dict[@"glassID"] intoTable:tableName];
+
+    [[HPNetworkingTool shareNetworkingTool] getListArray:@"glassApp/list" parameters:nil finish:^(NSArray *array) {
+        //列表数据初始化
+        NSArray *result = [NSArray array];
         
-        ListModel *model = [ListModel modelWithDict:dict];
-        [self.itemArray addObject:model];
-    }
+            YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
+        
+            NSString *tableName = @"hp_glass_table";
+        
+            if (self.pullNum == 1) {
+                [self.itemArray removeAllObjects];
+            }
+            for (NSDictionary *dict in array) {
+                [store putObject:dict withId:dict[@"glassID"] intoTable:tableName];
+        
+                ListModel *model = [ListModel modelWithDict:dict];
+                [self.itemArray addObject:model];
+            }
+        
+            //列表数据初始化
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
+                [self.tableView reloadData];
+            });
+        
+    } failure:^{
+        NSLog(@"获取数据失败");
+    }];
     
-    //列表数据初始化
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        [self.tableView reloadData];
-    });
+//    array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
 }
 
 #pragma mark - event

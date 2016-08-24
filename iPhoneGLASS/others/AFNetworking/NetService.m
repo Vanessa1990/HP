@@ -52,18 +52,9 @@
 //    _manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     _manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-//       [_manager GET:url parameters:parameter success:^(NSURLSessionDataTask *task, id responseObject) {
-//        NSArray *array = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-//        
-//        NSLog(@"%@***%@",array,[[NSString alloc]initWithData:responseObject encoding:4]);
-////     
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-////        failureBlock();
-//        NSLog(@"失败%@",error);
-//    }];
-    
-    [_manager POST:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
+    [_manager GET:url parameters:parameter progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *arrary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        finishBlock(arrary);
     } failure:nil];
     
 }
