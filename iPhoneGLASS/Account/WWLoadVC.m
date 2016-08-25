@@ -70,33 +70,33 @@
                            };
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    [[HPNetworkingTool shareNetworkingTool] getlogin:@"glassApp/login" parameters:dict finish:^(NSDictionary *dict) {
-        if ([[dict objectForKey:@"status" ] isEqualToString:@"OK"]) {
-            //成功保存数据
-            NSDictionary *data = [dict objectForKey:@"data"];
-            NSString *name = [data objectForKey:@"name"];
-            NSString *pwd = [data objectForKey:@"pwd"];
-            
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setValue:data forKey:@"user"];
-            
-            HP_Delegate.name = name;
-            HP_Delegate.pwd = pwd;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//    [[HPNetworkingTool shareNetworkingTool] getlogin:@"glassApp/login" parameters:dict finish:^(NSDictionary *dict) {
+//        if ([[dict objectForKey:@"status" ] isEqualToString:@"OK"]) {
+//            //成功保存数据
+//            NSDictionary *data = [dict objectForKey:@"data"];
+//            NSString *name = [data objectForKey:@"name"];
+//            NSString *pwd = [data objectForKey:@"pwd"];
+//            
+//            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//            [user setValue:data forKey:@"user"];
+//            
+//            HP_Delegate.name = name;
+//            HP_Delegate.pwd = pwd;
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 _hud.labelText = @"登陆成功";
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-                //进入主界面
+//                //进入主界面
                 MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
                 HP_Delegate.window.rootViewController = mainTVC;
-            });
-        }
-    } failure:^{
-        _hud.labelText = @"账号或密码错误!请重新输入!!!";
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-    }];
-    
+//            });
+//        }
+//    } failure:^{
+//        _hud.labelText = @"账号或密码错误!请重新输入!!!";
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        });
+//    }];
+//    
    
     
  

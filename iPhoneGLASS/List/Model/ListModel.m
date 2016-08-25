@@ -23,7 +23,7 @@
     model.height = dict[@"height"];
     model.isFinish = [dict[@"isFinish"] boolValue];
     model.wind = [dict[@"wind"] boolValue];
-    model.color = [dict[@"color"] integerValue];
+    model.color = dict[@"color"];
     model.glassID = dict[@"glassID"];
     
     return model;

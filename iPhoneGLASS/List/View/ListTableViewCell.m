@@ -40,7 +40,7 @@
     
     _listModel = listModel;
     self.nameLable.text = listModel.name;
-    if (listModel.color == 0) {
+    if ([listModel.color isEqualToString:@"0"]) {
         self.thickLable.text = listModel.thick;
     }else {
         self.thickLable.text = [NSString stringWithFormat:@"%@ 福特蓝",[listModel.thick substringToIndex:1]];

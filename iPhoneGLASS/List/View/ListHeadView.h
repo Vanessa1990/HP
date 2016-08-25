@@ -10,6 +10,12 @@
 
 @interface ListHeadView : UIView
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLable;
+
+@property (weak, nonatomic) IBOutlet UILabel *totleLable;
+
+@property (weak, nonatomic) IBOutlet UILabel *dateLable;
+
 +(instancetype)headView;
 
 @end

@@ -16,7 +16,7 @@
 
 @property (nonatomic ,strong) NSString *name;
 
-@property (nonatomic ,assign) NSInteger color;//颜色
+@property (nonatomic ,strong) NSString *color;//颜色
 
 @property (nonatomic ,strong) NSString *date;//日期
 

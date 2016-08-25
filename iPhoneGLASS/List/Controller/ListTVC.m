@@ -19,11 +19,11 @@
 #import "MJRefresh.h"
 #import "YTKKeyValueStore.h"
 #import "HPNetworkingTool.h"
-
+#import "ListHeadModel.h"
 
 @interface ListTVC ()<SearchTVCDelegate>
 
-@property (nonatomic, strong) NSMutableArray *itemArray;
+@property (nonatomic, strong) NSMutableArray <ListHeadModel *>*itemArray;
 @property(nonatomic,assign) int pullNum;
 
 @end
@@ -88,36 +88,57 @@
     self.pullNum ++;
     self.firstIn = NO;
 
-    [[HPNetworkingTool shareNetworkingTool] getListArray:@"glassApp/list" parameters:nil finish:^(NSArray *array) {
-        //列表数据初始化
-        NSArray *result = [NSArray array];
-        
-            YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
-        
-            NSString *tableName = @"hp_glass_table";
-        
-            if (self.pullNum == 1) {
-                [self.itemArray removeAllObjects];
-            }
-            for (NSDictionary *dict in array) {
-                [store putObject:dict withId:dict[@"glassID"] intoTable:tableName];
-        
-                ListModel *model = [ListModel modelWithDict:dict];
-                [self.itemArray addObject:model];
-            }
-        
-            //列表数据初始化
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.tableView.mj_header endRefreshing];
-                [self.tableView.mj_footer endRefreshing];
-                [self.tableView reloadData];
-            });
-        
-    } failure:^{
-        NSLog(@"获取数据失败");
-    }];
-    
-//    array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
+    NSArray *array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
+    if (self.pullNum == 1) {
+        [self.itemArray removeAllObjects];
+    }
+    for (NSDictionary *dict in array) {
+        ListHeadModel *model = [[ListHeadModel alloc] init];
+        model.name = dict[@"name"];
+        model.date = dict[@"date"];
+        model.totle = dict[@"totle"];
+        NSMutableArray *lists = [NSMutableArray array];
+        for (NSDictionary *childModel in dict[@"data"]) {
+            NSLog(@"%@",childModel);
+            ListModel *m = [ListModel modelWithDict:childModel];
+            [lists addObject:m];
+        }
+        model.listArray = [NSArray arrayWithArray:lists];
+        [self.itemArray addObject:model];
+    }
+
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
+    [self.tableView reloadData];
+
+//    [[HPNetworkingTool shareNetworkingTool] getListArray:@"glassApp/list" parameters:nil finish:^(NSArray *array) {
+//        //列表数据初始化
+//        NSArray *result = [NSArray array];
+//        
+//            YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
+//        
+//            NSString *tableName = @"hp_glass_table";
+//        
+//            if (self.pullNum == 1) {
+//                [self.itemArray removeAllObjects];
+//            }
+//            for (NSDictionary *dict in array) {
+//                [store putObject:dict withId:dict[@"glassID"] intoTable:tableName];
+//        
+//                ListModel *model = [ListModel modelWithDict:dict];
+//                [self.itemArray addObject:model];
+//            }
+//        
+//            //列表数据初始化
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [self.tableView.mj_header endRefreshing];
+//                [self.tableView.mj_footer endRefreshing];
+//                [self.tableView reloadData];
+//            });
+//        
+//    } failure:^{
+//        NSLog(@"获取数据失败");
+//    }];
 }
 
 #pragma mark - event
@@ -148,6 +169,9 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     ListHeadView *view = [ListHeadView headView];
     view.frame = CGRectMake(0, 0, 100, 35);
+    view.nameLable.text = self.itemArray[section].name;
+    view.totleLable.text = self.itemArray[section].totle;
+    view.dateLable.text = self.itemArray[section].date;
     return view;
 }
 
@@ -160,12 +184,15 @@
     
     return 50;
 }
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return self.itemArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.itemArray.count;
+    
+    return self.itemArray[section].listArray.count;
 }
 
 
@@ -173,8 +200,8 @@
     
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listcellID"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row < self.itemArray.count) {
-        cell.listModel = self.itemArray[indexPath.row];
+    if (indexPath.row < self.itemArray[indexPath.section].listArray.count) {
+        cell.listModel = self.itemArray[indexPath.section].listArray[indexPath.row];
     }
     return cell;
 }
