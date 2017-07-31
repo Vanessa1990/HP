@@ -39,8 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tabBarController.tabBar setHidden:YES];
-    if (![HP_Delegate.name isEqualToString:@"和平"]) {
+    if (![HP_Delegate.name isEqualToString:@"史和平"]) {
         self.name.text = HP_Delegate.name;
         self.name.userInteractionEnabled = NO;
     }
@@ -52,7 +51,6 @@
 -(void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    [self.tabBarController.tabBar setHidden:YES];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -114,21 +112,6 @@
     }
     
 }
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    if ([HP_Delegate.name isEqualToString:@"和平钢化"]) {
-        if (indexPath.section == 3 || indexPath.row == 0) {
-            ScanViewController *scanVC = [[ScanViewController alloc]init];
-            [self.navigationController pushViewController:scanVC animated:YES];
-        }
-//    } else {
-//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"" message:@"非管理者不能管理库存!!!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alertView show];
-//    }
-
-}
-
 
 
 @end

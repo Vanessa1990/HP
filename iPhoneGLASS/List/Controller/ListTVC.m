@@ -18,7 +18,6 @@
 #import "ScanViewController.h"
 #import "MJRefresh.h"
 #import "YTKKeyValueStore.h"
-#import "HPNetworkingTool.h"
 #import "ListHeadModel.h"
 
 @interface ListTVC ()<SearchTVCDelegate>
@@ -46,16 +45,6 @@
     self.tableView.mj_header = header;
     self.itemArray = [NSMutableArray array];
     
-    //列表数据初始化
-    [[HPNetworkingTool shareNetworkingTool] getLocalListArray:^(NSArray *array) {
-        if (array.count == 0) {
-            [self.tableView.mj_header beginRefreshing];
-        } else {
-            self.pullNum ++;
-            [self.itemArray addObjectsFromArray:array];
-            [self.tableView reloadData];
-        }
-    }];
 
     MJRefreshAutoNormalFooter *footer= [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [self beginRefresh];
@@ -81,6 +70,12 @@
     
     self.title = @"列表";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+    UIButton *iconButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    iconButton.frame = CGRectMake(0, 0, 30, 30);
+    iconButton.imageView.layer.cornerRadius = 15;
+    iconButton.imageView.clipsToBounds = YES;
+    [iconButton setImage:[UIImage imageNamed:@"icon.png"] forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:iconButton];
 }
 
 -(void)beginRefresh {
@@ -111,34 +106,6 @@
     [self.tableView.mj_footer endRefreshing];
     [self.tableView reloadData];
 
-//    [[HPNetworkingTool shareNetworkingTool] getListArray:@"glassApp/list" parameters:nil finish:^(NSArray *array) {
-//        //列表数据初始化
-//        NSArray *result = [NSArray array];
-//        
-//            YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];
-//        
-//            NSString *tableName = @"hp_glass_table";
-//        
-//            if (self.pullNum == 1) {
-//                [self.itemArray removeAllObjects];
-//            }
-//            for (NSDictionary *dict in array) {
-//                [store putObject:dict withId:dict[@"glassID"] intoTable:tableName];
-//        
-//                ListModel *model = [ListModel modelWithDict:dict];
-//                [self.itemArray addObject:model];
-//            }
-//        
-//            //列表数据初始化
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self.tableView.mj_header endRefreshing];
-//                [self.tableView.mj_footer endRefreshing];
-//                [self.tableView reloadData];
-//            });
-//        
-//    } failure:^{
-//        NSLog(@"获取数据失败");
-//    }];
 }
 
 #pragma mark - event
@@ -165,7 +132,6 @@
 }
 
 #pragma mark - Table view data source
-
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     ListHeadView *view = [ListHeadView headView];
     view.frame = CGRectMake(0, 0, 100, 35);

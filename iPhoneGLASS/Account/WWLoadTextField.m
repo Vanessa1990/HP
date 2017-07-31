@@ -11,10 +11,10 @@
 -(void)awakeFromNib{
     
     //1.设置光标颜色
-    self.tintColor = [UIColor whiteColor];
+    self.tintColor = [UIColor lightGrayColor];
     
     //2.设置字体颜色
-    self.textColor = [UIColor whiteColor];
+    self.textColor = [UIColor blackColor];
     
     /***=====****======***设置提示文字的属性方式二:***======***======***/
     //3.设置提示文本的文字属性

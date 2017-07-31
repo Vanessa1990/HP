@@ -14,15 +14,15 @@
 #import "MJRefresh.h"
 #import "MainTabBarController.h"
 #import "AFNetworking.h"
-#import "HPNetworkingTool.h"
 #import "MBProgressHUD.h"
+#import "BimService.h"
+#import "RegistViewController.h"
+#import "HomeViewController.h"
 
 @interface WWLoadVC ()
 
 
 @property (weak, nonatomic) IBOutlet UIButton *loadBtn;//登录按钮
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loadTrailing;
 @property (weak, nonatomic) IBOutlet WWLoadTextField *phoneTextField;
 @property (weak, nonatomic) IBOutlet WWLoadTextField *pwdTextField;
 @property(nonatomic,strong) MBProgressHUD *hud;
@@ -45,13 +45,17 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    NSDictionary *userdict = [user objectForKey:@"user"];
-    if ([userdict objectForKey:@"name"]) {
-        //进入主界面
-        MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
-        HP_Delegate.window.rootViewController = mainTVC;
-    }
+    self.navigationItem.title = @"登录";
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    // 自动登录
+//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//    NSDictionary *userdict = [user objectForKey:@"user"];
+//    if ([userdict objectForKey:@"name"]) {
+//        //进入主界面
+//        MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
+//        HP_Delegate.window.rootViewController = mainTVC;
+//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -60,46 +64,44 @@
     //1.设置文本和按钮的圆角
     self.loadBtn.layer.cornerRadius = 10;
     self.loadBtn.clipsToBounds = YES;
+    
+    //
+    self.phoneTextField.text = @"史和平";
+    self.pwdTextField.text = @"123456";
 }
 
 - (IBAction)loadClick:(id)sender {
     
-    NSDictionary *dict = @{
-                           @"phoneNumber":self.phoneTextField.text,
-                           @"password":self.pwdTextField.text
-                           };
+//    [[BimService instance] registNewUser:@"史和平" phone:@"13852689266" pwd:@"123456"];
+
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-//    [[HPNetworkingTool shareNetworkingTool] getlogin:@"glassApp/login" parameters:dict finish:^(NSDictionary *dict) {
-//        if ([[dict objectForKey:@"status" ] isEqualToString:@"OK"]) {
-//            //成功保存数据
-//            NSDictionary *data = [dict objectForKey:@"data"];
-//            NSString *name = [data objectForKey:@"name"];
-//            NSString *pwd = [data objectForKey:@"pwd"];
-//            
-//            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//            [user setValue:data forKey:@"user"];
-//            
-//            HP_Delegate.name = name;
-//            HP_Delegate.pwd = pwd;
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                _hud.labelText = @"登陆成功";
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-//                //进入主界面
-                MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
-                HP_Delegate.window.rootViewController = mainTVC;
-//            });
+    [[[BimService instance] load:self.phoneTextField.text pwd:self.pwdTextField.text] onFulfilled:^id(id value) {
+        // 保存数据
+//        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+        HS_PERSISTENT_SET_OBJECT(value, USER_INFO);
+        
+        //进入主界面
+        MainTabBarController *mainTVC = [[MainTabBarController alloc] init];
+        HP_Delegate.window.rootViewController = mainTVC;
+//        if ([[value objectForKey:@"phone"] isEqualToString:@"13852689266"]) {
+//        }else{
+//            HomeViewController *vc = [[HomeViewController alloc] init];
+//            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+//            HP_Delegate.window.rootViewController = nav;
 //        }
-//    } failure:^{
-//        _hud.labelText = @"账号或密码错误!请重新输入!!!";
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        });
-//    }];
-//    
-   
+        return value;
+    }rejected:^id(NSError *reason) {
+        _hud.label.text = @"登录失败";
+        [_hud hideAnimated:YES afterDelay:0.5];
+        return reason;
+    }];
+}
+
+
+- (IBAction)registClick:(id)sender {
     
- 
+    RegistViewController *VC = [[RegistViewController alloc] init];
+    [self.navigationController pushViewController:VC animated:YES];
 }
 
 @end

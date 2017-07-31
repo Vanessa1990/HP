@@ -7,6 +7,10 @@
 //
 
 #import "MainTabBarController.h"
+#import "WriteInViewController.h"
+#import "MainNavigationController.h"
+#import "ListTVC.h"
+#import "HomeViewController.h"
 
 @interface MainTabBarController ()
 
@@ -18,8 +22,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self addChildVCs];
+    
     self.selectedIndex = 1;
     
+}
+
+- (void)addChildVCs
+{
+    NSMutableArray *array = [NSMutableArray array];
+    
+    WriteInViewController *HomeVC = [[WriteInViewController alloc] init];
+    [self setupChildVC:HomeVC title:@"入库" imageName:@"tab_write.png" selectedImageName:@"tab_write_s.png" array:array];
+    
+    HomeViewController *addressVC = [[HomeViewController alloc] init];
+    addressVC.view.backgroundColor = YZ_ThemeGrayColor;
+    [self setupChildVC:addressVC title:@"主页" imageName:@"tab_contacts_sel.png" selectedImageName:@"tab_contacts_selected.png" array:array];
+    
+    self.viewControllers = array;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,14 +47,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)setupChildVC:(UIViewController *)VC title:(NSString *)title imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName array:(NSMutableArray *)array
+{
+    MainNavigationController *mainnc = [[MainNavigationController alloc] initWithRootViewController:VC];
+    
+    VC.title = title;
+    UIImage *maImage1 = [UIImage imageNamed:imageName];
+    UIImage *maImage2 = [UIImage imageNamed:selectedImageName];
+    VC.tabBarItem.image = [maImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    VC.tabBarItem.selectedImage = [maImage2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [array addObject:mainnc];
 }
-*/
 
 @end

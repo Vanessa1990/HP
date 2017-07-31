@@ -28,7 +28,8 @@
     if (!logged) {
         //进入登录页面
         WWLoadVC *loadVC = [[WWLoadVC alloc]init];
-        self.window.rootViewController = loadVC;
+        UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:loadVC];
+        self.window.rootViewController = navc;
     }else {
         //进入主界面
         MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
