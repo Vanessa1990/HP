@@ -42,7 +42,7 @@
 {
     self.page = 0;
     self.backgroundColor = YZ_WhiteColor;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 60, kScreenWidth, self.bounds.size.height - 64)];
+    self.tableView = [[UITableView alloc] initWithFrame:self.bounds];
     [self.contentView addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -77,7 +77,7 @@
 //    }
 //    [self.items addObject:model];
     
-    NSString *company = [HS_PERSISTENT_GET_OBJECT(USER_INFO) objectForKey:@"name"];
+    NSString *company = [UserInfo shareInstance].name;
     
     NSDictionary *dict = @{
                            @"company":company,

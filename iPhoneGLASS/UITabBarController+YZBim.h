@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UITabBarController (YZBim)
+
 - (BOOL)tabBarIsVisible;
 - (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;
+
 @end

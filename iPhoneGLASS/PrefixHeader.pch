@@ -20,12 +20,12 @@
 
 #import "YTKKeyValueStore.h"
 
-#import "YYCache.h"
-
 #define HP_UserInfo @"userInfo"
 
 #import "Macros.h"
 
 #import "SHXPromise.h"
+
+#import "UserInfo.h"
 
 #endif

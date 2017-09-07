@@ -42,6 +42,7 @@
     [self.view endEditing:YES];
 }
 
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     
@@ -77,12 +78,17 @@
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[[BimService instance] load:self.phoneTextField.text pwd:self.pwdTextField.text] onFulfilled:^id(id value) {
         // 保存数据
-//        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
-        HS_PERSISTENT_SET_OBJECT(value, USER_INFO);
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+        HS_PERSISTENT_SET_OBJECT(data, USER_INFO);
+        
+        [UserInfo shareInstance].name = value[@"name"];
+        [UserInfo shareInstance].tel = value[@"phone"];
+        [UserInfo shareInstance].userID = value[@"_id"];
         
         //进入主界面
         MainTabBarController *mainTVC = [[MainTabBarController alloc] init];
         HP_Delegate.window.rootViewController = mainTVC;
+        
 //        if ([[value objectForKey:@"phone"] isEqualToString:@"13852689266"]) {
 //        }else{
 //            HomeViewController *vc = [[HomeViewController alloc] init];
