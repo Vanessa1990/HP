@@ -13,10 +13,13 @@
 #import "MJRefreshAutoNormalFooter.h"
 #import "BimService.h"
 #import "NSDate+YZBim.h"
+#import "UserListModel.h"
 
 @interface HomeCollectionCell()
 
 @property (assign, nonatomic) NSUInteger page;
+
+@property (nonatomic, strong) ListHeadView *headView;
 
 @end
 
@@ -42,73 +45,26 @@
 {
     self.page = 0;
     self.backgroundColor = YZ_WhiteColor;
-    self.tableView = [[UITableView alloc] initWithFrame:self.bounds];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44 + 40, kScreenWidth, self.bounds.size.height - 40 - 44)];
     [self.contentView addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     //tableview设置
     [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.items = [NSArray array];
     
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        self.page = 0;
-        [self beginRefresh];
-    }];
-    header.stateLabel.hidden = YES;
-    self.tableView.mj_header = header;
-    self.items = [NSMutableArray array];
-    
-    [self.tableView.mj_header beginRefreshing];
+    ListHeadView *view = [ListHeadView headView];
+    view.frame = CGRectMake(0, 40, kScreenWidth, 44);
+    view.dateLable.text = [self.date formatOnlyDay];
+    [self.contentView addSubview:view];
+    self.headView = view;
 }
 
--(void)beginRefresh {
-    
-//    NSArray *array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
-//    
-//    ListHeadModel *model = [[ListHeadModel alloc] init];
-//    model.name = @"赵二";
-//    model.date = @"2016-5-31";
-//    model.totle = @"100";
-//    NSMutableArray *lists = [NSMutableArray array];
-//    for (NSDictionary *dict in array) {
-//        ListModel *m = [ListModel modelWithDict:dict];
-//        [lists addObject:m];
-//        model.listArray = [NSArray arrayWithArray:lists];
-//    }
-//    [self.items addObject:model];
-    
-    NSString *company = [UserInfo shareInstance].name;
-    
-    NSDictionary *dict = @{
-                           @"company":company,
-//                           @"createdAt":[self getCuttentDayPeriod]
-                           };
-    
-    self.page = self.page + 1;
-    NSString *attach = [NSString stringWithFormat:@"skip=%zd&limit=%d",  100 * (1), 100];
-
-    [[[BimService instance] getListAttach:attach searchDict:dict] onFulfilled:^id(NSArray *value) {
-        if (value.count > 0) {
-            if (self.page == 1) {
-                self.items = [NSMutableArray arrayWithArray:value];
-            }else{
-                [self.items addObjectsFromArray:value];
-            }
-            [self.tableView reloadData];
-        }
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        return value;
-    }rejected:^id(NSError *reason) {
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        return reason;
-    }];
-    
-    [self.tableView.mj_header endRefreshing];
-    [self.tableView.mj_footer endRefreshing];
-    [self.tableView reloadData];
-    
+- (void)setDate:(NSDate *)date
+{
+    _date = date;
+    self.headView.dateLable.text = [self.date formatOnlyDay];
 }
 
 - (NSDictionary *)getCuttentDayPeriod {
@@ -122,20 +78,17 @@
     return dct;
 }
 
-
-#pragma mark - Table view data source
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    ListHeadView *view = [ListHeadView headView];
-    view.frame = CGRectMake(0, 0, 100, 44);
-//    view.nameLable.text = self.items[section].name;
-//    view.totleLable.text = self.items[section].totle;
-    view.dateLable.text = [self.date formatOnlyDay];
-    return view;
+- (void)setItems:(NSArray *)items
+{
+    _items = items;
+    [self.tableView reloadData];
 }
 
+
+#pragma mark - Table view data source
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 44;
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
@@ -150,12 +103,13 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 1;
+    return self.items.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.items.count;
+    UserListModel *model = self.items[section];
+    return model.listArray.count;
 }
 
 
@@ -163,9 +117,8 @@
     
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listcellID"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    if (indexPath.row < self.items[indexPath.section].listArray.count) {
-//        cell.listModel = self.items[indexPath.section].listArray[indexPath.row];
-//    }
+    UserListModel *model = self.items[indexPath.section];
+    cell.listModel = model.listArray[indexPath.row];
     return cell;
 }
 

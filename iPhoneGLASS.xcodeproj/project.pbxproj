@@ -22,6 +22,7 @@
 		269ED3D31F60EF340047AF86 /* tab_home@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269ED3CF1F60EF340047AF86 /* tab_home@3x.png */; };
 		269ED3D71F60EFCE0047AF86 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 269ED3D61F60EFCE0047AF86 /* UserModel.m */; };
 		269ED3DA1F60EFF30047AF86 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 269ED3D91F60EFF30047AF86 /* UserInfo.m */; };
+		269ED3DD1F6121820047AF86 /* UserListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 269ED3DC1F6121820047AF86 /* UserListModel.m */; };
 		6A6AEB8D1D61A2D200265420 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A6AEB8C1D61A2D200265420 /* YTKKeyValueStore.m */; };
 		7F06A6AE1CE05ADD006B9CA4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6AD1CE05ADD006B9CA4 /* main.m */; };
 		7F06A6B11CE05ADD006B9CA4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6B01CE05ADD006B9CA4 /* AppDelegate.m */; };
@@ -82,9 +83,7 @@
 		7F667A0E1D6AF678009E0105 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A061D6AF678009E0105 /* AFURLRequestSerialization.m */; };
 		7F667A0F1D6AF678009E0105 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A081D6AF678009E0105 /* AFURLResponseSerialization.m */; };
 		7F667A101D6AF678009E0105 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A0A1D6AF678009E0105 /* AFURLSessionManager.m */; };
-		7F667A1F1D6E84F8009E0105 /* ListHeadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F667A1E1D6E84F8009E0105 /* ListHeadModel.m */; };
 		7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */; };
-		7F9904471CEB03B40039AAD5 /* ListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904461CEB03B40039AAD5 /* ListTVC.m */; };
 		7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */; };
 		7F9904511CEB19EF0039AAD5 /* MoreTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904501CEB19EF0039AAD5 /* MoreTVC.m */; };
 		7FAD3B491F2AF31400935E48 /* add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B471F2AF31400935E48 /* add_green.png */; };
@@ -165,6 +164,8 @@
 		269ED3D61F60EFCE0047AF86 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		269ED3D81F60EFF30047AF86 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		269ED3D91F60EFF30047AF86 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		269ED3DB1F6121820047AF86 /* UserListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListModel.h; sourceTree = "<group>"; };
+		269ED3DC1F6121820047AF86 /* UserListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListModel.m; sourceTree = "<group>"; };
 		6A6AEB8B1D61A2D200265420 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTKKeyValueStore.h; path = ../others/YTKKeyValueStore.h; sourceTree = "<group>"; };
 		6A6AEB8C1D61A2D200265420 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YTKKeyValueStore.m; path = ../others/YTKKeyValueStore.m; sourceTree = "<group>"; };
 		7F06A6A91CE05ADD006B9CA4 /* iPhoneGLASS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneGLASS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,12 +285,8 @@
 		7F667A081D6AF678009E0105 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		7F667A091D6AF678009E0105 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		7F667A0A1D6AF678009E0105 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		7F667A1D1D6E84F8009E0105 /* ListHeadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListHeadModel.h; sourceTree = "<group>"; };
-		7F667A1E1D6E84F8009E0105 /* ListHeadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListHeadModel.m; sourceTree = "<group>"; };
 		7F99043E1CEAFF080039AAD5 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
-		7F9904451CEB03B40039AAD5 /* ListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTVC.h; sourceTree = "<group>"; };
-		7F9904461CEB03B40039AAD5 /* ListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTVC.m; sourceTree = "<group>"; };
 		7F9904481CEB04D50039AAD5 /* WWLoadTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWLoadTextField.h; sourceTree = "<group>"; };
 		7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWLoadTextField.m; sourceTree = "<group>"; };
 		7F99044F1CEB19EF0039AAD5 /* MoreTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreTVC.h; sourceTree = "<group>"; };
@@ -770,8 +767,6 @@
 			children = (
 				7FCDB2A21F2ED46D00759928 /* HomeViewController.h */,
 				7FCDB2A31F2ED46D00759928 /* HomeViewController.m */,
-				7F9904451CEB03B40039AAD5 /* ListTVC.h */,
-				7F9904461CEB03B40039AAD5 /* ListTVC.m */,
 				7FC224C71CFD84A100CCBD85 /* SearchTVC.h */,
 				7FC224C81CFD84A100CCBD85 /* SearchTVC.m */,
 				7FC224CA1CFD84F400CCBD85 /* SearchTVC.storyboard */,
@@ -787,8 +782,8 @@
 				7FC224C51CFD6AC600CCBD85 /* NSDictionary+PropertyCode.m */,
 				7FC224C11CFD6A7900CCBD85 /* ListModel.h */,
 				7FC224C21CFD6A7900CCBD85 /* ListModel.m */,
-				7F667A1D1D6E84F8009E0105 /* ListHeadModel.h */,
-				7F667A1E1D6E84F8009E0105 /* ListHeadModel.m */,
+				269ED3DB1F6121820047AF86 /* UserListModel.h */,
+				269ED3DC1F6121820047AF86 /* UserListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1152,7 +1147,6 @@
 				7FCDB3241F2F071A00759928 /* RegistViewController.m in Sources */,
 				7F0E98D41CFED2EA0051C503 /* MBProgressHUD.m in Sources */,
 				7F0E98B81CFE7F5E0051C503 /* STConst.m in Sources */,
-				7F667A1F1D6E84F8009E0105 /* ListHeadModel.m in Sources */,
 				7F06A6B11CE05ADD006B9CA4 /* AppDelegate.m in Sources */,
 				7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */,
 				7F0E98AC1CFE7E8F0051C503 /* NSCalendar+ST.m in Sources */,
@@ -1175,6 +1169,7 @@
 				7F23D0421D100DB1002DB08D /* HeadView.m in Sources */,
 				7F60CC531D2A35BD00A53799 /* FMDatabase.m in Sources */,
 				7F0E990B1CFED9B90051C503 /* MJRefreshBackNormalFooter.m in Sources */,
+				269ED3DD1F6121820047AF86 /* UserListModel.m in Sources */,
 				7FCDB2A71F2ED5D200759928 /* HomeCollectionCell.m in Sources */,
 				7FC224B91CFD651100CCBD85 /* ListHeadView.m in Sources */,
 				7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */,
@@ -1199,7 +1194,6 @@
 				7F06A6AE1CE05ADD006B9CA4 /* main.m in Sources */,
 				7FCDB2951F2EC07A00759928 /* UITabBarController+YZBim.m in Sources */,
 				7F4C9F061D49E0760072F43C /* AboutViewController.m in Sources */,
-				7F9904471CEB03B40039AAD5 /* ListTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,8 @@
 		<string>500</string>
 		<key>glassID</key>
 		<string>00000001</string>
+		<key>_id</key>
+		<string>001</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -49,6 +51,8 @@
 		<string>300</string>
 		<key>glassID</key>
 		<string>00000002</string>
+		<key>_id</key>
+		<string>001</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -72,7 +76,9 @@
 		<key>height</key>
 		<string>200</string>
 		<key>glassID</key>
-		<string>00000003</string>
+		<string>001</string>
+		<key>_id</key>
+		<string>001</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -97,10 +103,12 @@
 		<string>500</string>
 		<key>glassID</key>
 		<string>00000004</string>
+		<key>_id</key>
+		<string>001</string>
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>和平</string>
+		<string>龙腾</string>
 		<key>totleNumber</key>
 		<string>5</string>
 		<key>thick</key>
@@ -121,6 +129,242 @@
 		<string>500</string>
 		<key>glassID</key>
 		<string>00000005</string>
+		<key>_id</key>
+		<string>002</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>和平</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>0</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000004</string>
+		<key>_id</key>
+		<string>001</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>和平</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>1</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000001</string>
+		<key>_id</key>
+		<string>001</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>龙腾</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>0</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000005</string>
+		<key>_id</key>
+		<string>002</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>和平</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>0</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000004</string>
+		<key>_id</key>
+		<string>001</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>龙腾</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>0</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000005</string>
+		<key>_id</key>
+		<string>002</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>和平</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>1</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000001</string>
+		<key>_id</key>
+		<string>001</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>龙腾</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>0</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000005</string>
+		<key>_id</key>
+		<string>002</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>和平</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>0</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000004</string>
+		<key>_id</key>
+		<string>001</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>和平</string>
+		<key>thick</key>
+		<string>5cm</string>
+		<key>color</key>
+		<string>0</string>
+		<key>wind</key>
+		<false/>
+		<key>isFinish</key>
+		<false/>
+		<key>date</key>
+		<string>2016-05-31</string>
+		<key>number</key>
+		<string>3</string>
+		<key>totleNumber</key>
+		<string>5</string>
+		<key>width</key>
+		<string>1100</string>
+		<key>height</key>
+		<string>500</string>
+		<key>glassID</key>
+		<string>00000004</string>
+		<key>_id</key>
+		<string>001</string>
 	</dict>
 </array>
 </plist>

@@ -34,4 +34,6 @@
 
 @property(nonatomic,strong) NSString *glassID;
 
+@property (nonatomic, strong) NSString *userID;
+
 @end

@@ -25,6 +25,7 @@
     model.wind = [dict[@"wind"] boolValue];
     model.color = dict[@"color"];
     model.glassID = dict[@"glassID"];
+    model.userID = dict[@"_id"];
     
     return model;
 }

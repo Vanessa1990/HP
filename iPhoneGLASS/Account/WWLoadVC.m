@@ -10,7 +10,6 @@
 #import "PrefixHeader.pch"
 #import "WWLoadTextField.h"
 #import "AppDelegate.h"
-#import "ListTVC.h"
 #import "MJRefresh.h"
 #import "MainTabBarController.h"
 #import "AFNetworking.h"
@@ -21,11 +20,12 @@
 
 @interface WWLoadVC ()
 
-
 @property (weak, nonatomic) IBOutlet UIButton *loadBtn;//登录按钮
 @property (weak, nonatomic) IBOutlet WWLoadTextField *phoneTextField;
 @property (weak, nonatomic) IBOutlet WWLoadTextField *pwdTextField;
 @property(nonatomic,strong) MBProgressHUD *hud;
+
+
 
 @end
 
@@ -70,6 +70,7 @@
     self.phoneTextField.text = @"史和平";
     self.pwdTextField.text = @"123456";
 }
+
 
 - (IBAction)loadClick:(id)sender {
     
