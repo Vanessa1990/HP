@@ -219,4 +219,18 @@
     return [AFNetworkingHelper getResource:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:nil];
 }
 
+// 获取用户下单日期
+- (SHXPromise *)getAllDate:(NSString *)userID
+{
+    SHXPromise *promise = [SHXPromise new];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i = 0; i < 30; i++) {
+        NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitDay value:i toDate:[NSDate date] options:0];
+        [array insertObject:date atIndex:0];
+    }
+    [promise resolve:array];
+    return promise;
+}
+
 @end

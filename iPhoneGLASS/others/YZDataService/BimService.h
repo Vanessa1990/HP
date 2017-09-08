@@ -67,4 +67,7 @@
 // 查询数据
 - (SHXPromise *)getListAttach:(NSString *)attach searchDict:(NSDictionary *)searchDict;
 
+// 获取用户下单日期
+- (SHXPromise *)getAllDate:(NSString *)userID;
+
 @end

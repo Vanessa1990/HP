@@ -9,7 +9,6 @@
 #import "MainTabBarController.h"
 #import "WriteInViewController.h"
 #import "MainNavigationController.h"
-#import "ListTVC.h"
 #import "HomeViewController.h"
 
 @interface MainTabBarController ()
@@ -17,6 +16,12 @@
 @end
 
 @implementation MainTabBarController
+
++ (void)load
+{
+    [[UINavigationBar appearance] setTintColor:YZ_ThemeColor];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,16 +33,26 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (![[UserInfo shareInstance].tel isEqualToString:@"13852689266"]) {
+        self.tabBar.hidden = YES;
+    }
+}
+
 - (void)addChildVCs
 {
     NSMutableArray *array = [NSMutableArray array];
     
-    WriteInViewController *HomeVC = [[WriteInViewController alloc] init];
-    [self setupChildVC:HomeVC title:@"入库" imageName:@"tab_write.png" selectedImageName:@"tab_write_s.png" array:array];
+    if ([[UserInfo shareInstance].tel isEqualToString:@"13852689266"]) {
+        WriteInViewController *HomeVC = [[WriteInViewController alloc] init];
+        [self setupChildVC:HomeVC title:@"入库" imageName:@"tab_write.png" selectedImageName:@"tab_write_s.png" array:array];
+    }
     
     HomeViewController *addressVC = [[HomeViewController alloc] init];
     addressVC.view.backgroundColor = YZ_ThemeGrayColor;
-    [self setupChildVC:addressVC title:@"主页" imageName:@"tab_contacts_sel.png" selectedImageName:@"tab_contacts_selected.png" array:array];
+    [self setupChildVC:addressVC title:@"主页" imageName:@"tab_home.png" selectedImageName:@"tab_home_s.png" array:array];
     
     self.viewControllers = array;
 }
@@ -56,6 +71,8 @@
     UIImage *maImage2 = [UIImage imageNamed:selectedImageName];
     VC.tabBarItem.image = [maImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     VC.tabBarItem.selectedImage = [maImage2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [VC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: YZ_GrayColor9B, NSFontAttributeName: YZ_Font(13)} forState:UIControlStateNormal];
+    [VC.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName: YZ_ThemeColor, NSFontAttributeName: YZ_Font(13)} forState:UIControlStateSelected];
     [array addObject:mainnc];
 }
 

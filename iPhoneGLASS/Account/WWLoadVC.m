@@ -10,7 +10,6 @@
 #import "PrefixHeader.pch"
 #import "WWLoadTextField.h"
 #import "AppDelegate.h"
-#import "ListTVC.h"
 #import "MJRefresh.h"
 #import "MainTabBarController.h"
 #import "AFNetworking.h"
@@ -21,11 +20,12 @@
 
 @interface WWLoadVC ()
 
-
 @property (weak, nonatomic) IBOutlet UIButton *loadBtn;//登录按钮
 @property (weak, nonatomic) IBOutlet WWLoadTextField *phoneTextField;
 @property (weak, nonatomic) IBOutlet WWLoadTextField *pwdTextField;
 @property(nonatomic,strong) MBProgressHUD *hud;
+
+
 
 @end
 
@@ -41,6 +41,7 @@
     
     [self.view endEditing:YES];
 }
+
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -70,6 +71,7 @@
     self.pwdTextField.text = @"123456";
 }
 
+
 - (IBAction)loadClick:(id)sender {
     
 //    [[BimService instance] registNewUser:@"史和平" phone:@"13852689266" pwd:@"123456"];
@@ -77,12 +79,17 @@
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[[BimService instance] load:self.phoneTextField.text pwd:self.pwdTextField.text] onFulfilled:^id(id value) {
         // 保存数据
-//        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
-        HS_PERSISTENT_SET_OBJECT(value, USER_INFO);
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+        HS_PERSISTENT_SET_OBJECT(data, USER_INFO);
+        
+        [UserInfo shareInstance].name = value[@"name"];
+        [UserInfo shareInstance].tel = value[@"phone"];
+        [UserInfo shareInstance].userID = value[@"_id"];
         
         //进入主界面
         MainTabBarController *mainTVC = [[MainTabBarController alloc] init];
         HP_Delegate.window.rootViewController = mainTVC;
+        
 //        if ([[value objectForKey:@"phone"] isEqualToString:@"13852689266"]) {
 //        }else{
 //            HomeViewController *vc = [[HomeViewController alloc] init];

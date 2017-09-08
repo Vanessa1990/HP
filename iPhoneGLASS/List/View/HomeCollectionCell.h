@@ -7,15 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ListHeadModel.h"
 #import "ListModel.h"
 
 @interface HomeCollectionCell : UICollectionViewCell<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *tableView;
 
-@property(nonatomic, strong) NSMutableArray <ListHeadModel *>*items;
-
 @property(nonatomic, strong) NSDate *date;
+
+@property (nonatomic, strong) NSArray *items;
 
 @end

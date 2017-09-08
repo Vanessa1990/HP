@@ -10,10 +10,17 @@
 #import "HomeCollectionCell.h"
 #import "SearchTVC.h"
 #import "MoreTVC.h"
+#import "NSDate+YZBim.h"
+#import "BimService.h"
+#import "UserListModel.h"
 
 @interface HomeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchTVCDelegate>
 
 @property(nonatomic, strong) UICollectionView *collectionView;
+
+@property (nonatomic, strong) NSArray *allDates;
+
+@property (nonatomic, strong) NSMutableDictionary *dateItems;
 
 @end
 
@@ -23,14 +30,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initNav];
+    self.allDates = [NSArray array];
+    self.dateItems = [NSMutableDictionary dictionary];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(kScreenWidth, kScreenHeight - 49);
+    layout.itemSize = CGSizeMake(kScreenWidth, self.view.bounds.size.height);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - 49) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -39,6 +48,12 @@
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.showsVerticalScrollIndicator = NO;
     [self.collectionView registerClass:[HomeCollectionCell class] forCellWithReuseIdentifier:@"HomeCollectionCellID"];
+    
+    [[[BimService instance] getAllDate:[UserInfo shareInstance].userID] onFulfilled:^id(NSArray *value) {
+        self.allDates = [NSArray arrayWithArray:value];
+        [self.collectionView reloadData];
+        return self.allDates;
+    }];
     
 }
 
@@ -59,7 +74,55 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (SHXPromise *)getDateItems:(NSDate *)date
+{
+    SHXPromise *promise = [SHXPromise new];
+    
+    if (![self.dateItems objectForKey:[date formatOnlyDay]]) {
+        NSArray *array = [NSArray array];
+        NSMutableArray *itemArray = [NSMutableArray array];
+        array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
+        for (NSDictionary *dict in array) {
+            ListModel *model = [ListModel modelWithDict:dict];
+            [itemArray addObject:model];
+        }
+        
+        [self.dateItems setObject:[self dealItems:itemArray] forKey:[date formatOnlyDay]];
+    }
+    [promise resolve:self.dateItems];
+    
+    return promise;
+    
+}
 
+- (NSArray *)dealItems:(NSArray *)items
+{
+    NSMutableArray *res = [NSMutableArray array];
+    NSArray *ids = [items valueForKey:@"userID"];
+    NSMutableArray *resIDs = [NSMutableArray array];
+    for (NSString *ID in ids) {
+        if (![resIDs containsObject:ID]) {
+            [resIDs addObject:ID];
+        }
+    }
+    
+    for (NSString *ID in resIDs) {
+        UserListModel *model = [UserListModel new];
+        model.userID = ID;
+        NSUInteger *totle = 0;
+        NSMutableArray *lists = [NSMutableArray array];
+        for (ListModel *m in items) {
+            if ([m.userID isEqualToString:ID]) {
+                totle += [m.totalNumber integerValue];
+                [lists addObject:m];
+            }
+        }
+        model.totle = [NSString stringWithFormat:@"%zd",totle];
+        model.listArray = lists;
+        [res addObject:model];
+    }
+    return res;
+}
 
 
 #pragma mark - event
@@ -92,13 +155,19 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return self.allDates.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     HomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeCollectionCellID" forIndexPath:indexPath];
-    cell.date = [NSDate date];
+    NSDate *date = self.allDates[indexPath.row];
+    cell.date = date;
+    [[self getDateItems:date] onFulfilled:^id(id value) {
+        NSArray *items = [self.dateItems objectForKey:[date formatOnlyDay]];
+        cell.items = items;
+        return value;
+    }];
     
     return cell;
 }
@@ -106,13 +175,13 @@
 //设置每个item的尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(kScreenWidth, kScreenHeight - 49);
+    return CGSizeMake(kScreenWidth, self.view.bounds.size.height);
 }
 
 //设置每个item的UIEdgeInsets
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(0, 0, 0, 0);
+    return UIEdgeInsetsMake(40, 0, 0, 0);
 }
 
 //设置每个item水平间距
