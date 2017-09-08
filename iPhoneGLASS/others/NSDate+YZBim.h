@@ -10,6 +10,7 @@
 
 @interface NSDate (YZBim)
 
+- (NSString *)formatISO;
 - (NSString *)format;
 - (NSString *)formatWithoutSec;
 - (NSString *)formatOnlyDay;

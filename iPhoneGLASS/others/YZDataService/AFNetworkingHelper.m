@@ -263,7 +263,7 @@ typedef void(^TDownloadComplete)(id task, NSError *error);
     
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
     session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
-//    session.responseSerializer = [AFHTTPResponseSerializer serializer];
+    session.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [session GET:URLString
       parameters:parameters

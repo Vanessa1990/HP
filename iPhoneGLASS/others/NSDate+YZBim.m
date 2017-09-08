@@ -44,6 +44,13 @@
     return date;
 }
 
+- (NSString *)formatISO
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    return [formatter stringFromDate:self];
+}
+
 - (NSString *)format
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
