@@ -46,8 +46,12 @@
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
     UIViewController *vc = [super popViewControllerAnimated:animated];
-    BOOL visible = self.childViewControllers.count < 2;
-    [vc.tabBarController setTabBarVisible:visible animated:NO completion:nil];
+    if (![[UserInfo shareInstance].tel isEqualToString:@"13852689266"]) {
+        vc.tabBarController.tabBar.hidden = YES;
+    }else{
+        BOOL visible = self.childViewControllers.count < 2;
+        [vc.tabBarController setTabBarVisible:visible animated:NO completion:nil];
+    }
     return vc;
 }
 

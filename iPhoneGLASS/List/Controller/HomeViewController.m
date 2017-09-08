@@ -14,6 +14,7 @@
 #import "BimService.h"
 #import "UserListModel.h"
 
+
 @interface HomeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchTVCDelegate>
 
 @property(nonatomic, strong) UICollectionView *collectionView;
@@ -34,7 +35,7 @@
     self.dateItems = [NSMutableDictionary dictionary];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(kScreenWidth, self.view.bounds.size.height);
+    layout.itemSize = self.view.bounds.size;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
@@ -181,7 +182,7 @@
 //设置每个item的UIEdgeInsets
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(40, 0, 0, 0);
+    return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 //设置每个item水平间距

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16B7168A6B6756B67ADE0427 /* libPods-iPhoneGLASSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AE2E497699B13C4228E2A9 /* libPods-iPhoneGLASSTests.a */; };
 		269ED3BB1F60E1A10047AF86 /* tab_write_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 269ED3B91F60E1A00047AF86 /* tab_write_s.png */; };
 		269ED3BC1F60E1A10047AF86 /* tab_write.png in Resources */ = {isa = PBXBuildFile; fileRef = 269ED3BA1F60E1A00047AF86 /* tab_write.png */; };
 		269ED3BF1F60E5740047AF86 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 269ED3BE1F60E5740047AF86 /* libsqlite3.tbd */; };
@@ -127,6 +128,8 @@
 		7FCDB32A1F2F0F8E00759928 /* MoreTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FCDB3281F2F0F8E00759928 /* MoreTableCell.xib */; };
 		7FCDB32E1F2F6D5F00759928 /* NSDate+YZBim.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCDB32D1F2F6D5F00759928 /* NSDate+YZBim.m */; };
 		7FDD6AC31F2F722B00599005 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDD6AC21F2F722B00599005 /* Utils.m */; };
+		EF05E2E4B5C8B65E8BD788DA /* libPods-iPhoneGLASS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD823ADEF02AF2F8B1C644D /* libPods-iPhoneGLASS.a */; };
+		F63C8A42A5578BA60B270D47 /* libPods-iPhoneGLASSUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A973D4FB745C7C89F07ED80 /* libPods-iPhoneGLASSUITests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +150,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0283804D10D51BA83CC8E608 /* Pods-iPhoneGLASSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iPhoneGLASSUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iPhoneGLASSUITests/Pods-iPhoneGLASSUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		269ED3B91F60E1A00047AF86 /* tab_write_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_write_s.png; sourceTree = "<group>"; };
 		269ED3BA1F60E1A00047AF86 /* tab_write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_write.png; sourceTree = "<group>"; };
 		269ED3BE1F60E5740047AF86 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -166,6 +170,12 @@
 		269ED3D91F60EFF30047AF86 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		269ED3DB1F6121820047AF86 /* UserListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListModel.h; sourceTree = "<group>"; };
 		269ED3DC1F6121820047AF86 /* UserListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListModel.m; sourceTree = "<group>"; };
+		2A973D4FB745C7C89F07ED80 /* libPods-iPhoneGLASSUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iPhoneGLASSUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DC430C6CB04AE392006CA8F /* Pods-iPhoneGLASSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iPhoneGLASSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iPhoneGLASSTests/Pods-iPhoneGLASSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3645B5CC03BF8757EA9E6B24 /* Pods-iPhoneGLASS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iPhoneGLASS.release.xcconfig"; path = "Pods/Target Support Files/Pods-iPhoneGLASS/Pods-iPhoneGLASS.release.xcconfig"; sourceTree = "<group>"; };
+		3CE512C60EDC799B998E691A /* Pods-iPhoneGLASSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iPhoneGLASSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iPhoneGLASSUITests/Pods-iPhoneGLASSUITests.release.xcconfig"; sourceTree = "<group>"; };
+		50AE2E497699B13C4228E2A9 /* libPods-iPhoneGLASSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iPhoneGLASSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B266CB1BDB5035F3E3A0F36 /* Pods-iPhoneGLASS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iPhoneGLASS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iPhoneGLASS/Pods-iPhoneGLASS.debug.xcconfig"; sourceTree = "<group>"; };
 		6A6AEB8B1D61A2D200265420 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTKKeyValueStore.h; path = ../others/YTKKeyValueStore.h; sourceTree = "<group>"; };
 		6A6AEB8C1D61A2D200265420 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YTKKeyValueStore.m; path = ../others/YTKKeyValueStore.m; sourceTree = "<group>"; };
 		7F06A6A91CE05ADD006B9CA4 /* iPhoneGLASS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneGLASS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -361,6 +371,8 @@
 		7FCDB32D1F2F6D5F00759928 /* NSDate+YZBim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+YZBim.m"; sourceTree = "<group>"; };
 		7FDD6AC11F2F722B00599005 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		7FDD6AC21F2F722B00599005 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		9D1817078672D870AF4D8A5F /* Pods-iPhoneGLASSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iPhoneGLASSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iPhoneGLASSTests/Pods-iPhoneGLASSTests.release.xcconfig"; sourceTree = "<group>"; };
+		DFD823ADEF02AF2F8B1C644D /* libPods-iPhoneGLASS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iPhoneGLASS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				269ED3BF1F60E5740047AF86 /* libsqlite3.tbd in Frameworks */,
+				EF05E2E4B5C8B65E8BD788DA /* libPods-iPhoneGLASS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +389,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16B7168A6B6756B67ADE0427 /* libPods-iPhoneGLASSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +397,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F63C8A42A5578BA60B270D47 /* libPods-iPhoneGLASSUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +408,9 @@
 			isa = PBXGroup;
 			children = (
 				269ED3BE1F60E5740047AF86 /* libsqlite3.tbd */,
+				DFD823ADEF02AF2F8B1C644D /* libPods-iPhoneGLASS.a */,
+				50AE2E497699B13C4228E2A9 /* libPods-iPhoneGLASSTests.a */,
+				2A973D4FB745C7C89F07ED80 /* libPods-iPhoneGLASSUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -437,6 +455,7 @@
 				7F06A6D01CE05ADD006B9CA4 /* iPhoneGLASSUITests */,
 				7F06A6AA1CE05ADD006B9CA4 /* Products */,
 				269ED3BD1F60E5740047AF86 /* Frameworks */,
+				80E9755A51DCB29990D0BF8D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -948,6 +967,19 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
+		80E9755A51DCB29990D0BF8D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5B266CB1BDB5035F3E3A0F36 /* Pods-iPhoneGLASS.debug.xcconfig */,
+				3645B5CC03BF8757EA9E6B24 /* Pods-iPhoneGLASS.release.xcconfig */,
+				2DC430C6CB04AE392006CA8F /* Pods-iPhoneGLASSTests.debug.xcconfig */,
+				9D1817078672D870AF4D8A5F /* Pods-iPhoneGLASSTests.release.xcconfig */,
+				0283804D10D51BA83CC8E608 /* Pods-iPhoneGLASSUITests.debug.xcconfig */,
+				3CE512C60EDC799B998E691A /* Pods-iPhoneGLASSUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -955,9 +987,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F06A6D61CE05ADD006B9CA4 /* Build configuration list for PBXNativeTarget "iPhoneGLASS" */;
 			buildPhases = (
+				CFC0CA40DDA968C8B0FB6368 /* [CP] Check Pods Manifest.lock */,
 				7F06A6A51CE05ADD006B9CA4 /* Sources */,
 				7F06A6A61CE05ADD006B9CA4 /* Frameworks */,
 				7F06A6A71CE05ADD006B9CA4 /* Resources */,
+				5BB87F440A4D2F9A9503BB3C /* [CP] Embed Pods Frameworks */,
+				AC5BC0BE2CD5D2E3611A12E3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -972,9 +1007,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F06A6D91CE05ADD006B9CA4 /* Build configuration list for PBXNativeTarget "iPhoneGLASSTests" */;
 			buildPhases = (
+				FB11C6FBC6E5DB088A1E3C5D /* [CP] Check Pods Manifest.lock */,
 				7F06A6BE1CE05ADD006B9CA4 /* Sources */,
 				7F06A6BF1CE05ADD006B9CA4 /* Frameworks */,
 				7F06A6C01CE05ADD006B9CA4 /* Resources */,
+				4741FB61CA3C228D1D730758 /* [CP] Embed Pods Frameworks */,
+				F88992CECD9B0605A346E17A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -990,9 +1028,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F06A6DC1CE05ADD006B9CA4 /* Build configuration list for PBXNativeTarget "iPhoneGLASSUITests" */;
 			buildPhases = (
+				B75048A4FBB1BFB98E216018 /* [CP] Check Pods Manifest.lock */,
 				7F06A6C91CE05ADD006B9CA4 /* Sources */,
 				7F06A6CA1CE05ADD006B9CA4 /* Frameworks */,
 				7F06A6CB1CE05ADD006B9CA4 /* Resources */,
+				7AE6AC43B0866D6D8133F468 /* [CP] Embed Pods Frameworks */,
+				78E11A7863A260B55F38C3F3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1110,6 +1151,144 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4741FB61CA3C228D1D730758 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iPhoneGLASSTests/Pods-iPhoneGLASSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5BB87F440A4D2F9A9503BB3C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iPhoneGLASS/Pods-iPhoneGLASS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78E11A7863A260B55F38C3F3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iPhoneGLASSUITests/Pods-iPhoneGLASSUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7AE6AC43B0866D6D8133F468 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iPhoneGLASSUITests/Pods-iPhoneGLASSUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC5BC0BE2CD5D2E3611A12E3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iPhoneGLASS/Pods-iPhoneGLASS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B75048A4FBB1BFB98E216018 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CFC0CA40DDA968C8B0FB6368 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F88992CECD9B0605A346E17A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iPhoneGLASSTests/Pods-iPhoneGLASSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB11C6FBC6E5DB088A1E3C5D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7F06A6A51CE05ADD006B9CA4 /* Sources */ = {
@@ -1324,6 +1503,7 @@
 		};
 		7F06A6D71CE05ADD006B9CA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B266CB1BDB5035F3E3A0F36 /* Pods-iPhoneGLASS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1343,6 +1523,7 @@
 		};
 		7F06A6D81CE05ADD006B9CA4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3645B5CC03BF8757EA9E6B24 /* Pods-iPhoneGLASS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1362,6 +1543,7 @@
 		};
 		7F06A6DA1CE05ADD006B9CA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DC430C6CB04AE392006CA8F /* Pods-iPhoneGLASSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = iPhoneGLASSTests/Info.plist;
@@ -1374,6 +1556,7 @@
 		};
 		7F06A6DB1CE05ADD006B9CA4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D1817078672D870AF4D8A5F /* Pods-iPhoneGLASSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = iPhoneGLASSTests/Info.plist;
@@ -1386,6 +1569,7 @@
 		};
 		7F06A6DD1CE05ADD006B9CA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0283804D10D51BA83CC8E608 /* Pods-iPhoneGLASSUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = iPhoneGLASSUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1398,6 +1582,7 @@
 		};
 		7F06A6DE1CE05ADD006B9CA4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CE512C60EDC799B998E691A /* Pods-iPhoneGLASSUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = iPhoneGLASSUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

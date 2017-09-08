@@ -28,4 +28,6 @@
 
 #import "UserInfo.h"
 
+#import <Masonry.h>
+
 #endif
