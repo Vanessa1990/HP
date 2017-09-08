@@ -16,9 +16,9 @@
 		<key>date</key>
 		<string>2016-05-31</string>
 		<key>number</key>
-		<string>3</string>
+		<integer>3</integer>
 		<key>totleNumber</key>
-		<string>5</string>
+		<integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -41,10 +41,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>200</string>
 		<key>height</key>
@@ -67,10 +67,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -93,10 +93,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -121,8 +121,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -145,8 +147,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>totleNumber</key>
 		<string>5</string>
 		<key>width</key>
@@ -171,10 +175,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -199,8 +203,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -223,10 +229,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -251,8 +257,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -275,10 +283,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -303,8 +311,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -327,10 +337,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>
@@ -353,10 +363,10 @@
 		<false/>
 		<key>date</key>
 		<string>2016-05-31</string>
-		<key>number</key>
-		<string>3</string>
-		<key>totleNumber</key>
-		<string>5</string>
+        <key>number</key>
+        <integer>3</integer>
+        <key>totleNumber</key>
+        <integer>5</integer>
 		<key>width</key>
 		<string>1100</string>
 		<key>height</key>

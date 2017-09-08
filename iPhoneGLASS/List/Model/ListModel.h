@@ -20,9 +20,9 @@
 
 @property (nonatomic ,strong) NSString *date;//日期
 
-@property (nonatomic ,strong) NSString *number;
+@property (nonatomic ,assign) NSUInteger number;
 
-@property (nonatomic ,strong) NSString *totalNumber;
+@property (nonatomic ,assign) NSUInteger totalNumber;
 
 @property (nonatomic ,strong) NSString *width;
 

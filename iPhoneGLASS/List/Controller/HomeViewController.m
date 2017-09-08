@@ -110,11 +110,11 @@
     for (NSString *ID in resIDs) {
         UserListModel *model = [UserListModel new];
         model.userID = ID;
-        NSUInteger *totle = 0;
+        NSUInteger totle = 0;
         NSMutableArray *lists = [NSMutableArray array];
         for (ListModel *m in items) {
             if ([m.userID isEqualToString:ID]) {
-                totle += [m.totalNumber integerValue];
+                totle += m.totalNumber;
                 [lists addObject:m];
             }
         }

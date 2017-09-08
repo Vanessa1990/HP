@@ -101,6 +101,8 @@
 		7FC22FD51F62825100717CEE /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FC22FD21F62825100717CEE /* launch.png */; };
 		7FC22FD61F62825100717CEE /* launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FC22FD31F62825100717CEE /* launch@2x.png */; };
 		7FC22FD71F62825100717CEE /* launch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FC22FD41F62825100717CEE /* launch@3x.png */; };
+		7FC22FDA1F6298E700717CEE /* ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC22FD91F6298E700717CEE /* ListCell.m */; };
+		7FC22FDD1F62A4E900717CEE /* SearchListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC22FDC1F62A4E900717CEE /* SearchListViewController.m */; };
 		7FCDB2761F2DC0B100759928 /* btn_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FCDB2731F2DC0B100759928 /* btn_logo.png */; };
 		7FCDB2771F2DC0B100759928 /* btn_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FCDB2741F2DC0B100759928 /* btn_logo@2x.png */; };
 		7FCDB2781F2DC0B100759928 /* btn_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FCDB2751F2DC0B100759928 /* btn_logo@3x.png */; };
@@ -323,6 +325,10 @@
 		7FC22FD21F62825100717CEE /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		7FC22FD31F62825100717CEE /* launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@2x.png"; sourceTree = "<group>"; };
 		7FC22FD41F62825100717CEE /* launch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@3x.png"; sourceTree = "<group>"; };
+		7FC22FD81F6298E700717CEE /* ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListCell.h; sourceTree = "<group>"; };
+		7FC22FD91F6298E700717CEE /* ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListCell.m; sourceTree = "<group>"; };
+		7FC22FDB1F62A4E900717CEE /* SearchListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchListViewController.h; sourceTree = "<group>"; };
+		7FC22FDC1F62A4E900717CEE /* SearchListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchListViewController.m; sourceTree = "<group>"; };
 		7FCDB2731F2DC0B100759928 /* btn_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_logo.png; sourceTree = "<group>"; };
 		7FCDB2741F2DC0B100759928 /* btn_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_logo@2x.png"; sourceTree = "<group>"; };
 		7FCDB2751F2DC0B100759928 /* btn_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_logo@3x.png"; sourceTree = "<group>"; };
@@ -795,6 +801,8 @@
 				7FC224C71CFD84A100CCBD85 /* SearchTVC.h */,
 				7FC224C81CFD84A100CCBD85 /* SearchTVC.m */,
 				7FC224CA1CFD84F400CCBD85 /* SearchTVC.storyboard */,
+				7FC22FDB1F62A4E900717CEE /* SearchListViewController.h */,
+				7FC22FDC1F62A4E900717CEE /* SearchListViewController.m */,
 				7FC224B51CFD60FD00CCBD85 /* List.plist */,
 			);
 			path = Controller;
@@ -823,6 +831,8 @@
 				7FC224BC1CFD68A700CCBD85 /* ListTableViewCell.h */,
 				7FC224BD1CFD68A700CCBD85 /* ListTableViewCell.m */,
 				7FC224BE1CFD68A700CCBD85 /* ListTableViewCell.xib */,
+				7FC22FD81F6298E700717CEE /* ListCell.h */,
+				7FC22FD91F6298E700717CEE /* ListCell.m */,
 				7FCDB2A51F2ED5D200759928 /* HomeCollectionCell.h */,
 				7FCDB2A61F2ED5D200759928 /* HomeCollectionCell.m */,
 			);
@@ -1329,6 +1339,7 @@
 				7F0E99021CFED9B90051C503 /* MJRefreshAutoFooter.m in Sources */,
 				7F0E99061CFED9B90051C503 /* MJRefreshHeader.m in Sources */,
 				7F0E99071CFED9B90051C503 /* MJRefreshAutoGifFooter.m in Sources */,
+				7FC22FDD1F62A4E900717CEE /* SearchListViewController.m in Sources */,
 				7F60CC551D2A35BD00A53799 /* FMDatabasePool.m in Sources */,
 				7FC224C31CFD6A7900CCBD85 /* ListModel.m in Sources */,
 				7FCDB3121F2EF17100759928 /* USDictionaryWrapper.m in Sources */,
@@ -1365,6 +1376,7 @@
 				7FC224B91CFD651100CCBD85 /* ListHeadView.m in Sources */,
 				7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */,
 				269ED3DA1F60EFF30047AF86 /* UserInfo.m in Sources */,
+				7FC22FDA1F6298E700717CEE /* ListCell.m in Sources */,
 				7F0E99141CFED9B90051C503 /* UIView+MJExtension.m in Sources */,
 				7F0E99131CFED9B90051C503 /* UIScrollView+MJRefresh.m in Sources */,
 				7F667A0C1D6AF678009E0105 /* AFNetworkReachabilityManager.m in Sources */,

@@ -14,6 +14,7 @@
 #import "BimService.h"
 #import "NSDate+YZBim.h"
 #import "UserListModel.h"
+#import "ListCell.h"
 
 @interface HomeCollectionCell()
 
@@ -50,7 +51,8 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     //tableview设置
-    [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
+    [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.items = [NSArray array];
     
@@ -88,18 +90,34 @@
 #pragma mark - Table view data source
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0;
+    return 35;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     
-    return 50;
+    return 35;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 50;
+    return 44;
 }
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    UserListModel *model = self.items[section];
+    NSString *string = [NSString stringWithFormat:@"%@\t\t\t\t\t%@",model.userID,model.totle];
+    return string;
+}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    ListHeadView *view = [[[NSBundle mainBundle] loadNibNamed:@"ListHeadView" owner:0 options:0] lastObject];
+//    UserListModel *model = self.items[section];
+//    view.nameLable.text = model.userID;
+//    view.totleLable.text = model.totle;
+//    return view;
+//}
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -115,7 +133,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listcellID"];
+    ListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ListCellID"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UserListModel *model = self.items[indexPath.section];
     cell.listModel = model.listArray[indexPath.row];

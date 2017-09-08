@@ -16,8 +16,8 @@
     ListModel *model = [[ListModel alloc]init];
     model.name = dict[@"name"];
     model.thick = dict[@"thick"];
-    model.number = dict[@"number"];
-    model.totalNumber = dict[@"totleNumber"];
+    model.number = [dict[@"number"] integerValue];
+    model.totalNumber = [dict[@"totleNumber"] integerValue];
     model.date = dict[@"date"];
     model.width = dict[@"width"];
     model.height = dict[@"height"];
