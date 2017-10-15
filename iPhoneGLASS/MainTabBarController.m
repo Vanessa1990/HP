@@ -20,7 +20,6 @@
 + (void)load
 {
     [[UINavigationBar appearance] setTintColor:YZ_ThemeColor];
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidLoad {

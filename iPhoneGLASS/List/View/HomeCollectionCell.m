@@ -46,8 +46,9 @@
 {
     self.page = 0;
     self.backgroundColor = YZ_WhiteColor;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44 + 64, kScreenWidth, self.bounds.size.height - 64 - 44)];
-    [self.contentView addSubview:self.tableView];
+    CGFloat headY = self.contentView.bounds.size.height - (kScreenHeight - 64);
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, kScreenWidth, self.bounds.size.height - 44)];
+    [self addSubview:self.tableView];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     //tableview设置
@@ -57,9 +58,9 @@
     self.items = [NSArray array];
     
     ListHeadView *view = [ListHeadView headView];
-    view.frame = CGRectMake(0, 64, kScreenWidth, 44);
+    view.frame = CGRectMake(0, 0, kScreenWidth, 44);
     view.dateLable.text = [self.date formatOnlyDay];
-    [self.contentView addSubview:view];
+    [self addSubview:view];
     self.headView = view;
 }
 

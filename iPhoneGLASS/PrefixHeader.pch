@@ -18,6 +18,8 @@
 
 #define HP_SavePath(path) [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:path]
 
+#define ThemeColor [UIColor colorWithRed:77/255.0 green:146/255.0 blue:223/255.0 alpha:1.0]
+
 #import "YTKKeyValueStore.h"
 
 #define HP_UserInfo @"userInfo"

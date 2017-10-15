@@ -17,6 +17,7 @@
 #import "BimService.h"
 #import "RegistViewController.h"
 #import "HomeViewController.h"
+#import "MainHomeViewController.h"
 
 @interface WWLoadVC ()
 
@@ -75,7 +76,19 @@
 - (IBAction)loadClick:(id)sender {
     
 //    [[BimService instance] registNewUser:@"史和平" phone:@"13852689266" pwd:@"123456"];
+    
+    //进入主界面
+    MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
+    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
+    HP_Delegate.window.rootViewController = navc;
+    
+    [UserInfo shareInstance].name = @"史和平";
+    [UserInfo shareInstance].tel = @"13852689266";
+    
+//    [self load];
+}
 
+- (void)load {
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[[BimService instance] load:self.phoneTextField.text pwd:self.pwdTextField.text] onFulfilled:^id(id value) {
         // 保存数据
@@ -90,12 +103,12 @@
         MainTabBarController *mainTVC = [[MainTabBarController alloc] init];
         HP_Delegate.window.rootViewController = mainTVC;
         
-//        if ([[value objectForKey:@"phone"] isEqualToString:@"13852689266"]) {
-//        }else{
-//            HomeViewController *vc = [[HomeViewController alloc] init];
-//            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-//            HP_Delegate.window.rootViewController = nav;
-//        }
+        //        if ([[value objectForKey:@"phone"] isEqualToString:@"13852689266"]) {
+        //        }else{
+        //            HomeViewController *vc = [[HomeViewController alloc] init];
+        //            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        //            HP_Delegate.window.rootViewController = nav;
+        //        }
         return value;
     }rejected:^id(NSError *reason) {
         _hud.label.text = @"登录失败";

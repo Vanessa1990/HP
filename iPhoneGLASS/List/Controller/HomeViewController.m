@@ -35,12 +35,12 @@
     self.dateItems = [NSMutableDictionary dictionary];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = self.view.bounds.size;
+    layout.itemSize = CGSizeMake(kScreenWidth, kScreenHeight - 64);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, kScreenHeight - 65) collectionViewLayout:layout];
     [self.view addSubview:self.collectionView];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -61,13 +61,6 @@
 -(void)initNav {
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
-    UIButton *iconButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    iconButton.frame = CGRectMake(0, 0, 30, 30);
-    iconButton.imageView.layer.cornerRadius = 15;
-    iconButton.imageView.clipsToBounds = YES;
-    [iconButton setImage:[UIImage imageNamed:@"icon.png"] forState:UIControlStateNormal];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:iconButton];
-    [iconButton addTarget:self action:@selector(moreClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,12 +120,6 @@
 
 
 #pragma mark - event
-- (void)moreClick:(id)sender
-{
-    MoreTVC *vc = [[MoreTVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 -(void)search {
     
     SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
@@ -176,7 +163,7 @@
 //设置每个item的尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(kScreenWidth, self.view.bounds.size.height);
+    return CGSizeMake(kScreenWidth, self.view.bounds.size.height - 64);
 }
 
 //设置每个item的UIEdgeInsets

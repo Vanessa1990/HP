@@ -82,10 +82,6 @@
         ListModel *model = [ListModel modelWithDict:dict];
         [itemArray addObject:model];
     }
-//    //返回数据,刷新list列表
-//    if ([self.delegate respondsToSelector:@selector(SearchTVC:searchSuccess:)]) {
-//        [self.delegate SearchTVC:self searchSuccess:@[itemArray[0]]];
-//    }
     SearchListViewController *VC = [[SearchListViewController alloc] init];
     VC.items = itemArray;
     [self.navigationController pushViewController:VC animated:YES];
