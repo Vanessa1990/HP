@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#define admin_tel @"13852689266"
 
 @interface UserInfo : NSObject
 
@@ -18,6 +19,8 @@
 @property (nonatomic, strong) NSString *userID;
 
 @property (nonatomic, strong) NSString *icon;
+
+@property (assign, nonatomic, getter=isAdmin) BOOL admin;
 
 + (instancetype)shareInstance;
 

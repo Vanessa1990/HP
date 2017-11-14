@@ -113,5 +113,12 @@
     
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if ([UserInfo shareInstance].isAdmin) {
+        return 3;
+    }
+    return 2;
+}
+
 
 @end

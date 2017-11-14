@@ -14,10 +14,9 @@
 #import "JSViewController.h"
 
 typedef enum : NSUInteger {
-    ButtonMe = 0,
+    ButtonMe = 110,
     ButtonList,
     ButtonWrite,
-    ButtonRegist,
     ButtonJS,
 } ButtonType;
 
@@ -33,7 +32,12 @@ typedef enum : NSUInteger {
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.title = @"主页";
-    NSArray *titles = @[@"关于我们", @"订单列表", @"入库", @"注册", @"计算"];
+    NSArray *titles = @[@"关于我们", @"订单列表", @"入库",@"计算"];
+    NSArray *tags = @[@110,@111,@112,@113];
+    if (![UserInfo shareInstance].isAdmin) {
+        titles = @[@"关于我们", @"订单列表"];
+        tags = @[@110,@111];
+    }
     int maxRow = 3;
     CGFloat x = 15;
     CGFloat y = 15 + 64;
@@ -50,7 +54,7 @@ typedef enum : NSUInteger {
         }
         button.frame = CGRectMake(x + (wh + 15) * row, y + (wh + 15) * section, wh, wh);
         [self.view addSubview:button];
-        button.tag = section * maxRow + row;
+        button.tag = [tags[section * maxRow + row] integerValue];
         [button addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         row++;
     }
@@ -75,9 +79,6 @@ typedef enum : NSUInteger {
     } else if (button.tag == ButtonWrite) {
         WriteInViewController *vc = [[WriteInViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if (button.tag == ButtonRegist) {
-        RegistViewController *registVC = [[RegistViewController alloc]init];
-        [self.navigationController pushViewController:registVC animated:YES];
     } else if (button.tag == ButtonJS) {
         JSViewController *vc = [[JSViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];

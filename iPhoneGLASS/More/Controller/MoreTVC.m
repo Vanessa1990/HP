@@ -31,6 +31,8 @@
     self.tableView.backgroundColor = YZ_ThemeGrayColor;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(quit:)];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,7 +73,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    if ([UserInfo shareInstance].isAdmin) return 3;
+    return 2;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -99,17 +102,17 @@
     }
     
     // Configure the cell...
-    if (indexPath.row == 0) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.text = @"清除缓存";
-    }
+//    if (indexPath.row == 0) {
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        cell.textLabel.text = @"清除缓存";
+//    }
     
-    else if (indexPath.row == 1) {
+    if (indexPath.row == 0) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = @"修改密码";
     }
     
-    else if (indexPath.row == 2) {
+    else if (indexPath.row == 1) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = @"关于我们";
     }
@@ -125,15 +128,20 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == 2) {
+    
+    if (indexPath.row == 1) {
         AboutViewController *aboutVC = [[AboutViewController alloc]init];
         [self.navigationController pushViewController:aboutVC animated:YES];
         
     }
     
-    else if (indexPath.row == 3) {
+    else if (indexPath.row == 2) {
         RegistViewController *registVC = [[RegistViewController alloc]init];
         [self.navigationController pushViewController:registVC animated:YES];
+        
+    }
+    
+    else { // 修改密码
         
     }
     

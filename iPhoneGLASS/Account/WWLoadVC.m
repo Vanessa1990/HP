@@ -67,23 +67,22 @@
     self.loadBtn.layer.cornerRadius = 10;
     self.loadBtn.clipsToBounds = YES;
     
-    //
-    self.phoneTextField.text = @"史和平";
+    // test
+    self.phoneTextField.text = admin_tel;
     self.pwdTextField.text = @"123456";
 }
 
 
 - (IBAction)loadClick:(id)sender {
-    
-//    [[BimService instance] registNewUser:@"史和平" phone:@"13852689266" pwd:@"123456"];
-    
+
+    // test
     //进入主界面
     MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
     UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
     HP_Delegate.window.rootViewController = navc;
     
-    [UserInfo shareInstance].name = @"史和平";
-    [UserInfo shareInstance].tel = @"13852689266";
+    [UserInfo shareInstance].name = self.phoneTextField.text;
+    [UserInfo shareInstance].tel = self.phoneTextField.text;
     
 //    [self load];
 }
@@ -100,15 +99,10 @@
         [UserInfo shareInstance].userID = value[@"_id"];
         
         //进入主界面
-        MainTabBarController *mainTVC = [[MainTabBarController alloc] init];
-        HP_Delegate.window.rootViewController = mainTVC;
+        MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
+        UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
+        HP_Delegate.window.rootViewController = navc;
         
-        //        if ([[value objectForKey:@"phone"] isEqualToString:@"13852689266"]) {
-        //        }else{
-        //            HomeViewController *vc = [[HomeViewController alloc] init];
-        //            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-        //            HP_Delegate.window.rootViewController = nav;
-        //        }
         return value;
     }rejected:^id(NSError *reason) {
         _hud.label.text = @"登录失败";
