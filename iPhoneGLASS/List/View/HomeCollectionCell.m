@@ -107,7 +107,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     UserListModel *model = self.items[section];
-    NSString *string = [NSString stringWithFormat:@"%@\t\t\t\t\t%@",model.userID,model.totle];
+    NSString *string = [NSString stringWithFormat:@"%@\t\t\t\t\t%@",model.name,model.totle];
     return string;
 }
 

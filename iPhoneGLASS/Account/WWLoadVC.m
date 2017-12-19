@@ -74,17 +74,16 @@
 
 
 - (IBAction)loadClick:(id)sender {
-
     // test
-    //进入主界面
-    MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
-    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
-    HP_Delegate.window.rootViewController = navc;
+//    //进入主界面
+//    MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
+//    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
+//    HP_Delegate.window.rootViewController = navc;
+//
+//    [UserInfo shareInstance].name = self.phoneTextField.text;
+//    [UserInfo shareInstance].tel = self.phoneTextField.text;
     
-    [UserInfo shareInstance].name = self.phoneTextField.text;
-    [UserInfo shareInstance].tel = self.phoneTextField.text;
-    
-//    [self load];
+    [self load];
 }
 
 - (void)load {

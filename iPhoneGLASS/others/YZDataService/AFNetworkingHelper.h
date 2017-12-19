@@ -15,7 +15,7 @@
 @interface AFNetworkingHelper : NSObject
 
 + (SHXPromise *)getResource:(NSString *)URLString
-                 parameters:(id)parameters;
+                 parameters:(NSDictionary *)parameters;
 
 + (SHXPromise *)postResource:(NSString *)URLString
                  parameters:(id)parameters;

@@ -13,15 +13,23 @@
 #import "NSDate+YZBim.h"
 #import "BimService.h"
 #import "UserListModel.h"
+#import "ListNavView.h"
+#import "ListCell.h"
+#import "Utils.h"
 
-
-@interface HomeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchTVCDelegate>
+@interface HomeViewController ()<SearchTVCDelegate,UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UICollectionView *collectionView;
 
 @property (nonatomic, strong) NSArray *allDates;
 
 @property (nonatomic, strong) NSMutableDictionary *dateItems;
+
+@property(nonatomic, strong) NSDate *currentDate;
+
+@property(nonatomic, strong) ListNavView *navView;
+
+@property(nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -34,25 +42,23 @@
     self.allDates = [NSArray array];
     self.dateItems = [NSMutableDictionary dictionary];
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(kScreenWidth, kScreenHeight - 64);
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = 0;
-    
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, kScreenHeight - 65) collectionViewLayout:layout];
-    [self.view addSubview:self.collectionView];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    self.collectionView.pagingEnabled = YES;
-    self.collectionView.backgroundColor = YZ_WhiteColor;
-    self.collectionView.showsHorizontalScrollIndicator = NO;
-    self.collectionView.showsVerticalScrollIndicator = NO;
-    [self.collectionView registerClass:[HomeCollectionCell class] forCellWithReuseIdentifier:@"HomeCollectionCellID"];
-    
+    self.tableView = [[UITableView alloc] init];
+    [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.mas_equalTo(0);
+    }];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    //tableview设置
+    //    [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
+    [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    NSTimeInterval secondsPerDay = 24 * 60 * 60;
     [[[BimService instance] getAllDate:[UserInfo shareInstance].userID] onFulfilled:^id(NSArray *value) {
         self.allDates = [NSArray arrayWithArray:value];
-        [self.collectionView reloadData];
+        // 取出最近的时间赋值给 currentDate
+        self.currentDate = [NSDate dateWithTimeIntervalSinceNow:-secondsPerDay];
+        [self getDateItems:self.currentDate];
         return self.allDates;
     }];
     
@@ -60,6 +66,8 @@
 
 -(void)initNav {
     
+    self.navigationItem.titleView = self.navView;
+    self.navView.currenDateLabel.text = @"2017-12-18";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
 }
 
@@ -71,17 +79,26 @@
 - (SHXPromise *)getDateItems:(NSDate *)date
 {
     SHXPromise *promise = [SHXPromise new];
-    
     if (![self.dateItems objectForKey:[date formatOnlyDay]]) {
-        NSArray *array = [NSArray array];
-        NSMutableArray *itemArray = [NSMutableArray array];
-        array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
-        for (NSDictionary *dict in array) {
-            ListModel *model = [ListModel modelWithDict:dict];
-            [itemArray addObject:model];
-        }
         
-        [self.dateItems setObject:[self dealItems:itemArray] forKey:[date formatOnlyDay]];
+        NSTimeInterval secondsPerDay = 24 * 60 * 60;
+        NSDate *tomorrow = [date dateByAddingTimeInterval:secondsPerDay];
+        NSString *todayString = [date formatOnlyDay];
+        NSString *tomorrowString = [tomorrow formatOnlyDay];
+        [[[BimService instance] getListAttach:nil searchDict:@{@"createdAt":@{@"$gte":todayString,@"$lt":tomorrowString}}] onFulfilled:^id(id value) {
+            
+            NSMutableArray *itemArray = [NSMutableArray array];
+            for (NSDictionary *dict in value) {
+                ListModel *model = [ListModel modelWithDict:dict];
+                [itemArray addObject:model];
+            }
+            [self.dateItems setObject:[self dealItems:itemArray] forKey:todayString];
+            [self.tableView reloadData];
+            
+            return value;
+        } rejected:^id(NSError *reason) {
+            return reason;
+        }];
     }
     [promise resolve:self.dateItems];
     
@@ -89,10 +106,24 @@
     
 }
 
+- (NSDate *)dateFromString:(NSString *)dateString
+{
+    if (!dateString) {
+        return nil;
+    }
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat: @"yyyy-MM-dd"];
+    [formatter setLocale:[NSLocale currentLocale]];
+    NSDate *date= [formatter dateFromString:dateString];
+    return date;
+}
+
+
 - (NSArray *)dealItems:(NSArray *)items
 {
     NSMutableArray *res = [NSMutableArray array];
-    NSArray *ids = [items valueForKey:@"userID"];
+    NSArray *ids = [items valueForKey:@"name"];
     NSMutableArray *resIDs = [NSMutableArray array];
     for (NSString *ID in ids) {
         if (![resIDs containsObject:ID]) {
@@ -100,13 +131,13 @@
         }
     }
     
-    for (NSString *ID in resIDs) {
+    for (NSString *name in resIDs) {
         UserListModel *model = [UserListModel new];
-        model.userID = ID;
+        model.name = name;
         NSUInteger totle = 0;
         NSMutableArray *lists = [NSMutableArray array];
         for (ListModel *m in items) {
-            if ([m.userID isEqualToString:ID]) {
+            if ([m.name isEqualToString:name]) {
                 totle += m.totalNumber;
                 [lists addObject:m];
             }
@@ -128,61 +159,63 @@
 }
 
 #pragma mark - SearchTVCDelegate
-
 -(void)SearchTVC:(SearchTVC *)VC searchSuccess:(NSArray *)array {
     
     
 }
 
-
-#pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+#pragma mark - UITableViewDelegate, UITableViewDataSource
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 1;
+    return 35;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.allDates.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    HomeCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeCollectionCellID" forIndexPath:indexPath];
-    NSDate *date = self.allDates[indexPath.row];
-    cell.date = date;
-    [[self getDateItems:date] onFulfilled:^id(id value) {
-        NSArray *items = [self.dateItems objectForKey:[date formatOnlyDay]];
-        cell.items = items;
-        return value;
-    }];
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    return 44;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    UserListModel *model = [self currentDateItems][section];
+    NSString *string = [NSString stringWithFormat:@"%@(共%@块)",model.name,model.totle];
+    return string;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return [self currentDateItems].count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    UserListModel *model = [self currentDateItems][section];
+    return model.listArray.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    ListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ListCellID"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UserListModel *model = [self currentDateItems][indexPath.section];
+    cell.listModel = model.listArray[indexPath.row];
     return cell;
 }
 
-//设置每个item的尺寸
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CGSizeMake(kScreenWidth, self.view.bounds.size.height - 64);
+- (NSArray *)currentDateItems {
+    NSString *string = [self.currentDate formatOnlyDay];
+    if (self.dateItems[string] && [self.dateItems[string] isKindOfClass:[NSArray class]]) {
+        return self.dateItems[string];
+    }
+    return @[];
 }
 
-//设置每个item的UIEdgeInsets
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(0, 0, 0, 0);
-}
-
-//设置每个item水平间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 0;
-}
-
-
-//设置每个item垂直间距
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 0;
+- (ListNavView *)navView {
+    if (!_navView) {
+        _navView = [[ListNavView alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
+    }
+    return _navView;
 }
 
 

@@ -92,6 +92,7 @@
 		7F9904511CEB19EF0039AAD5 /* MoreTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904501CEB19EF0039AAD5 /* MoreTVC.m */; };
 		7FAD3B491F2AF31400935E48 /* add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B471F2AF31400935E48 /* add_green.png */; };
 		7FAD3B4A1F2AF31400935E48 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B481F2AF31400935E48 /* call.png */; };
+		7FBF1EB21FE78FB400BA1739 /* ListNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBF1EB11FE78FB400BA1739 /* ListNavView.m */; };
 		7FC224B61CFD60FD00CCBD85 /* List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC224B51CFD60FD00CCBD85 /* List.plist */; };
 		7FC224B91CFD651100CCBD85 /* ListHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC224B81CFD651100CCBD85 /* ListHeadView.m */; };
 		7FC224BB1CFD651A00CCBD85 /* ListHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC224BA1CFD651A00CCBD85 /* ListHeadView.xib */; };
@@ -317,6 +318,8 @@
 		7F9904501CEB19EF0039AAD5 /* MoreTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreTVC.m; sourceTree = "<group>"; };
 		7FAD3B471F2AF31400935E48 /* add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_green.png; sourceTree = "<group>"; };
 		7FAD3B481F2AF31400935E48 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
+		7FBF1EB01FE78FB400BA1739 /* ListNavView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListNavView.h; sourceTree = "<group>"; };
+		7FBF1EB11FE78FB400BA1739 /* ListNavView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListNavView.m; sourceTree = "<group>"; };
 		7FC224B51CFD60FD00CCBD85 /* List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = List.plist; sourceTree = "<group>"; };
 		7FC224B71CFD651100CCBD85 /* ListHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListHeadView.h; sourceTree = "<group>"; };
 		7FC224B81CFD651100CCBD85 /* ListHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListHeadView.m; sourceTree = "<group>"; };
@@ -844,6 +847,8 @@
 				7FC22FD91F6298E700717CEE /* ListCell.m */,
 				7FCDB2A51F2ED5D200759928 /* HomeCollectionCell.h */,
 				7FCDB2A61F2ED5D200759928 /* HomeCollectionCell.m */,
+				7FBF1EB01FE78FB400BA1739 /* ListNavView.h */,
+				7FBF1EB11FE78FB400BA1739 /* ListNavView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1090,7 +1095,7 @@
 					7F06A6A81CE05ADD006B9CA4 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 57CNB6KP3B;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					7F06A6C11CE05ADD006B9CA4 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1340,6 +1345,7 @@
 				7FCDB30D1F2EF17100759928 /* Underscore+Strings.m in Sources */,
 				7F60CC541D2A35BD00A53799 /* FMDatabaseAdditions.m in Sources */,
 				7FCDB30F1F2EF17100759928 /* Underscore+Functional.m in Sources */,
+				7FBF1EB21FE78FB400BA1739 /* ListNavView.m in Sources */,
 				269ED3D71F60EFCE0047AF86 /* UserModel.m in Sources */,
 				7F60CC561D2A35BD00A53799 /* FMDatabaseQueue.m in Sources */,
 				7FC224C91CFD84A100CCBD85 /* SearchTVC.m in Sources */,
@@ -1553,17 +1559,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: you ww (V7FNA5PMV7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 57CNB6KP3B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhoneGLASS/PrefixHeader.pch";
 				INFOPLIST_FILE = iPhoneGLASS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ayang.hpGlass;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tzhp.hpGlass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "bfe5bfa9-a805-4315-a1d3-bf95661b0bfb";
+				PROVISIONING_PROFILE_SPECIFIER = hpDevelopment;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1574,18 +1580,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: you ww (57CNB6KP3B)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: you ww (57CNB6KP3B)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 57CNB6KP3B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhoneGLASS/PrefixHeader.pch";
 				INFOPLIST_FILE = iPhoneGLASS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ayang.hpGlass;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tzhp.hpGlass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "3ec142c5-28c2-4e8d-9e87-ea1066550e0a";
+				PROVISIONING_PROFILE_SPECIFIER = hpDistribution;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

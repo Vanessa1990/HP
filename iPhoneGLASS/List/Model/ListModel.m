@@ -14,18 +14,18 @@
 +(ListModel *)modelWithDict:(NSDictionary *)dict {
     
     ListModel *model = [[ListModel alloc]init];
-    model.name = dict[@"name"];
-    model.thick = dict[@"thick"];
-    model.number = [dict[@"number"] integerValue];
-    model.totalNumber = [dict[@"totleNumber"] integerValue];
-    model.date = dict[@"date"];
-    model.width = dict[@"width"];
-    model.height = dict[@"height"];
-    model.isFinish = [dict[@"isFinish"] boolValue];
-    model.wind = [dict[@"wind"] boolValue];
-    model.color = dict[@"color"];
-    model.glassID = dict[@"glassID"];
-    model.userID = dict[@"_id"];
+    model.name = dict[@"company"];
+    model.thick = dict[@"category"];
+    model.number = dict[@"stockIn"]?[dict[@"stockIn"] integerValue]:0;
+    model.totalNumber = dict[@"count"]?[dict[@"count"] integerValue]:0;
+    model.date = dict[@"createdAt"];
+    model.width = [NSString stringWithFormat:@"%@",dict[@"width"]];
+    model.height = [NSString stringWithFormat:@"%@",dict[@"length"]];
+//    model.isFinish = [dict[@"isFinish"] boolValue];
+//    model.wind = [dict[@"wind"] boolValue];
+//    model.color = dict[@"color"];
+    model.glassID = dict[@"_id"];
+//    model.userID = dict[@"_id"];
     
     return model;
 }

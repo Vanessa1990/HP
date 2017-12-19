@@ -7,8 +7,11 @@
 //
 
 #import "WriteInViewController.h"
+#import "HomeViewController.h"
 #import "ResultCell.h"
 #import "MBProgressHUD.h"
+#import "BimService.h"
+#import "ListModel.h"
 
 @interface WriteInViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, ResultCellDelegate>
 
@@ -40,6 +43,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCellID"];
     
     self.searchItems = [NSMutableArray array];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看订单" style:UIBarButtonItemStylePlain target:self action:@selector(seeMore:)];
 }
 
 
@@ -51,24 +56,70 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [self.view endEditing:YES];
-    NSArray *array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
-    [self.searchItems addObject:array[0]];
-    [self.tableView reloadData];
+    NSArray *allValue = [searchBar.text componentsSeparatedByString:@"+"];
+    // 暂不考虑姓名
+    NSDictionary *searchDict = @{@"length":allValue[0],@"width":allValue[1]};
+    [[[BimService instance] getListAttach:nil searchDict:searchDict] onFulfilled:^id(id value) {
+        NSMutableArray *array = [NSMutableArray array];
+        for (NSDictionary *dict in value) {
+            ListModel *model = [ListModel modelWithDict:dict];
+            [array addObject:model];
+        }
+        self.searchItems = [NSMutableArray arrayWithArray:array];
+        [self.tableView reloadData];
+        
+        return value;
+    } rejected:^id(NSError *reason) {
+        return reason;
+    }];
     
 }
 
+- (void)seeMore:(id)sender {
+    HomeViewController *vc = [[HomeViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - ResultCellDelegate
-- (void)ResultCell:(UITableViewCell *)cell didPutaway:(NSDictionary *)glassDictionary
+- (void)ResultCell:(UITableViewCell *)cell didPutaway:(ListModel *)model
 {
     //上传数据
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.label.text = @"正在入库";
     //成功之后退出
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        hud.label.text = @"入库成功";
+    NSUInteger newStockin = model.number?model.number:0;
+    if (newStockin < model.totalNumber) {
+        newStockin+=1;
+        [[[BimService instance] updateGlassInfo:model.glassID newDict:@{@"stockIn":@(newStockin)}] onFulfilled:^id(id value) {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:value options:kNilOptions error:nil];
+            if (dict) {
+                hud.label.text = @"入库成功";
+                [hud hideAnimated:YES afterDelay:0.5];
+                // 修改当前数据
+                ListModel *newmodel = [ListModel modelWithDict:dict];
+                [self reloadData:newmodel old:model];
+            }else{
+                hud.label.text = @"入库失败,请稍后重试";
+                [hud hideAnimated:YES afterDelay:0.5];
+            }
+            
+            return value;
+        }];
+    }else{
+        hud.label.text = @"已全!!!不可重复入库!!!";
         [hud hideAnimated:YES afterDelay:0.5];
-        //更新当前搜索数据
-    });
+    }
+}
+
+- (void)reloadData:(ListModel *)newModel old:(ListModel *)oldModel{
+    for (ListModel *model in self.searchItems) {
+        if ([oldModel isEqual:model]) {
+            NSInteger index = [self.searchItems indexOfObject:oldModel];
+            [self.searchItems removeObject:oldModel];
+            [self.searchItems insertObject:newModel atIndex:index];
+            [self.tableView reloadData];
+        }
+    }
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
@@ -82,7 +133,7 @@
     ResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultCellID"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
-    
+    cell.model = self.searchItems[indexPath.row];
     return cell;
 }
 

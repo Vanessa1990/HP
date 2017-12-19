@@ -11,11 +11,9 @@
 
 @interface UserListModel : NSObject
 
-@property(nonatomic,strong) NSString *userID;
+@property(nonatomic,strong) NSString *name;
 
 @property(nonatomic,strong) NSString *totle;
-
-@property(nonatomic,strong) NSString *date;
 
 @property(nonatomic,strong) NSArray <ListModel *>*listArray;
 

@@ -257,19 +257,17 @@ typedef void(^TDownloadComplete)(id task, NSError *error);
 @implementation AFNetworkingHelper
 
 + (SHXPromise *)getResource:(NSString *)URLString
-                 parameters:(id)parameters
+                 parameters:(NSDictionary *)parameters
 {
     SHXPromise *promise = [[SHXPromise alloc] init];
-    
+
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
+//    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
     session.responseSerializer = [AFJSONResponseSerializer serializer];
-    
+
     [session GET:URLString
       parameters:parameters
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            
-        }
+        progress:nil
          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [promise fulfill:responseObject];
         }
@@ -292,15 +290,12 @@ typedef void(^TDownloadComplete)(id task, NSError *error);
     SHXPromise *promise = [[SHXPromise alloc] init];
     
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-    session.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"text/json", @"text/javascript", @"text/plain", nil];
-    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
+    session.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
  
-    
-    [session POST:URLString
+    [session POST:@"http://localhost:8081/api/user/add"
        parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             
-         }
+         progress:nil
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
              [promise fulfill:responseObject];
          }
@@ -356,10 +351,10 @@ typedef void(^TDownloadComplete)(id task, NSError *error);
     SHXPromise *promise = [[SHXPromise alloc] init];
     
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
-    session.requestSerializer = [AFHTTPRequestSerializer serializer];
+//    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
+//    session.requestSerializer = [AFHTTPRequestSerializer serializer];
     session.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
+
     [session PUT:URLString
       parameters:parameters
          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -382,32 +377,32 @@ typedef void(^TDownloadComplete)(id task, NSError *error);
                     parameters:(id)parameters
      constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
 {
-    
+  
     SHXPromise *promise = [[SHXPromise alloc] init];
     
-    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
-    
-    NSError *serializationError = nil;
-    NSMutableURLRequest *request = [session.requestSerializer multipartFormRequestWithMethod:@"PUT" URLString:[[NSURL URLWithString:URLString relativeToURL:session.baseURL] absoluteString] parameters:parameters constructingBodyWithBlock:block error:&serializationError];
-    if (serializationError) {
-        dispatch_async(session.completionQueue ?: dispatch_get_main_queue(), ^{
-            [promise reject:serializationError];
-        });
-        return promise;
-    }
-    
-    __block NSURLSessionDataTask *task = [session uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
-        if (error) {
-            [promise reject:error];
-        } else {
-            [promise fulfill:responseObject];
-        }
-    }];
-    
-    [task resume];
+//    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+//    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
+//
+//    NSError *serializationError = nil;
+//    NSMutableURLRequest *request = [session.requestSerializer multipartFormRequestWithMethod:@"PUT" URLString:[[NSURL URLWithString:URLString relativeToURL:session.baseURL] absoluteString] parameters:parameters constructingBodyWithBlock:block error:&serializationError];
+//    if (serializationError) {
+//        dispatch_async(session.completionQueue ?: dispatch_get_main_queue(), ^{
+//            [promise reject:serializationError];
+//        });
+//        return promise;
+//    }
+//
+//    __block NSURLSessionDataTask *task = [session uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
+//
+//    } completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
+//        if (error) {
+//            [promise reject:error];
+//        } else {
+//            [promise fulfill:responseObject];
+//        }
+//    }];
+//
+//    [task resume];
     
     return promise;
 }

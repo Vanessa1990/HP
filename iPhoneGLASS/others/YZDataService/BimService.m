@@ -19,7 +19,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.address = @"http://52.88.125.48:8081";//http://52.88.125.48
+        self.address = @"http://localhost:8081";//@"http://52.88.125.48:8081";
         // 陈鹏
 //        self.address = @"http://192.168.1.239:3000";
     }
@@ -189,8 +189,9 @@
 // 测试
 - (SHXPromise *)test
 {
-    NSString *url = [NSString stringWithFormat:@"%@test", self.baseAPI];
+    NSString *url = [NSString stringWithFormat:@"%@/test", self.baseAPI];
     return [AFNetworkingHelper getResource:url parameters:nil];
+//    return [AFNetworkingHelper postResource:url parameters:@{@"First Name":@"111",@"last Name":@"111"}];
 }
 
 // 注册新用户
@@ -202,10 +203,12 @@
 }
 
 // 登录
-- (SHXPromise *)load:(NSString *)name pwd:(NSString *)pwd
+- (SHXPromise *)load:(NSString *)phone pwd:(NSString *)pwd
 {
-    NSString *url = [[NSString stringWithFormat:@"%@login?name=%@&password=%@", self.baseAPI,name,pwd] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    return [AFNetworkingHelper getResource:url parameters:nil];
+    // @"http://localhost:8081/api/login"
+    NSString *url = [NSString stringWithFormat:@"%@login", self.baseAPI];
+    NSDictionary *dict = @{@"phone":phone,@"password":pwd};
+    return [AFNetworkingHelper getResource:url parameters:dict];
 }
 
 // 查询数据
@@ -231,6 +234,12 @@
     }
     [promise resolve:array];
     return promise;
+}
+
+// 更新数据
+- (SHXPromise *)updateGlassInfo:(NSString *)glassId newDict:(NSDictionary *)newDict {
+    NSString *url = [NSString stringWithFormat:@"%@order/%@", self.baseAPI,glassId];
+    return [AFNetworkingHelper updateResource:url parameters:newDict];
 }
 
 @end

@@ -40,13 +40,9 @@
     
     _listModel = listModel;
 //    self.nameLable.text = listModel.name;
-    if ([listModel.color isEqualToString:@"0"]) {
-        self.thickLable.text = listModel.thick;
-    }else {
-        self.thickLable.text = [NSString stringWithFormat:@"%@ 福特蓝",[listModel.thick substringToIndex:1]];
-    }
+    self.thickLable.text = [NSString stringWithFormat:@"%@",listModel.thick];
     self.sizeLable.text = [NSString stringWithFormat:@"%@ * %@ * %zd",listModel.width,listModel.height,listModel.totalNumber];
-    self.finishLable.text = (listModel.number == listModel.totalNumber)?@"是":[NSString stringWithFormat:@"%zd/%zd",listModel.number,listModel.totalNumber];
+    self.finishLable.text = (listModel.number == listModel.totalNumber)?@"⭕️":[NSString stringWithFormat:@"%zd/%zd",listModel.number,listModel.totalNumber];
     self.finishLable.textColor = (listModel.number == listModel.totalNumber)?[UIColor redColor]:[UIColor blackColor];
 }
 

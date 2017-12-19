@@ -62,12 +62,15 @@
 - (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd;
 
 // 登录
-- (SHXPromise *)load:(NSString *)name pwd:(NSString *)pwd;
+- (SHXPromise *)load:(NSString *)phone pwd:(NSString *)pwd;
 
 // 查询数据
 - (SHXPromise *)getListAttach:(NSString *)attach searchDict:(NSDictionary *)searchDict;
 
 // 获取用户下单日期
 - (SHXPromise *)getAllDate:(NSString *)userID;
+
+// 更新数据
+- (SHXPromise *)updateGlassInfo:(NSString *)glassId newDict:(NSDictionary *)newDict;
 
 @end

@@ -52,7 +52,7 @@
         make.right.mas_equalTo(-10);
         make.height.mas_equalTo(self.contentView.bounds.size.height);
         make.top.mas_equalTo(0);
-        make.width.mas_equalTo(self.typeLabel);
+        make.width.mas_equalTo(80);
     }];
     
     self.sizeLabel = [[UILabel alloc] init];
@@ -62,7 +62,7 @@
         make.left.mas_equalTo(self.typeLabel.mas_right);
         make.right.mas_equalTo(self.countLabel.mas_left);
         make.top.mas_equalTo(0);
-        make.width.mas_equalTo(self.typeLabel);
+        make.width.mas_equalTo(self.typeLabel).offset(-30);
         make.height.mas_equalTo(self.contentView.bounds.size.height);
     }];
 
@@ -72,13 +72,9 @@
     
     _listModel = listModel;
     //    self.nameLable.text = listModel.name;
-    if ([listModel.color isEqualToString:@"0"]) {
-        self.typeLabel.text = listModel.thick;
-    }else {
-        self.typeLabel.text = [NSString stringWithFormat:@"%@ 福特蓝",[listModel.thick substringToIndex:1]];
-    }
-    self.sizeLabel.text = [NSString stringWithFormat:@"%@ * %@",listModel.width,listModel.height];
-    self.countLabel.text = (listModel.number == listModel.totalNumber)?@"是":[NSString stringWithFormat:@"%zd/%zd",listModel.number,listModel.totalNumber];
+    self.typeLabel.text = [NSString stringWithFormat:@"%@",listModel.thick];
+    self.sizeLabel.text = [NSString stringWithFormat:@"%@ * %@",listModel.height,listModel.width];
+    self.countLabel.text = (listModel.number == listModel.totalNumber)?@"⭕️":[NSString stringWithFormat:@"%zd/%zd",listModel.number,listModel.totalNumber];
     self.countLabel.textColor = (listModel.number == listModel.totalNumber)?[UIColor redColor]:[UIColor blackColor];
 }
 

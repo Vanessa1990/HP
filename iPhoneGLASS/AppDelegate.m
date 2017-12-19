@@ -10,6 +10,8 @@
 #import "MainTabBarController.h"
 #import "WWLoadVC.h"
 #import "YTKKeyValueStore.h"
+#import "BimService.h"
+#import "RegistViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,14 +22,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch
-    
+
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     // 判断是否登录
     BOOL logged = self.logged;
     if (!logged) {
         //进入登录页面
-        WWLoadVC *loadVC = [[WWLoadVC alloc]init];
+        WWLoadVC *loadVC = [[WWLoadVC alloc] init];
         UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:loadVC];
         self.window.rootViewController = navc;
     }else {
