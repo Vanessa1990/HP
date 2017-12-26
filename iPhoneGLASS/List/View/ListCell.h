@@ -13,4 +13,10 @@
 
 @property(nonatomic,strong) ListModel *listModel;
 
+@property (assign, nonatomic) BOOL edit;
+
+@property (assign, nonatomic) BOOL choose;
+
+@property (assign, nonatomic) BOOL showDate;
+
 @end

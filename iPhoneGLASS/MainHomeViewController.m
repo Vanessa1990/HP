@@ -26,14 +26,19 @@ typedef enum : NSUInteger {
 
 @implementation MainHomeViewController
 
++ (void)load {
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -500)
+                                                         forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.title = @"主页";
-    NSArray *titles = @[@"关于我们", @"订单列表", @"入库",@"计算"];
-    NSArray *tags = @[@110,@111,@112,@113];
+    NSArray *titles = @[ @"订单列表", @"玻璃管理",@"计算",@"设置"];
+    NSArray *tags = @[@111,@112,@113,@110];
     if (![UserInfo shareInstance].isAdmin) {
         titles = @[@"关于我们", @"订单列表"];
         tags = @[@110,@111];

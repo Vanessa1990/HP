@@ -7,19 +7,10 @@
 //
 
 #import "HomeViewController.h"
-#import "HomeCollectionCell.h"
-#import "SearchTVC.h"
-#import "MoreTVC.h"
-#import "NSDate+YZBim.h"
-#import "BimService.h"
-#import "UserListModel.h"
-#import "ListNavView.h"
-#import "ListCell.h"
-#import "Utils.h"
+#import "ListHeadView.h"
 
-@interface HomeViewController ()<SearchTVCDelegate,UITableViewDelegate, UITableViewDataSource>
 
-@property(nonatomic, strong) UICollectionView *collectionView;
+@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate>
 
 @property (nonatomic, strong) NSArray *allDates;
 
@@ -29,19 +20,27 @@
 
 @property(nonatomic, strong) ListNavView *navView;
 
-@property(nonatomic, strong) UITableView *tableView;
+
 
 @end
 
+static NSUInteger const secondsPerDay = 24 * 60 * 60;
+
 @implementation HomeViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+   
     [self initNav];
     self.allDates = [NSArray array];
     self.dateItems = [NSMutableDictionary dictionary];
-    
+    [self initView];
+    [self getTableViewData];
+}
+
+- (void)initView {
     self.tableView = [[UITableView alloc] init];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -50,25 +49,36 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     //tableview设置
-    //    [self.tableView registerNib:[UINib nibWithNibName:@"ListTableViewCell" bundle:nil] forCellReuseIdentifier:@"listcellID"];
     [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    NSTimeInterval secondsPerDay = 24 * 60 * 60;
-    [[[BimService instance] getAllDate:[UserInfo shareInstance].userID] onFulfilled:^id(NSArray *value) {
-        self.allDates = [NSArray arrayWithArray:value];
-        // 取出最近的时间赋值给 currentDate
-        self.currentDate = [NSDate dateWithTimeIntervalSinceNow:-secondsPerDay];
-        [self getDateItems:self.currentDate];
-        return self.allDates;
-    }];
-    
 }
 
--(void)initNav {
-    
+- (void)initNav {
     self.navigationItem.titleView = self.navView;
-    self.navView.currenDateLabel.text = @"2017-12-18";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+}
+
+- (void)getTableViewData {
+    if ([UserInfo shareInstance].isAdmin) {
+        self.currentDate = [NSDate date];
+        self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
+        [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
+            [self reloadDataAndUI];
+            return value;
+        }];
+    }else{
+        [[[BimService instance] getAllDate:[UserInfo shareInstance].userID] onFulfilled:^id(NSArray *value) {
+            self.allDates = [NSArray arrayWithArray:value];
+            // 取出最近的时间赋值给 currentDate
+            self.currentDate = [NSDate date];
+            self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
+            [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
+                [self reloadDataAndUI];
+                return value;
+            }];
+            return self.allDates;
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,16 +86,36 @@
     // Dispose of any resources that can be recreated.
 }
 
+// 取出所有的分组
+- (NSArray *)getAllSections:(NSArray *)items {
+    NSMutableArray *resIDs = [NSMutableArray array];
+    // 取出组
+    for (ListModel *m in items) {
+        NSMutableString *section = [NSMutableString stringWithFormat:@"%@",m.name];
+        if (m.mark) {
+            [section appendFormat:@"+%@",m.mark];
+        }
+        if (![resIDs containsObject:section]) {
+            [resIDs addObject:section];
+        }
+    }
+    return resIDs;
+}
+
 - (SHXPromise *)getDateItems:(NSDate *)date
 {
     SHXPromise *promise = [SHXPromise new];
     if (![self.dateItems objectForKey:[date formatOnlyDay]]) {
+        NSMutableDictionary *searchDict = [NSMutableDictionary dictionary];
         
-        NSTimeInterval secondsPerDay = 24 * 60 * 60;
         NSDate *tomorrow = [date dateByAddingTimeInterval:secondsPerDay];
         NSString *todayString = [date formatOnlyDay];
         NSString *tomorrowString = [tomorrow formatOnlyDay];
-        [[[BimService instance] getListAttach:nil searchDict:@{@"createdAt":@{@"$gte":todayString,@"$lt":tomorrowString}}] onFulfilled:^id(id value) {
+        [searchDict setObject:@{@"$gte":todayString,@"$lt":tomorrowString} forKey:@"createdAt"];
+        if (![UserInfo shareInstance].isAdmin) {
+            [searchDict setObject:[UserInfo shareInstance].name forKey:@"name"];
+        }
+       return [[[BimService instance] getListAttach:nil searchDict:searchDict] onFulfilled:^id(id value) {
             
             NSMutableArray *itemArray = [NSMutableArray array];
             for (NSDictionary *dict in value) {
@@ -93,62 +123,50 @@
                 [itemArray addObject:model];
             }
             [self.dateItems setObject:[self dealItems:itemArray] forKey:todayString];
-            [self.tableView reloadData];
-            
-            return value;
+            return self.dateItems;
         } rejected:^id(NSError *reason) {
             return reason;
         }];
+    }else{
+       [promise resolve:self.dateItems];
+        return promise;
     }
-    [promise resolve:self.dateItems];
-    
-    return promise;
-    
-}
-
-- (NSDate *)dateFromString:(NSString *)dateString
-{
-    if (!dateString) {
-        return nil;
-    }
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat: @"yyyy-MM-dd"];
-    [formatter setLocale:[NSLocale currentLocale]];
-    NSDate *date= [formatter dateFromString:dateString];
-    return date;
 }
 
 
 - (NSArray *)dealItems:(NSArray *)items
 {
     NSMutableArray *res = [NSMutableArray array];
-    NSArray *ids = [items valueForKey:@"name"];
-    NSMutableArray *resIDs = [NSMutableArray array];
-    for (NSString *ID in ids) {
-        if (![resIDs containsObject:ID]) {
-            [resIDs addObject:ID];
-        }
-    }
-    
-    for (NSString *name in resIDs) {
+    NSArray *resIDs = [NSArray arrayWithArray:[self getAllSections:items]];
+    // 分组
+    for (NSString *section in resIDs) {
         UserListModel *model = [UserListModel new];
-        model.name = name;
+        model.name = section;
         NSUInteger totle = 0;
         NSMutableArray *lists = [NSMutableArray array];
         for (ListModel *m in items) {
-            if ([m.name isEqualToString:name]) {
+            NSString *middle = m.mark?[NSMutableString stringWithFormat:@"%@+%@",m.name,m.mark]:m.name;
+            if ([section isEqualToString:middle]) {
                 totle += m.totalNumber;
                 [lists addObject:m];
             }
         }
-        model.totle = [NSString stringWithFormat:@"%zd",totle];
-        model.listArray = lists;
-        [res addObject:model];
+        if (totle > 0){
+            model.totle = [NSString stringWithFormat:@"%zd",totle];
+            model.listArray = lists;
+            [res addObject:model];
+        }
+        
     }
     return res;
 }
 
+- (void)reloadDataAndUI {
+    NSString *dayString = [self.currentDate formatOnlyDay];
+    self.navView.currenDateLabel.text = dayString;
+    self.items = [NSArray arrayWithArray:[self currentDateItems]];
+    [self.tableView reloadData];
+}
 
 #pragma mark - event
 -(void)search {
@@ -158,11 +176,27 @@
     [self.navigationController pushViewController:searchTVC animated:YES];
 }
 
-#pragma mark - SearchTVCDelegate
--(void)SearchTVC:(SearchTVC *)VC searchSuccess:(NSArray *)array {
-    
-    
+#pragma mark - ListNavViewDelegate
+- (void)getNewDateGlassDataWithPre:(BOOL)preDay {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, kScreenWidth, 44 ) animated:YES];
+    });
+    NSDate *newDay;
+    if (preDay) {
+        newDay = [NSDate dateWithTimeInterval:-24*60*60 sinceDate:self.currentDate];
+    }else{
+        newDay = [NSDate dateWithTimeInterval:24*60*60 sinceDate:self.currentDate];
+        if ([newDay timeIntervalSinceNow] > 0) {
+            return;
+        }
+    }
+    self.currentDate = newDay;
+    [[self getDateItems:newDay] onFulfilled:^id(id value) {
+        [self reloadDataAndUI];
+        return value;
+    }];
 }
+
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -175,21 +209,31 @@
     return 44;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UserListModel *model = self.items[section];
+    ListHeadView *headView = [ListHeadView headViewWithSeeMoreInfoBlock:^{
+        NSLog(@"%@",model);
+    }];
+    headView.nameLable.text = model.name;
+    headView.totleLable.text = [NSString stringWithFormat:@"(共%@块)",model.totle];
+    return headView;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    UserListModel *model = [self currentDateItems][section];
+    UserListModel *model = self.items[section];
     NSString *string = [NSString stringWithFormat:@"%@(共%@块)",model.name,model.totle];
     return string;
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return [self currentDateItems].count;
+    return self.items.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    UserListModel *model = [self currentDateItems][section];
+    UserListModel *model = self.items[section];
     return model.listArray.count;
 }
 
@@ -198,10 +242,11 @@
     
     ListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ListCellID"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    UserListModel *model = [self currentDateItems][indexPath.section];
+    UserListModel *model = self.items[indexPath.section];
     cell.listModel = model.listArray[indexPath.row];
     return cell;
 }
+
 
 - (NSArray *)currentDateItems {
     NSString *string = [self.currentDate formatOnlyDay];
@@ -213,10 +258,18 @@
 
 - (ListNavView *)navView {
     if (!_navView) {
-        _navView = [[ListNavView alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
+        _navView = [[ListNavView alloc] initWithFrame:CGRectMake(0, 0, 220, 44) delegate:self];
     }
     return _navView;
 }
+
+- (NSArray *)items {
+    if (!_items) {
+        _items = [NSArray array];
+    }
+    return _items;
+}
+
 
 
 @end

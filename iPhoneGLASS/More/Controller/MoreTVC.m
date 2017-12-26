@@ -13,6 +13,8 @@
 #import "AboutViewController.h"
 #import "UIView+MJExtension.h"
 #import "RegistViewController.h"
+#import "MBProgressHUD.h"
+#import "ContactTableViewController.h"
 
 @interface MoreTVC ()
 
@@ -106,45 +108,50 @@
 //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //        cell.textLabel.text = @"清除缓存";
 //    }
-    
-    if (indexPath.row == 0) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.text = @"修改密码";
+    if ([UserInfo shareInstance].isAdmin) {
+        if (indexPath.row == 0) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = @"注册";
+        }
+        else if (indexPath.row == 1) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = @"关于我们";
+        }else{
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = @"客户资料";
+        }
+    }else{
+        if (indexPath.row == 0) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = @"修改密码";
+        }
+        else if (indexPath.row == 1) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = @"关于我们";
+        }
     }
-    
-    else if (indexPath.row == 1) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.text = @"关于我们";
-    }
-    
-    else {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.text = @"注册";
-    }
-    
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
-    if (indexPath.row == 1) {
+    if (indexPath.row == 0) {
+        if ([UserInfo shareInstance].isAdmin) {
+            RegistViewController *registVC = [[RegistViewController alloc]init];
+            [self.navigationController pushViewController:registVC animated:YES];
+        }else{
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.label.text = @"~_~暂不支持,敬请期待...";
+            [hud hideAnimated:YES afterDelay:1.0];
+        }
+    }else if (indexPath.row == 1) {
         AboutViewController *aboutVC = [[AboutViewController alloc]init];
         [self.navigationController pushViewController:aboutVC animated:YES];
-        
+    }else {
+        ContactTableViewController *contactVC = [[ContactTableViewController alloc]init];
+        [self.navigationController pushViewController:contactVC animated:YES];
     }
-    
-    else if (indexPath.row == 2) {
-        RegistViewController *registVC = [[RegistViewController alloc]init];
-        [self.navigationController pushViewController:registVC animated:YES];
-        
-    }
-    
-    else { // 修改密码
-        
-    }
-    
 }
 
 @end

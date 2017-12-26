@@ -58,6 +58,9 @@
 // 测试
 - (SHXPromise *)test;
 
+// 获取所有用户
+- (SHXPromise *)getAllUsers;
+
 // 注册新用户
 - (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd;
 
@@ -72,5 +75,9 @@
 
 // 更新数据
 - (SHXPromise *)updateGlassInfo:(NSString *)glassId newDict:(NSDictionary *)newDict;
+
+// 删除数据
+- (SHXPromise *)deleteGlasses:(NSArray *)glassIds;
+- (SHXPromise *)deleteGlass:(NSString *)glassId;
 
 @end

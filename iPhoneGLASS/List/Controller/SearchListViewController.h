@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HomeViewController.h"
 
-@interface SearchListViewController : UITableViewController
+@interface SearchListViewController : HomeViewController
 
-@property(nonatomic, strong) NSArray *items;
+- (instancetype)initWithSearchDict:(NSDictionary *)searchDict sort:(BOOL)sort;
+
+- (instancetype)initWithSearchDict:(NSDictionary *)searchDict;
 
 @end

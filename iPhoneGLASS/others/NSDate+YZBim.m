@@ -82,7 +82,7 @@
 - (NSString *)formatMonthAndDay
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"MM月dd日";
+    formatter.dateFormat = @"MM/dd";
     return [formatter stringFromDate:self];
 }
 

@@ -276,7 +276,7 @@ static NSInteger const yearSum = 200;
 -(NSArray *)thickArray {
     
     if (!_thickArray) {
-        _thickArray = @[@"4cm",@"5cm",@"6cm",@"8cm",@"10cm",@"12cm"];
+        _thickArray = @[@"全部",@"4mm",@"5mm",@"6mm",@"8mm",@"10mm",@"12mm"];
     }
     return _thickArray;
 }

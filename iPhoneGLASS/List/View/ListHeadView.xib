@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,23 +15,41 @@
             <rect key="frame" x="0.0" y="0.0" width="506" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日期" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c50-Jf-4Lv">
-                    <rect key="frame" x="235.5" y="12" width="35" height="20.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHO-xF-l0g">
+                    <rect key="frame" x="20" y="12" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJE-an-JA3">
+                    <rect key="frame" x="65" y="12" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5pz-je-gXQ">
+                    <rect key="frame" x="455" y="7" width="31" height="30"/>
+                    <state key="normal" title="详情"/>
+                    <connections>
+                        <action selector="seeMore:" destination="iN0-l3-epB" eventType="touchUpInside" id="MhS-oZ-Ypb"/>
+                    </connections>
+                </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="c50-Jf-4Lv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3uI-AG-uuT"/>
-                <constraint firstItem="c50-Jf-4Lv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="AYs-Fe-8Cd"/>
+                <constraint firstItem="5pz-je-gXQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="30P-tu-beo"/>
+                <constraint firstItem="nHO-xF-l0g" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="B8j-Yc-BXv"/>
+                <constraint firstItem="nHO-xF-l0g" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="BRs-Nr-rKH"/>
+                <constraint firstItem="CJE-an-JA3" firstAttribute="leading" secondItem="nHO-xF-l0g" secondAttribute="trailing" constant="3" id="SG8-5c-VLz"/>
+                <constraint firstAttribute="trailing" secondItem="5pz-je-gXQ" secondAttribute="trailing" constant="20" id="WCy-27-lkl"/>
+                <constraint firstItem="CJE-an-JA3" firstAttribute="centerY" secondItem="nHO-xF-l0g" secondAttribute="centerY" id="g0d-ve-sKW"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="dateLable" destination="c50-Jf-4Lv" id="Gf6-pK-TkO"/>
+                <outlet property="nameLable" destination="nHO-xF-l0g" id="PPL-Ss-CaI"/>
+                <outlet property="totleLable" destination="CJE-an-JA3" id="hHx-rb-9mq"/>
             </connections>
-            <point key="canvasLocation" x="349" y="220.5"/>
+            <point key="canvasLocation" x="349" y="220"/>
         </view>
     </objects>
 </document>

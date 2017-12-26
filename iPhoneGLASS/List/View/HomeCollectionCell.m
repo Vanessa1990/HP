@@ -57,7 +57,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.items = [NSArray array];
     
-    ListHeadView *view = [ListHeadView headView];
+    ListHeadView *view = [ListHeadView headViewWithSeeMoreInfoBlock:^{
+        
+    }];
     view.frame = CGRectMake(0, 0, kScreenWidth, 44);
     view.dateLable.text = [self.date formatOnlyDay];
     [self addSubview:view];

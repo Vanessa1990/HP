@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^SeeMoreBlock)();
+
+@protocol ListHeadViewDelegate
+
+@end
+
 @interface ListHeadView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLable;
@@ -16,6 +22,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
 
-+(instancetype)headView;
++ (instancetype)headViewWithSeeMoreInfoBlock:(SeeMoreBlock)seeBlcok;
 
 @end

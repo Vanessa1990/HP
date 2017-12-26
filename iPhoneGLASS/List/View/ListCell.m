@@ -8,6 +8,7 @@
 
 #import "ListCell.h"
 #import "ListModel.h"
+#import "NSDate+YZBim.h"
 
 @interface ListCell()
 
@@ -16,6 +17,10 @@
 @property(nonatomic, strong) UILabel *sizeLabel;
 
 @property(nonatomic, strong) UILabel *countLabel;
+
+@property(nonatomic, strong) UIImageView *editImageView;
+
+@property(nonatomic, strong) UILabel *dataLabel;
 
 @end
 
@@ -37,10 +42,32 @@
 
 - (void)setUp
 {
+    self.editImageView = [[UIImageView alloc] init];
+    self.editImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.contentView addSubview:self.editImageView];
+    [self.editImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.height.mas_equalTo(self.contentView.bounds.size.height);
+        make.top.mas_equalTo(0);
+        make.width.mas_equalTo(0);
+    }];
+    self.editImageView.hidden = YES;
+    
+    self.dataLabel = [[UILabel alloc] init];
+    self.dataLabel.font = YZ_Font(12);
+    [self.contentView addSubview:self.dataLabel];
+    [self.dataLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(0);
+        make.height.mas_equalTo(self.contentView.bounds.size.height);
+        make.top.mas_equalTo(0);
+        make.width.mas_equalTo(0);
+    }];
+    self.dataLabel.hidden = YES;
+    
     self.typeLabel = [[UILabel alloc] init];
     [self.contentView addSubview:self.typeLabel];
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(10);
+        make.left.mas_equalTo(self.editImageView.mas_right).offset(10);
         make.height.mas_equalTo(self.contentView.bounds.size.height);
         make.top.mas_equalTo(0);
     }];
@@ -49,7 +76,7 @@
     [self.contentView addSubview:self.countLabel];
     self.countLabel.textAlignment = NSTextAlignmentRight;
     [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-10);
+        make.right.mas_equalTo(self.dataLabel.mas_left).offset(-10);
         make.height.mas_equalTo(self.contentView.bounds.size.height);
         make.top.mas_equalTo(0);
         make.width.mas_equalTo(80);
@@ -65,7 +92,6 @@
         make.width.mas_equalTo(self.typeLabel).offset(-30);
         make.height.mas_equalTo(self.contentView.bounds.size.height);
     }];
-
 }
 
 -(void)setListModel:(ListModel *)listModel {
@@ -74,8 +100,38 @@
     //    self.nameLable.text = listModel.name;
     self.typeLabel.text = [NSString stringWithFormat:@"%@",listModel.thick];
     self.sizeLabel.text = [NSString stringWithFormat:@"%@ * %@",listModel.height,listModel.width];
-    self.countLabel.text = (listModel.number == listModel.totalNumber)?@"⭕️":[NSString stringWithFormat:@"%zd/%zd",listModel.number,listModel.totalNumber];
-    self.countLabel.textColor = (listModel.number == listModel.totalNumber)?[UIColor redColor]:[UIColor blackColor];
+    self.countLabel.text = listModel.isFinish?[NSString stringWithFormat:@"⭕️%zd",listModel.totalNumber]:[NSString stringWithFormat:@"%zd/%zd",listModel.number,listModel.totalNumber];
+    self.countLabel.textColor = listModel.isFinish?[UIColor redColor]:[UIColor blackColor];
+}
+
+- (void)setEdit:(BOOL)edit {
+    _edit = edit;
+    [self.editImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(edit?10:0);
+        make.width.mas_equalTo(edit?35:0);
+        make.height.mas_equalTo(edit?self.contentView.bounds.size.height:0);
+    }];
+    self.editImageView.hidden = !edit;
+}
+
+- (void)setChoose:(BOOL)choose {
+    _choose = choose;
+    self.imageView.image = [UIImage imageNamed:self.edit?(choose?@"choose.png":@"unchoose.png"):@""];
+}
+
+- (void)setShowDate:(BOOL)showDate {
+    _showDate = showDate;
+    if (showDate) {
+        self.dataLabel.hidden = NO;
+        self.dataLabel.text = [[NSDate dateFromISOString:self.listModel.date] formatMonthAndDay];
+    }else{
+        self.dataLabel.hidden = YES;
+        self.dataLabel.text = @"";
+    }
+    [self.dataLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(showDate?-3:0);
+        make.width.mas_equalTo(showDate?35:0);
+    }];
 }
 
 

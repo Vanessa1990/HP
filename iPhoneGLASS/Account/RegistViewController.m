@@ -45,16 +45,29 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.label.text = @"正在注册...";
+    // 先验证是否有重复的号码存储
     [[[BimService instance] registNewUser:name phone:phone pwd:pwd] onFulfilled:^id(id value) {
-        hud.label.text = @"注册成功";
+        if (value) {
+            hud.label.text = @"注册成功";
+            hud.mode = MBProgressHUDModeText;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [hud hideAnimated:YES afterDelay:0];
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            hud.label.text = @"此号码已经注册过!";
+            hud.mode = MBProgressHUDModeText;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [hud hideAnimated:YES afterDelay:0];
+            });
+        }
+        return value;
+    }rejected:^id(NSError *reason) {
+        hud.label.text = @"注册失败";
         hud.mode = MBProgressHUDModeText;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [hud hideAnimated:YES afterDelay:0];
-            [self.navigationController popViewControllerAnimated:YES];
         });
-        
-        return value;
-    }rejected:^id(NSError *reason) {
         return reason;
     }];
 }

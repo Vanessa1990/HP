@@ -8,11 +8,23 @@
 
 #import "ListHeadView.h"
 
+@interface  ListHeadView()
+
+@property(nonatomic, strong) SeeMoreBlock blcok;
+
+@end
+
 @implementation ListHeadView
 
-+(instancetype)headView {
-    
-    return [[[NSBundle mainBundle]loadNibNamed:@"ListHeadView" owner:nil options:nil] lastObject];
++ (instancetype)headViewWithSeeMoreInfoBlock:(SeeMoreBlock)seeBlcok {
+    ListHeadView *headView = [[[NSBundle mainBundle]loadNibNamed:@"ListHeadView" owner:nil options:nil] lastObject];
+    headView.blcok = seeBlcok;
+    return headView;
+}
+- (IBAction)seeMore:(id)sender {
+    if (self.blcok) {
+        self.blcok();
+    }
 }
 
 @end

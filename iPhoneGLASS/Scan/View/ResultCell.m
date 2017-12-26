@@ -22,11 +22,9 @@
     // Configure the view for the selected state
 }
 - (IBAction)save:(id)sender {
-    
     //上传数据
-    NSDictionary *dict = [NSDictionary dictionary];
     if ([self.delegate respondsToSelector:@selector(ResultCell:didPutaway:)]) {
-        [self.delegate ResultCell:self didPutaway:self.model];
+        [self.delegate ResultCell:self didPutaway:self.row];
     }
 }
 

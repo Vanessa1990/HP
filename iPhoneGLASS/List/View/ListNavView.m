@@ -11,6 +11,13 @@
 
 @implementation ListNavView
 
+- (instancetype)initWithFrame:(CGRect)frame delegate:(id)delegate {
+    if (self = [self initWithFrame:frame]) {
+        self.delegate = delegate;
+    }
+    return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self setUp];
@@ -64,7 +71,9 @@
 }
 
 - (void)changeDate:(BOOL)pre {
-    
+    if ([(id)self.delegate respondsToSelector:@selector(getNewDateGlassDataWithPre:)]) {
+        [self.delegate getNewDateGlassDataWithPre:pre];
+    }
 }
 
 @end

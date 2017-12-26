@@ -19,7 +19,8 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.address = @"http://localhost:8081";//@"http://52.88.125.48:8081";
+        self.address = @"http://localhost:3000";
+//        self.address = @"http://47.96.157.244:3000";
         // 陈鹏
 //        self.address = @"http://192.168.1.239:3000";
     }
@@ -194,12 +195,33 @@
 //    return [AFNetworkingHelper postResource:url parameters:@{@"First Name":@"111",@"last Name":@"111"}];
 }
 
+// 获取所有用户
+- (SHXPromise *)getAllUsers {
+    NSString *url = [NSString stringWithFormat:@"%@users", self.baseAPI];
+    return [AFNetworkingHelper getResource:url parameters:nil];
+}
+
 // 注册新用户
 - (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd
 {
     NSString *url = [NSString stringWithFormat:@"%@user/add", self.baseAPI];
     NSDictionary *dict = @{@"name":name,@"phone":phone,@"password":pwd};
-    return [AFNetworkingHelper postResource:url parameters:dict];
+    
+    return [[self checkSameUser:phone] onFulfilled:^id(NSArray *value) {
+        if (value && value.count > 0) {
+            return nil;
+        }
+        return [AFNetworkingHelper postResource:url parameters:dict];
+    } rejected:^id(NSError *reason) {
+        
+        return [AFNetworkingHelper postResource:url parameters:dict];
+    }];
+    
+}
+
+- (SHXPromise *)checkSameUser:(NSString *)phone {
+    NSString *url = [NSString stringWithFormat:@"%@user/%@", self.baseAPI,phone];
+    return [AFNetworkingHelper getResource:url parameters:nil];
 }
 
 // 登录
@@ -240,6 +262,20 @@
 - (SHXPromise *)updateGlassInfo:(NSString *)glassId newDict:(NSDictionary *)newDict {
     NSString *url = [NSString stringWithFormat:@"%@order/%@", self.baseAPI,glassId];
     return [AFNetworkingHelper updateResource:url parameters:newDict];
+}
+
+- (SHXPromise *)deleteGlasses:(NSArray *)glassIds {
+    NSMutableArray *ps = [NSMutableArray array];
+    for (NSString *glassId in glassIds) {
+        SHXPromise *p = [self deleteGlass:glassId];
+        [ps addObject:p];
+    }
+    return [SHXPromise all:ps];
+}
+
+- (SHXPromise *)deleteGlass:(NSString *)glassId {
+    NSString *url = [NSString stringWithFormat:@"%@deleteOrder/%@", self.baseAPI,glassId];
+    return [AFNetworkingHelper deleteResource:url parameters:nil];
 }
 
 @end

@@ -12,7 +12,7 @@
 
 @protocol ResultCellDelegate <NSObject>
 
-- (void)ResultCell:(UITableViewCell *)cell didPutaway:(ListModel *)model;
+- (void)ResultCell:(UITableViewCell *)cell didPutaway:(NSInteger)row;
 
 @end
 
@@ -21,6 +21,7 @@
 @property (nonatomic, copy) void (^saveSuccessBlock)();
 @property (nonatomic, strong) id <ResultCellDelegate>delegate;
 @property(nonatomic, strong) ListModel *model;
+@property (assign, nonatomic) NSInteger row;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;

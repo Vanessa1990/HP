@@ -36,4 +36,6 @@
 
 @property (nonatomic, strong) NSString *userID;
 
+@property(nonatomic, strong) NSString *mark;
+
 @end

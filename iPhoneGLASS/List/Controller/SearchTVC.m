@@ -13,6 +13,7 @@
 #import "ListModel.h"
 #import "ScanViewController.h"
 #import "SearchListViewController.h"
+#import "UserInfo.h"
 
 @interface SearchTVC ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *beginDate;
@@ -39,9 +40,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"筛选";
     
-    if (![HP_Delegate.name isEqualToString:@"史和平"]) {
-        self.name.text = HP_Delegate.name;
+    if (![UserInfo shareInstance].isAdmin) {
+        self.name.text = [UserInfo shareInstance].name;
         self.name.userInteractionEnabled = NO;
     }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(sure)];
@@ -71,22 +73,46 @@
     
 }
 
--(void)sure {
-    
-    //假数据
-    //列表数据初始化
-    NSArray *array = [NSArray array];
-    NSMutableArray *itemArray = [NSMutableArray array];
-    array = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"List.plist" ofType:nil]];
-    for (NSDictionary *dict in array) {
-        ListModel *model = [ListModel modelWithDict:dict];
-        [itemArray addObject:model];
+- (BOOL)textIsNotNull:(UITextField *)textField {
+    if ([@"全部" isEqualToString:textField.text]) {
+        return NO;
     }
-    SearchListViewController *VC = [[SearchListViewController alloc] init];
-    VC.items = itemArray;
+    return textField.text && textField.text.length > 0;
+}
+
+-(void)sure {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if ([self textIsNotNull:self.height]) {
+        [dict setValue:self.height.text forKey:@"length"];
+    }
+    if ([self textIsNotNull:self.width]) {
+        [dict setValue:self.width.text forKey:@"width"];
+    }
+    if ([self textIsNotNull:self.thick]) {
+        [dict setValue:self.thick.text forKey:@"category"];
+    }
+    if ([self textIsNotNull:self.name]) {
+        [dict setValue:self.name.text forKey:@"name"];
+    }
+    if (self.beginDate.text || self.endDate.text) {
+        NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
+        if ([self textIsNotNull:self.beginDate]) {
+            [timedict setValue:self.beginDate.text forKey:@"$gte"];
+        }
+        if ([self textIsNotNull:self.endDate]) {
+            [timedict setValue:self.endDate.text forKey:@"$lt"];
+        }
+        if (timedict.count > 0) {
+            [dict setObject:timedict forKey:@"createdAt"];
+        }
+    }
+    int finish = (int)self.finishState.selectedSegmentIndex;
+    if (finish > 0) {
+        [dict setObject:@(finish == 2) forKey:@"finish"];
+    }
+    
+    SearchListViewController *VC = [[SearchListViewController alloc] initWithSearchDict:dict];
     [self.navigationController pushViewController:VC animated:YES];
-//    //返回
-//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -119,6 +145,7 @@
     }
     return 2;
 }
+
 
 
 @end
