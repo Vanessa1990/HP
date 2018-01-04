@@ -293,7 +293,7 @@ typedef void(^TDownloadComplete)(id task, NSError *error);
     session.responseSerializer = [AFHTTPResponseSerializer serializer];
 //    session.requestSerializer.timeoutInterval = DEF_TIME_OUT_INTERVAL;
  
-    [session POST:@"http://localhost:8081/api/user/add"
+    [session POST:URLString
        parameters:parameters
          progress:nil
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

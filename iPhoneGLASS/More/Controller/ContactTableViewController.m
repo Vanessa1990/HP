@@ -7,13 +7,18 @@
 //
 
 #import "ContactTableViewController.h"
+#import "RegistViewController.h"
 #import "UserModel.h"
 #import "BimService.h"
+#import "MBProgressHUD.h"
 
-@interface ContactTableViewController ()
 
-@property(nonatomic, strong) NSArray *contacts;
+@interface ContactTableViewController ()<UITableViewDelegate, UITableViewDataSource,RegistViewControllerDelegate,UITextFieldDelegate>
+
+@property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSArray *indexs;
+@property(nonatomic, strong) UserModel *resetModel;
+@property(nonatomic, copy) SelecteBlock block;
 
 @end
 
@@ -25,12 +30,39 @@
     return _contacts;
 }
 
+- (instancetype)initWithSelectedBlock:(void (^)(UserModel *model))selecteBlock {
+    if (self = [super init]) {
+        self.block = selecteBlock;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"所有客户";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(add:)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    [self.view addSubview:self.tableView];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
 //    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"contactCellID"];
-    [[[BimService instance] getAllUsers] onFulfilled:^id(id value) {
+    [self getData];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)add:(id)sender {
+    RegistViewController *registVC = [[RegistViewController alloc] init];
+    registVC.delegate = self;
+    [self.navigationController pushViewController:registVC animated:YES];
+}
+
+- (SHXPromise *)getData {
+    return [[[BimService instance] getAllUsers] onFulfilled:^id(id value) {
         NSMutableArray *array = [NSMutableArray array];
         for (NSDictionary *dict in value) {
             UserModel *model = [UserModel new];
@@ -39,14 +71,8 @@
         }
         self.contacts = [self sortObjectsAccordingToInitialWith:array];
         [self.tableView reloadData];
-
         return value;
     }];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 // 按首字母分组排序数组
@@ -96,6 +122,23 @@
     return finalArr;
 }
 
+- (void)registSuccess {
+    [self getData];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (textField.tag / 100 == 1) {
+            self.resetModel.name = textField.text;
+        } else if (textField.tag / 100 == 2) {
+            self.resetModel.phone = textField.text;
+        } else {
+            self.resetModel.password = textField.text;
+        }
+    });
+    return YES;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -130,6 +173,71 @@
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.block) {
+        NSArray *arr = self.contacts[indexPath.section];
+        UserModel *model = arr[indexPath.row];
+        self.block(model);
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+/**
+ *  左滑cell时出现什么按钮
+ */
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"修改" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSArray *arr = self.contacts[indexPath.section];
+        UserModel *model = arr[indexPath.row];
+        [self reset:model];
+    }];
+    
+    return @[action];
+}
+
+- (void)reset:(UserModel *)model {
+    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"" message:@"修改账号" preferredStyle:UIAlertControllerStyleAlert];
+    self.resetModel = [[UserModel alloc] init];
+    [self addTextFieldWith:100 text:model.name vc:vc];
+    [self addTextFieldWith:200 text:model.phone vc:vc];
+    [self addTextFieldWith:300 text:model.password vc:vc];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        self.resetModel.name?[dict setValue:self.resetModel.name forKey:@"name"]:0;
+        self.resetModel.phone?[dict setValue:self.resetModel.phone forKey:@"phone"]:0;
+        self.resetModel.password?[dict setValue:self.resetModel.password forKey:@"password"]:0;
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.label.text = @"正在修改...";
+        [[[BimService instance] updateUser:model.userID newDict:dict] onFulfilled:^id(id value) {
+            [hud hideAnimated:YES afterDelay:0.3];
+            return [self getData];
+        } rejected:^id(NSError *reason) {
+            hud.label.text = @"修改失败✘";
+            [hud hideAnimated:YES afterDelay:0.6];
+            return reason;
+        }];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+    [vc addAction:cancelAction];
+    [vc addAction:sureAction];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)addTextFieldWith:(NSInteger)tag text:(NSString *)text vc:(UIAlertController *)vc {
+    [vc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.delegate = self;
+        textField.tag = tag;
+        textField.font = YZ_Font_XL;
+        textField.text = text;
+    }];
+}
+
 
 
 @end

@@ -75,7 +75,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([UserInfo shareInstance].isAdmin) return 3;
     return 2;
 }
 
@@ -109,11 +108,7 @@
 //        cell.textLabel.text = @"清除缓存";
 //    }
     if ([UserInfo shareInstance].isAdmin) {
-        if (indexPath.row == 0) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text = @"注册";
-        }
-        else if (indexPath.row == 1) {
+        if (indexPath.row == 1) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"关于我们";
         }else{
@@ -138,8 +133,8 @@
     
     if (indexPath.row == 0) {
         if ([UserInfo shareInstance].isAdmin) {
-            RegistViewController *registVC = [[RegistViewController alloc]init];
-            [self.navigationController pushViewController:registVC animated:YES];
+            ContactTableViewController *contactVC = [[ContactTableViewController alloc]init];
+            [self.navigationController pushViewController:contactVC animated:YES];
         }else{
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.label.text = @"~_~暂不支持,敬请期待...";
@@ -148,9 +143,6 @@
     }else if (indexPath.row == 1) {
         AboutViewController *aboutVC = [[AboutViewController alloc]init];
         [self.navigationController pushViewController:aboutVC animated:YES];
-    }else {
-        ContactTableViewController *contactVC = [[ContactTableViewController alloc]init];
-        [self.navigationController pushViewController:contactVC animated:YES];
     }
 }
 

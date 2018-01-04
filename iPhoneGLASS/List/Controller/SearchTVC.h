@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 @class SearchTVC;
 
+
+
 @protocol SearchTVCDelegate <NSObject>
 
 -(void)SearchTVC:(SearchTVC *)VC searchSuccess:(NSArray *)array;

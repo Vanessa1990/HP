@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class UserModel;
 
-@interface ContactTableViewController : UITableViewController
+typedef void(^SelecteBlock)(UserModel *model);
+
+@interface ContactTableViewController : UIViewController
+
+- (instancetype)initWithSelectedBlock:(SelecteBlock)selecteBlock;
+
+@property(nonatomic, strong) NSArray *contacts;
 
 @end

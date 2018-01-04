@@ -13,7 +13,9 @@
 #import "ListModel.h"
 #import "ScanViewController.h"
 #import "SearchListViewController.h"
+#import "ContactTableViewController.h"
 #import "UserInfo.h"
+#import "UserModel.h"
 
 @interface SearchTVC ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *beginDate;
@@ -72,6 +74,15 @@
     [self.searchDic setValue:@(seg.selectedSegmentIndex) forKey:@"isFinish"];
     
 }
+- (IBAction)resetSearchDict:(id)sender {
+    self.beginDate.text = @"";
+    self.endDate.text = @"";
+    self.thick.text = @"";
+    self.width.text = @"";
+    self.height.text = @"";
+    self.finishState.selectedSegmentIndex = 0;
+    self.name.text = @"";
+}
 
 - (BOOL)textIsNotNull:(UITextField *)textField {
     if ([@"全部" isEqualToString:textField.text]) {
@@ -111,7 +122,7 @@
         [dict setObject:@(finish == 2) forKey:@"finish"];
     }
     
-    SearchListViewController *VC = [[SearchListViewController alloc] initWithSearchDict:dict];
+    SearchListViewController *VC = [[SearchListViewController alloc] initWithSearchDict:dict sort:YES];
     [self.navigationController pushViewController:VC animated:YES];
 }
 
@@ -144,6 +155,16 @@
         return 3;
     }
     return 2;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        ContactTableViewController *vc = [[ContactTableViewController alloc] initWithSelectedBlock:^(UserModel *model) {
+            self.name.text = model.name;
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 

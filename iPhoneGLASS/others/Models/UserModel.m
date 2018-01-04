@@ -11,7 +11,14 @@
 @implementation UserModel
 
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key{
+    if ([key isEqualToString:@"_id"]) {
+        self.userID = value;
+    }
     NSLog(@"%@",key);
 }
+
+//+ (instancetype)userWithDict:(NSDictionary *)dict {
+//
+//}
 
 @end

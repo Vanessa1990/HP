@@ -26,11 +26,6 @@ typedef enum : NSUInteger {
 
 @implementation MainHomeViewController
 
-+ (void)load {
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -500)
-                                                         forBarMetrics:UIBarMetricsDefault];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

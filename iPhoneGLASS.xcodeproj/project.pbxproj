@@ -67,6 +67,9 @@
 		7F0E99121CFED9B90051C503 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E98FD1CFED9B90051C503 /* UIScrollView+MJExtension.m */; };
 		7F0E99131CFED9B90051C503 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E98FF1CFED9B90051C503 /* UIScrollView+MJRefresh.m */; };
 		7F0E99141CFED9B90051C503 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E99011CFED9B90051C503 /* UIView+MJExtension.m */; };
+		7F1DD2CD1FF74DE000F67747 /* OrderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DD2CC1FF74DE000F67747 /* OrderInfoViewController.m */; };
+		7F1DD2CF1FF74DEC00F67747 /* OrderInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F1DD2CE1FF74DEC00F67747 /* OrderInfoViewController.xib */; };
+		7F1DD2D21FF75D6600F67747 /* KeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DD2D11FF75D6600F67747 /* KeyBoardView.m */; };
 		7F23D0421D100DB1002DB08D /* HeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F23D0411D100DB1002DB08D /* HeadView.m */; };
 		7F23D0441D100DBB002DB08D /* HeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F23D0431D100DBB002DB08D /* HeadView.xib */; };
 		7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F49C16A1D11096000E56023 /* GlassTableViewCell.m */; };
@@ -279,6 +282,11 @@
 		7F0E98FF1CFED9B90051C503 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		7F0E99001CFED9B90051C503 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		7F0E99011CFED9B90051C503 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		7F1DD2CB1FF74DE000F67747 /* OrderInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderInfoViewController.h; sourceTree = "<group>"; };
+		7F1DD2CC1FF74DE000F67747 /* OrderInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderInfoViewController.m; sourceTree = "<group>"; };
+		7F1DD2CE1FF74DEC00F67747 /* OrderInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderInfoViewController.xib; sourceTree = "<group>"; };
+		7F1DD2D01FF75D6600F67747 /* KeyBoardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyBoardView.h; sourceTree = "<group>"; };
+		7F1DD2D11FF75D6600F67747 /* KeyBoardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyBoardView.m; sourceTree = "<group>"; };
 		7F23D0401D100DB1002DB08D /* HeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadView.h; sourceTree = "<group>"; };
 		7F23D0411D100DB1002DB08D /* HeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadView.m; sourceTree = "<group>"; };
 		7F23D0431D100DBB002DB08D /* HeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeadView.xib; sourceTree = "<group>"; };
@@ -675,6 +683,8 @@
 				7F0E98CB1CFEB1800051C503 /* ResultCell.h */,
 				7F0E98CC1CFEB1800051C503 /* ResultCell.m */,
 				7F0E98CD1CFEB1800051C503 /* ResultCell.xib */,
+				7F1DD2D01FF75D6600F67747 /* KeyBoardView.h */,
+				7F1DD2D11FF75D6600F67747 /* KeyBoardView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -837,6 +847,9 @@
 				7FFB0D8A1FF0F85800D56CC7 /* SendOrderViewController.h */,
 				7FFB0D8B1FF0F85800D56CC7 /* SendOrderViewController.m */,
 				7FFB0D8C1FF0F85800D56CC7 /* SendOrderViewController.xib */,
+				7F1DD2CB1FF74DE000F67747 /* OrderInfoViewController.h */,
+				7F1DD2CC1FF74DE000F67747 /* OrderInfoViewController.m */,
+				7F1DD2CE1FF74DEC00F67747 /* OrderInfoViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1171,6 +1184,7 @@
 				269ED3C71F60EE5C0047AF86 /* tab_write@2x.png in Resources */,
 				269ED3BC1F60E1A10047AF86 /* tab_write.png in Resources */,
 				7FFB0D891FF09B7000D56CC7 /* choose@2x.png in Resources */,
+				7F1DD2CF1FF74DEC00F67747 /* OrderInfoViewController.xib in Resources */,
 				7FC22FD71F62825100717CEE /* launch@3x.png in Resources */,
 				7F06A6BC1CE05ADD006B9CA4 /* LaunchScreen.storyboard in Resources */,
 				7FCDB2A01F2EC18A00759928 /* tab_more@2x.png in Resources */,
@@ -1401,6 +1415,7 @@
 				7FC224C31CFD6A7900CCBD85 /* ListModel.m in Sources */,
 				7FCDB3121F2EF17100759928 /* USDictionaryWrapper.m in Sources */,
 				7FFB0D8D1FF0F85800D56CC7 /* SendOrderViewController.m in Sources */,
+				7F1DD2D21FF75D6600F67747 /* KeyBoardView.m in Sources */,
 				7FCDB2F51F2EECDC00759928 /* AFNetworkingHelper.m in Sources */,
 				7FC224C61CFD6AC600CCBD85 /* NSDictionary+PropertyCode.m in Sources */,
 				7FDD6AC31F2F722B00599005 /* Utils.m in Sources */,
@@ -1408,6 +1423,7 @@
 				7F0E98D41CFED2EA0051C503 /* MBProgressHUD.m in Sources */,
 				7F0E98B81CFE7F5E0051C503 /* STConst.m in Sources */,
 				7F06A6B11CE05ADD006B9CA4 /* AppDelegate.m in Sources */,
+				7F1DD2CD1FF74DE000F67747 /* OrderInfoViewController.m in Sources */,
 				7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */,
 				7F0E98AC1CFE7E8F0051C503 /* NSCalendar+ST.m in Sources */,
 				7F0E990A1CFED9B90051C503 /* MJRefreshBackGifFooter.m in Sources */,

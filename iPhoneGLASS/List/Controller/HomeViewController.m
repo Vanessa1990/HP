@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "OrderInfoViewController.h"
 #import "ListHeadView.h"
 
 
@@ -245,6 +246,16 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     UserListModel *model = self.items[indexPath.section];
     cell.listModel = model.listArray[indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    UserListModel *model = self.items[indexPath.section];
+//    ListModel *listModel = model.listArray[indexPath.row];
+//    OrderInfoViewController *vc = [[OrderInfoViewController alloc] init];
+//    vc.model = listModel;
+//    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+//    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    [self presentViewController:vc animated:YES completion:nil];
 }
 
 

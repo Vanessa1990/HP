@@ -64,6 +64,9 @@
 // 注册新用户
 - (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd;
 
+// 更新用户
+- (SHXPromise *)updateUser:(NSString *)userId newDict:(NSDictionary *)newDict;
+
 // 登录
 - (SHXPromise *)load:(NSString *)phone pwd:(NSString *)pwd;
 

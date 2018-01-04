@@ -38,4 +38,6 @@
 
 @property(nonatomic, strong) NSString *mark;
 
+@property(nonatomic, strong) NSArray *deliverymans;
+
 @end

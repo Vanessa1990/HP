@@ -28,8 +28,8 @@
     self.registButton.clipsToBounds = YES;
     self.registButton.layer.cornerRadius = 6;
     
-    self.navigationItem.title = @"注册";
-    
+    self.navigationItem.title = @"添加新用户";
+    self.pwd.text = @"123456";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,6 +53,9 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [hud hideAnimated:YES afterDelay:0];
                 [self.navigationController popViewControllerAnimated:YES];
+                if ([(id)self.delegate respondsToSelector:@selector(registSuccess)]) {
+                    [self.delegate registSuccess];
+                }
             });
         }else{
             hud.label.text = @"此号码已经注册过!";

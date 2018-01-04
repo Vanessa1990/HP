@@ -10,6 +10,9 @@
 
 @interface UserModel : NSObject
 
++ (instancetype)userWithDict:(NSDictionary *)dict;
+
+@property(nonatomic, strong) NSString *userID;
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *password;
 @property(nonatomic, strong) NSString *phone;

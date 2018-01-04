@@ -12,8 +12,11 @@
 #import "MBProgressHUD.h"
 #import "BimService.h"
 #import "ListModel.h"
+#import "KeyBoardView.h"
 
-@interface WriteInViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, ResultCellDelegate>
+#define KeyboardHeight 260
+
+@interface WriteInViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, ResultCellDelegate,KeyBoardViewDelegate>
 
 @property(nonatomic, strong) UISearchBar *searchBar;
 
@@ -25,6 +28,8 @@
 
 @property(nonatomic, strong) ListModel *writeInModel;
 
+@property(nonatomic, strong) KeyBoardView *keyBoard;
+
 @end
 
 @implementation WriteInViewController
@@ -34,11 +39,12 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"入库";
-    
+
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, 44)];
     [self.view addSubview:self.searchBar];
-    self.searchBar.placeholder = @"请输入搜索条件,以 + 连接";
+    self.searchBar.placeholder = @"请输入搜索条件,以 * 连接";
     self.searchBar.delegate = self;
+//    self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108, kScreenWidth, kScreenHeight - 108 - 49)];
     [self.view addSubview:self.tableView];
@@ -48,6 +54,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCellID"];
     
     self.searchItems = [NSMutableArray array];
+    [self.view addSubview:self.keyBoard];
+    [self keyBoard:YES];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看订单" style:UIBarButtonItemStylePlain target:self action:@selector(seeMore:)];
 }
@@ -62,10 +70,38 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
+- (void)keyBoard:(BOOL)show {
+    CGRect frame = show ? CGRectMake(0, kScreenHeight - KeyboardHeight, kScreenWidth, KeyboardHeight) : CGRectMake(0, kScreenHeight, kScreenWidth, KeyboardHeight);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.keyBoard.frame = frame;
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [self keyBoard:YES];
+    return NO;
+}
+
+#pragma mark - KeyBoardViewDelegate
+- (void)chooseNumber:(int)number {
+    NSString *string = self.searchBar.text?self.searchBar.text:@"";
+    self.searchBar.text = [NSString stringWithFormat:@"%@%d",string,number];
+}
+
+- (void)deleteNumber {
+    if (self.searchBar.text && self.searchBar.text.length > 0) {
+        NSString *string = self.searchBar.text;
+        NSString *newStr = [string substringToIndex:string.length - 1];
+        self.searchBar.text = newStr;
+    }
+}
+
+- (void)searchFunc {
     [self.view endEditing:YES];
-    NSArray *allValue = [searchBar.text componentsSeparatedByString:@"+"];
+    [self keyBoard:NO];
+    if (!self.searchBar.text || self.searchBar.text.length == 0) return;
+    NSArray *allValue = [self.searchBar.text componentsSeparatedByString:@"*"];
     if (allValue.count < 1 || allValue.count > 2) return;
     // 暂不考虑姓名
     //searchDict = @{@"length":allValue[0],@"width":allValue[1]};
@@ -92,6 +128,11 @@
             return value;
         }];
     }];
+}
+
+- (void)addSeparator {
+    NSString *string = self.searchBar.text?self.searchBar.text:@"";
+    self.searchBar.text = [NSString stringWithFormat:@"%@*",string];
 }
 
 - (SHXPromise *)searchWithDict:(NSDictionary *)searchDict seeSame:(BOOL)see {
@@ -191,7 +232,7 @@
             }
         }];
         NSString *message = [NSString stringWithFormat:@"%@  %@\n%@*%@\n",model.name,model.thick,model.height,model.width];
-        UIAlertController *alertvc = [UIAlertController alertControllerWithTitle:message message:@"确定入库?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertvc = [UIAlertController alertControllerWithTitle:@"确定入库?" message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertvc addAction:action];
         [alertvc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alertvc animated:YES completion:nil];
@@ -227,6 +268,15 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return 120;
+}
+
+- (KeyBoardView *)keyBoard
+{
+    if (!_keyBoard) {
+        _keyBoard = [[KeyBoardView alloc] initWithFrame:CGRectMake(0, kScreenHeight, kScreenWidth, KeyboardHeight)];
+        _keyBoard.delegate = self;
+    }
+    return _keyBoard;
 }
 
 @end

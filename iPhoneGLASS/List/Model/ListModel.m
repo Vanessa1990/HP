@@ -34,6 +34,7 @@
     }else{
         model.isFinish = false;
     }
+    model.deliverymans = dict[@"deliveryman"];
     
     return model;
 }

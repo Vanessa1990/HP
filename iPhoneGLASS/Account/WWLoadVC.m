@@ -49,40 +49,23 @@
     
     self.navigationItem.title = @"登录";
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    // 自动登录
-//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//    NSDictionary *userdict = [user objectForKey:@"user"];
-//    if ([userdict objectForKey:@"name"]) {
-//        //进入主界面
-//        MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
-//        HP_Delegate.window.rootViewController = mainTVC;
-//    }
+    // 设置文本和按钮的圆角
+    self.loadBtn.layer.cornerRadius = 10;
+    self.loadBtn.clipsToBounds = YES;
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    //1.设置文本和按钮的圆角
-    self.loadBtn.layer.cornerRadius = 10;
-    self.loadBtn.clipsToBounds = YES;
     
     // test
-    self.phoneTextField.text = admin_tel;
-    self.pwdTextField.text = @"123456";
+//    self.phoneTextField.text = admin_tel;
+//    self.pwdTextField.text = @"123456";
 }
 
 
 - (IBAction)loadClick:(id)sender {
-    // test
-//    //进入主界面
-//    MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
-//    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
-//    HP_Delegate.window.rootViewController = navc;
-//
-//    [UserInfo shareInstance].name = self.phoneTextField.text;
-//    [UserInfo shareInstance].tel = self.phoneTextField.text;
-    
     [self load];
 }
 

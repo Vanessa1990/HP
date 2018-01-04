@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol RegistViewControllerDelegate
+
+- (void)registSuccess;
+
+@end
+
 @interface RegistViewController : UIViewController
+
+@property(nonatomic, strong) id<RegistViewControllerDelegate>delegate;
 
 @end
