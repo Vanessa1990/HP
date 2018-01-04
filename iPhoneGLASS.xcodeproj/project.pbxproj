@@ -31,7 +31,6 @@
 		7F06A6BC1CE05ADD006B9CA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F06A6BA1CE05ADD006B9CA4 /* LaunchScreen.storyboard */; };
 		7F06A6C71CE05ADD006B9CA4 /* iPhoneGLASSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6C61CE05ADD006B9CA4 /* iPhoneGLASSTests.m */; };
 		7F06A6D21CE05ADD006B9CA4 /* iPhoneGLASSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6D11CE05ADD006B9CA4 /* iPhoneGLASSUITests.m */; };
-		7F06A6E51CEAEB90006B9CA4 /* OrderTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6E41CEAEB90006B9CA4 /* OrderTVC.m */; };
 		7F06A6EF1CEAF101006B9CA4 /* WWLoadVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F06A6ED1CEAF101006B9CA4 /* WWLoadVC.m */; };
 		7F06A6F01CEAF101006B9CA4 /* WWLoadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F06A6EE1CEAF101006B9CA4 /* WWLoadVC.xib */; };
 		7F0AD8B01FEBA5F10032CDD0 /* ContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0AD8AF1FEBA5F10032CDD0 /* ContactTableViewController.m */; };
@@ -70,12 +69,6 @@
 		7F1DD2CD1FF74DE000F67747 /* OrderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DD2CC1FF74DE000F67747 /* OrderInfoViewController.m */; };
 		7F1DD2CF1FF74DEC00F67747 /* OrderInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F1DD2CE1FF74DEC00F67747 /* OrderInfoViewController.xib */; };
 		7F1DD2D21FF75D6600F67747 /* KeyBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1DD2D11FF75D6600F67747 /* KeyBoardView.m */; };
-		7F23D0421D100DB1002DB08D /* HeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F23D0411D100DB1002DB08D /* HeadView.m */; };
-		7F23D0441D100DBB002DB08D /* HeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F23D0431D100DBB002DB08D /* HeadView.xib */; };
-		7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F49C16A1D11096000E56023 /* GlassTableViewCell.m */; };
-		7F49C16D1D11096000E56023 /* GlassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */; };
-		7F49C17B1D12818400E56023 /* OrderPreViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F49C1791D12818400E56023 /* OrderPreViewViewController.m */; };
-		7F49C17C1D12818400E56023 /* OrderPreViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */; };
 		7F4C9F061D49E0760072F43C /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4C9F051D49E0760072F43C /* AboutViewController.m */; };
 		7F60CC531D2A35BD00A53799 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC491D2A35BD00A53799 /* FMDatabase.m */; };
 		7F60CC541D2A35BD00A53799 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60CC4B1D2A35BD00A53799 /* FMDatabaseAdditions.m */; };
@@ -211,8 +204,6 @@
 		7F06A6CD1CE05ADD006B9CA4 /* iPhoneGLASSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iPhoneGLASSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F06A6D11CE05ADD006B9CA4 /* iPhoneGLASSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iPhoneGLASSUITests.m; sourceTree = "<group>"; };
 		7F06A6D31CE05ADD006B9CA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F06A6E31CEAEB90006B9CA4 /* OrderTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTVC.h; sourceTree = "<group>"; };
-		7F06A6E41CEAEB90006B9CA4 /* OrderTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTVC.m; sourceTree = "<group>"; };
 		7F06A6EC1CEAF101006B9CA4 /* WWLoadVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWLoadVC.h; sourceTree = "<group>"; };
 		7F06A6ED1CEAF101006B9CA4 /* WWLoadVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWLoadVC.m; sourceTree = "<group>"; };
 		7F06A6EE1CEAF101006B9CA4 /* WWLoadVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WWLoadVC.xib; sourceTree = "<group>"; };
@@ -287,15 +278,6 @@
 		7F1DD2CE1FF74DEC00F67747 /* OrderInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderInfoViewController.xib; sourceTree = "<group>"; };
 		7F1DD2D01FF75D6600F67747 /* KeyBoardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyBoardView.h; sourceTree = "<group>"; };
 		7F1DD2D11FF75D6600F67747 /* KeyBoardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyBoardView.m; sourceTree = "<group>"; };
-		7F23D0401D100DB1002DB08D /* HeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadView.h; sourceTree = "<group>"; };
-		7F23D0411D100DB1002DB08D /* HeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadView.m; sourceTree = "<group>"; };
-		7F23D0431D100DBB002DB08D /* HeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeadView.xib; sourceTree = "<group>"; };
-		7F49C1691D11096000E56023 /* GlassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlassTableViewCell.h; sourceTree = "<group>"; };
-		7F49C16A1D11096000E56023 /* GlassTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlassTableViewCell.m; sourceTree = "<group>"; };
-		7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlassTableViewCell.xib; sourceTree = "<group>"; };
-		7F49C1781D12818400E56023 /* OrderPreViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPreViewViewController.h; sourceTree = "<group>"; };
-		7F49C1791D12818400E56023 /* OrderPreViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPreViewViewController.m; sourceTree = "<group>"; };
-		7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderPreViewViewController.xib; sourceTree = "<group>"; };
 		7F4C9F041D49E0760072F43C /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		7F4C9F051D49E0760072F43C /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		7F60CC481D2A35BD00A53799 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -526,7 +508,6 @@
 				7FCDB27F1F2DC32200759928 /* main */,
 				6A7B7CB81D47553B00EC797E /* others */,
 				7F06A6E61CEAEEEF006B9CA4 /* Account */,
-				7F06A6DF1CEAEB77006B9CA4 /* Order */,
 				7F9904411CEB039B0039AAD5 /* List */,
 				7F0E98BD1CFE90C10051C503 /* Scan */,
 				7F99044B1CEB19DD0039AAD5 /* More */,
@@ -565,48 +546,6 @@
 				7F06A6D31CE05ADD006B9CA4 /* Info.plist */,
 			);
 			path = iPhoneGLASSUITests;
-			sourceTree = "<group>";
-		};
-		7F06A6DF1CEAEB77006B9CA4 /* Order */ = {
-			isa = PBXGroup;
-			children = (
-				7F06A6E01CEAEB77006B9CA4 /* Controller */,
-				7F06A6E11CEAEB77006B9CA4 /* Model */,
-				7F06A6E21CEAEB77006B9CA4 /* View */,
-			);
-			path = Order;
-			sourceTree = "<group>";
-		};
-		7F06A6E01CEAEB77006B9CA4 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				7F06A6E31CEAEB90006B9CA4 /* OrderTVC.h */,
-				7F06A6E41CEAEB90006B9CA4 /* OrderTVC.m */,
-				7F49C1781D12818400E56023 /* OrderPreViewViewController.h */,
-				7F49C1791D12818400E56023 /* OrderPreViewViewController.m */,
-				7F49C17A1D12818400E56023 /* OrderPreViewViewController.xib */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		7F06A6E11CEAEB77006B9CA4 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		7F06A6E21CEAEB77006B9CA4 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				7F23D0401D100DB1002DB08D /* HeadView.h */,
-				7F23D0411D100DB1002DB08D /* HeadView.m */,
-				7F23D0431D100DBB002DB08D /* HeadView.xib */,
-				7F49C1691D11096000E56023 /* GlassTableViewCell.h */,
-				7F49C16A1D11096000E56023 /* GlassTableViewCell.m */,
-				7F49C16B1D11096000E56023 /* GlassTableViewCell.xib */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		7F06A6E61CEAEEEF006B9CA4 /* Account */ = {
@@ -1175,7 +1114,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F49C17C1D12818400E56023 /* OrderPreViewViewController.xib in Resources */,
 				7FC22FD61F62825100717CEE /* launch@2x.png in Resources */,
 				269ED3D11F60EF340047AF86 /* tab_home_s@3x.png in Resources */,
 				7FC224BB1CFD651A00CCBD85 /* ListHeadView.xib in Resources */,
@@ -1195,7 +1133,6 @@
 				7FCDB2781F2DC0B100759928 /* btn_logo@3x.png in Resources */,
 				269ED3CB1F60EEB50047AF86 /* tab_write@3x.png in Resources */,
 				7FCDB2761F2DC0B100759928 /* btn_logo.png in Resources */,
-				7F49C16D1D11096000E56023 /* GlassTableViewCell.xib in Resources */,
 				7F06A6B91CE05ADD006B9CA4 /* Assets.xcassets in Resources */,
 				7FC22FD51F62825100717CEE /* launch.png in Resources */,
 				7FCDB32A1F2F0F8E00759928 /* MoreTableCell.xib in Resources */,
@@ -1215,7 +1152,6 @@
 				7FFB0D861FF09B7000D56CC7 /* unchoose@3x.png in Resources */,
 				7FFB0D8E1FF0F85800D56CC7 /* SendOrderViewController.xib in Resources */,
 				7F0E98CA1CFEAFF10051C503 /* ResultViewController.xib in Resources */,
-				7F23D0441D100DBB002DB08D /* HeadView.xib in Resources */,
 				7FFB0D931FF0FB7800D56CC7 /* SendOrderCell.xib in Resources */,
 				7FAD3B4A1F2AF31400935E48 /* call.png in Resources */,
 				7FC224C01CFD68A700CCBD85 /* ListTableViewCell.xib in Resources */,
@@ -1400,7 +1336,6 @@
 				7FC224C91CFD84A100CCBD85 /* SearchTVC.m in Sources */,
 				7FC224BF1CFD68A700CCBD85 /* ListTableViewCell.m in Sources */,
 				7F0E99121CFED9B90051C503 /* UIScrollView+MJExtension.m in Sources */,
-				7F06A6E51CEAEB90006B9CA4 /* OrderTVC.m in Sources */,
 				7F0E99091CFED9B90051C503 /* MJRefreshAutoStateFooter.m in Sources */,
 				7FCDB32E1F2F6D5F00759928 /* NSDate+YZBim.m in Sources */,
 				7F0E98C41CFE90DC0051C503 /* ScanViewController.m in Sources */,
@@ -1439,18 +1374,15 @@
 				7F900CB11F932CEF002D9972 /* MainHomeViewController.m in Sources */,
 				7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */,
 				7F667A0E1D6AF678009E0105 /* AFURLRequestSerialization.m in Sources */,
-				7F49C17B1D12818400E56023 /* OrderPreViewViewController.m in Sources */,
 				7F667A0F1D6AF678009E0105 /* AFURLResponseSerialization.m in Sources */,
 				7F06A6EF1CEAF101006B9CA4 /* WWLoadVC.m in Sources */,
 				7F0E99111CFED9B90051C503 /* MJRefreshConst.m in Sources */,
 				7F0E990D1CFED9B90051C503 /* MJRefreshGifHeader.m in Sources */,
-				7F23D0421D100DB1002DB08D /* HeadView.m in Sources */,
 				7F60CC531D2A35BD00A53799 /* FMDatabase.m in Sources */,
 				7F0E990B1CFED9B90051C503 /* MJRefreshBackNormalFooter.m in Sources */,
 				269ED3DD1F6121820047AF86 /* UserListModel.m in Sources */,
 				7FCDB2A71F2ED5D200759928 /* HomeCollectionCell.m in Sources */,
 				7FC224B91CFD651100CCBD85 /* ListHeadView.m in Sources */,
-				7F49C16C1D11096000E56023 /* GlassTableViewCell.m in Sources */,
 				269ED3DA1F60EFF30047AF86 /* UserInfo.m in Sources */,
 				7FC22FDA1F6298E700717CEE /* ListCell.m in Sources */,
 				7F0E99141CFED9B90051C503 /* UIView+MJExtension.m in Sources */,
