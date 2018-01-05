@@ -57,11 +57,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.items = [NSArray array];
     
-    ListHeadView *view = [ListHeadView headViewWithSeeMoreInfoBlock:^{
-        
-    }];
+    ListHeadView *view = [[ListHeadView alloc] init];
     view.frame = CGRectMake(0, 0, kScreenWidth, 44);
-    view.dateLable.text = [self.date formatOnlyDay];
+//    view.dateLable.text = [self.date formatOnlyDay];
     [self addSubview:view];
     self.headView = view;
 }
@@ -69,7 +67,7 @@
 - (void)setDate:(NSDate *)date
 {
     _date = date;
-    self.headView.dateLable.text = [self.date formatOnlyDay];
+//    self.headView.dateLable.text = [self.date formatOnlyDay];
 }
 
 - (NSDictionary *)getCuttentDayPeriod {

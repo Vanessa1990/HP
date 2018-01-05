@@ -22,3 +22,8 @@
 @property(nonatomic, strong) id<KeyBoardViewDelegate>delegate;
 
 @end
+
+@interface KeyBoardButton : UIButton
+
+
+@end

@@ -41,6 +41,7 @@
 #define YZ_WhiteColor YZ_Color(255, 255, 255, 1)
 
 // #主题色#5c90dc 100%
+#define YZ_ThemeAlphaC [UIColor colorWithRed:(92 / 255.0) green:(144 / 255.0) blue:(220 / 255.0) alpha:0.5]
 #define YZ_ThemeColor [UIColor colorWithRed:(92 / 255.0) green:(144 / 255.0) blue:(220 / 255.0) alpha:1]
 // #40dd8e 用于主要功能模块的图标.按钮
 #define YZ_GreenColor [UIColor colorWithRed:(64 / 255.0) green:(221 / 255.0) blue:(142 / 255.0) alpha:1]

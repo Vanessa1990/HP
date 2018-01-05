@@ -37,6 +37,9 @@ typedef enum : NSUInteger {
 
 @property (assign, nonatomic) BOOL sort;
 
+@property(nonatomic, strong) NSArray *colors;
+
+@property (assign, nonatomic) int colorEven;
 
 @end
 
@@ -83,6 +86,7 @@ typedef enum : NSUInteger {
         make.left.mas_equalTo(self.deleteButton.mas_right);
         make.width.bottom.mas_equalTo(self.deleteButton);
     }];
+    self.colors = @[YZ_WhiteColor, YZ_ThemeAlphaC];
     
 }
 
@@ -136,11 +140,20 @@ typedef enum : NSUInteger {
             return value;
         }];
     }];
-    NSString *message = [NSString stringWithFormat:@"确定删除%zd条数据?",self.chooseItems.count];
+    
+    NSString *message = [NSString stringWithFormat:@"确定删除%zd条数据\n共%zd块玻璃?",self.chooseItems.count,[self getAllGlassCount]];
     UIAlertController *alertvc = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertvc addAction:action];
     [alertvc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertvc animated:YES completion:nil];
+}
+
+- (NSInteger)getAllGlassCount {
+    NSUInteger count = 0;
+    for (ListModel *model in self.chooseItems) {
+        count += model.totalNumber;
+    }
+    return count;
 }
 
 
@@ -222,6 +235,17 @@ typedef enum : NSUInteger {
     cell.listModel = listModel;
     cell.edit = self.isEdit;
     cell.choose = [self.chooseItems containsObject:listModel];
+    if (indexPath.row > 0) {
+        ListModel *preListModel = model.listArray[indexPath.row - 1];
+        NSString *date1 = [[NSDate dateFromISOString:preListModel.date] formatOnlyDay];
+        NSString *date2 = [[NSDate dateFromISOString:listModel.date] formatOnlyDay];
+        if (![date1 isEqualToString:date2]) {
+            self.colorEven = (self.colorEven + 1) % 2;
+        }
+    }else{
+        self.colorEven = 0;
+    }
+    cell.backgroundColor = self.colors[self.colorEven % 2];
     if (self.sort) {// 入库后查看当前用户所有订单(显示日期)
         cell.showDate = YES;
     }
@@ -239,6 +263,25 @@ typedef enum : NSUInteger {
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UserListModel *model = self.items[section];
+    ListHeadView *headView = [[ListHeadView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44) chooseClick:^(UserListModel *model, BOOL choose) {
+        for (ListModel *listModel in model.listArray) {
+            if (choose) {
+                if (![self.chooseItems containsObject:listModel]) {
+                    [self.chooseItems addObject:listModel];
+                }
+            }else{
+                if ([self.chooseItems containsObject:listModel]) {
+                    [self.chooseItems removeObject:listModel];
+                }
+            }
+        }
+        [self.tableView reloadData];
+    }];
+    headView.model = model;
+    headView.edit = self.isEdit;
+    return headView;
+}
 
 @end

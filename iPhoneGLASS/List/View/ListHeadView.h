@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserListModel.h"
 
-typedef void(^SeeMoreBlock)();
+typedef void(^ChooseBlock)(UserListModel *model,BOOL choose);
 
 @protocol ListHeadViewDelegate
 
@@ -16,12 +17,13 @@ typedef void(^SeeMoreBlock)();
 
 @interface ListHeadView : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLable;
+- (instancetype)initWithFrame:(CGRect)frame chooseClick:(ChooseBlock)chooseClick;
 
-@property (weak, nonatomic) IBOutlet UILabel *totleLable;
+@property(nonatomic, strong) UserListModel *model;
 
-@property (weak, nonatomic) IBOutlet UILabel *dateLable;
+@property (assign, nonatomic) BOOL edit;
 
-+ (instancetype)headViewWithSeeMoreInfoBlock:(SeeMoreBlock)seeBlcok;
+@property (assign, nonatomic) BOOL choosed;
+
 
 @end

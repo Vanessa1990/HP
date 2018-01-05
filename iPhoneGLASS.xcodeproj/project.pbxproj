@@ -91,7 +91,6 @@
 		7FAD3B4A1F2AF31400935E48 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B481F2AF31400935E48 /* call.png */; };
 		7FBF1EB21FE78FB400BA1739 /* ListNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBF1EB11FE78FB400BA1739 /* ListNavView.m */; };
 		7FC224B91CFD651100CCBD85 /* ListHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC224B81CFD651100CCBD85 /* ListHeadView.m */; };
-		7FC224BB1CFD651A00CCBD85 /* ListHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC224BA1CFD651A00CCBD85 /* ListHeadView.xib */; };
 		7FC224BF1CFD68A700CCBD85 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC224BD1CFD68A700CCBD85 /* ListTableViewCell.m */; };
 		7FC224C01CFD68A700CCBD85 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC224BE1CFD68A700CCBD85 /* ListTableViewCell.xib */; };
 		7FC224C31CFD6A7900CCBD85 /* ListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC224C21CFD6A7900CCBD85 /* ListModel.m */; };
@@ -322,7 +321,6 @@
 		7FBF1EB11FE78FB400BA1739 /* ListNavView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListNavView.m; sourceTree = "<group>"; };
 		7FC224B71CFD651100CCBD85 /* ListHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListHeadView.h; sourceTree = "<group>"; };
 		7FC224B81CFD651100CCBD85 /* ListHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListHeadView.m; sourceTree = "<group>"; };
-		7FC224BA1CFD651A00CCBD85 /* ListHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListHeadView.xib; sourceTree = "<group>"; };
 		7FC224BC1CFD68A700CCBD85 /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewCell.h; sourceTree = "<group>"; };
 		7FC224BD1CFD68A700CCBD85 /* ListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewCell.m; sourceTree = "<group>"; };
 		7FC224BE1CFD68A700CCBD85 /* ListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
@@ -812,7 +810,6 @@
 				7F0E98A71CFE7E8F0051C503 /* Date(日期) */,
 				7FC224B71CFD651100CCBD85 /* ListHeadView.h */,
 				7FC224B81CFD651100CCBD85 /* ListHeadView.m */,
-				7FC224BA1CFD651A00CCBD85 /* ListHeadView.xib */,
 				7FC224BC1CFD68A700CCBD85 /* ListTableViewCell.h */,
 				7FC224BD1CFD68A700CCBD85 /* ListTableViewCell.m */,
 				7FC224BE1CFD68A700CCBD85 /* ListTableViewCell.xib */,
@@ -1116,7 +1113,6 @@
 			files = (
 				7FC22FD61F62825100717CEE /* launch@2x.png in Resources */,
 				269ED3D11F60EF340047AF86 /* tab_home_s@3x.png in Resources */,
-				7FC224BB1CFD651A00CCBD85 /* ListHeadView.xib in Resources */,
 				269ED3C61F60EE5C0047AF86 /* tab_write_s@2x.png in Resources */,
 				7F06A6F01CEAF101006B9CA4 /* WWLoadVC.xib in Resources */,
 				269ED3C71F60EE5C0047AF86 /* tab_write@2x.png in Resources */,

@@ -60,8 +60,8 @@
     [super viewWillAppear:animated];
     
     // test
-//    self.phoneTextField.text = admin_tel;
-//    self.pwdTextField.text = @"123456";
+    self.phoneTextField.text = admin_tel;
+    self.pwdTextField.text = @"123456";
 }
 
 

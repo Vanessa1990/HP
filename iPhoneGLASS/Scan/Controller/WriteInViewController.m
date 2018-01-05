@@ -14,9 +14,9 @@
 #import "ListModel.h"
 #import "KeyBoardView.h"
 
-#define KeyboardHeight 260
+#define KeyboardHeight 300
 
-@interface WriteInViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, ResultCellDelegate,KeyBoardViewDelegate>
+@interface WriteInViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, ResultCellDelegate,KeyBoardViewDelegate,UITextFieldDelegate>
 
 @property(nonatomic, strong) UISearchBar *searchBar;
 
@@ -29,6 +29,8 @@
 @property(nonatomic, strong) ListModel *writeInModel;
 
 @property(nonatomic, strong) KeyBoardView *keyBoard;
+
+@property (assign, nonatomic) int addCount;
 
 @end
 
@@ -199,14 +201,21 @@
     }else{
         ListModel *model = self.searchItems[row];
         self.writeInModel = model;
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+       
+        UIAlertController *alertvc = [self alertVCWithModel:model handler:^(UIAlertAction *action) {
+
             //上传数据
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.label.text = @"正在入库";
             //成功之后退出
             NSUInteger newStockin = model.number?model.number:0;
             if (newStockin < model.totalNumber) {
-                newStockin+=1;
+                newStockin+=self.addCount;
+                if (newStockin > model.totalNumber) {
+                    hud.label.text = @"入库总数大于未入库数,请核实完,重新填写入库数目!";
+                    [hud hideAnimated:YES afterDelay:0.5];
+                    return;
+                }
                 NSMutableDictionary *writeInDict = [NSMutableDictionary dictionaryWithObject:@(newStockin) forKey:@"stockIn"];
                 if (newStockin == model.totalNumber) {
                     [writeInDict setObject:@(YES) forKey:@"finish"];
@@ -231,18 +240,47 @@
                 [hud hideAnimated:YES afterDelay:0.5];
             }
         }];
-        NSString *message = [NSString stringWithFormat:@"%@  %@\n%@*%@\n",model.name,model.thick,model.height,model.width];
-        UIAlertController *alertvc = [UIAlertController alertControllerWithTitle:@"确定入库?" message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertvc addAction:action];
-        [alertvc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alertvc animated:YES completion:nil];
     }
+}
+
+- (UIAlertController *)alertVCWithModel:(ListModel *)model handler:(void (^)(UIAlertAction *action))handler {
+    // init message
+    NSString *message = [NSString stringWithFormat:@"\n%@  %@\n%@*%@\n",model.name,model.thick,model.height,model.width];
+    NSMutableAttributedString *messageStr = [[NSMutableAttributedString alloc] initWithString:message];
+    [messageStr addAttributes:@{NSForegroundColorAttributeName:YZ_ThemeColor,
+                                NSFontAttributeName:YZ_Font_XL
+                                } range:NSMakeRange(0, message.length)];
+    // init alert vc
+    UIAlertController *alertvc = [UIAlertController alertControllerWithTitle:@"确定入库?" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertvc setValue:messageStr forKey:@"attributedMessage"];
+    // init actions
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        handler(action);
+    }];
+    [alertvc addAction:action];
+    [alertvc addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alertvc addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.delegate = self;
+        textField.text = @"1";
+        self.addCount = 1;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.font = YZ_Font_XL;
+    }];
+    return alertvc;
 }
 
 
 - (void)reloadData:(ListModel *)newModel index:(NSUInteger)index{
     [self.searchItems replaceObjectAtIndex:index withObject:newModel];
     [self.tableView reloadData];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.addCount = [textField.text intValue];
+    });
+    return YES;
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource

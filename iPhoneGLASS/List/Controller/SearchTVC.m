@@ -16,6 +16,7 @@
 #import "ContactTableViewController.h"
 #import "UserInfo.h"
 #import "UserModel.h"
+#import "MBProgressHUD.h"
 
 @interface SearchTVC ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *beginDate;
@@ -91,8 +92,41 @@
     return textField.text && textField.text.length > 0;
 }
 
+- (BOOL)lessThenSevenDay:(NSString *)begin end:(NSString *)end {
+    NSDate *bd = [NSDate dateFormDayString:begin];
+    NSDate *ed = [NSDate dateFormDayString:end];
+    NSTimeInterval time = [ed timeIntervalSinceDate:bd];
+    if (time <= 7 * 24 * 60 * 60) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)showHudWithTitle:(NSString *)title {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.label.text = title;
+    hud.mode = MBProgressHUDModeText;
+    [hud hideAnimated:YES afterDelay:1.0];
+}
+
 -(void)sure {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if ([self textIsNotNull:self.beginDate] && [self textIsNotNull:self.endDate]) {
+        if ([self lessThenSevenDay:self.beginDate.text end:self.endDate.text]) {
+            NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
+            [timedict setValue:self.beginDate.text forKey:@"$gte"];
+            [timedict setValue:self.endDate.text forKey:@"$lt"];
+            if (timedict.count > 0) {
+                [dict setObject:timedict forKey:@"createdAt"];
+            }
+        }else {
+            [self showHudWithTitle:@"只能查看相差7天的数据"];
+            return;
+        }
+    }else{
+        [self showHudWithTitle:@"日期必须选择"];
+        return;
+    }
     if ([self textIsNotNull:self.height]) {
         [dict setValue:self.height.text forKey:@"length"];
     }
@@ -104,18 +138,6 @@
     }
     if ([self textIsNotNull:self.name]) {
         [dict setValue:self.name.text forKey:@"name"];
-    }
-    if (self.beginDate.text || self.endDate.text) {
-        NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
-        if ([self textIsNotNull:self.beginDate]) {
-            [timedict setValue:self.beginDate.text forKey:@"$gte"];
-        }
-        if ([self textIsNotNull:self.endDate]) {
-            [timedict setValue:self.endDate.text forKey:@"$lt"];
-        }
-        if (timedict.count > 0) {
-            [dict setObject:timedict forKey:@"createdAt"];
-        }
     }
     int finish = (int)self.finishState.selectedSegmentIndex;
     if (finish > 0) {

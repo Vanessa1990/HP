@@ -8,7 +8,6 @@
 
 #import "HomeViewController.h"
 #import "OrderInfoViewController.h"
-#import "ListHeadView.h"
 
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate>
@@ -173,7 +172,6 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 -(void)search {
     
     SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
-    searchTVC.delegate = self;
     [self.navigationController pushViewController:searchTVC animated:YES];
 }
 
@@ -202,7 +200,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 35;
+    return 44;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -212,20 +210,11 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UserListModel *model = self.items[section];
-    ListHeadView *headView = [ListHeadView headViewWithSeeMoreInfoBlock:^{
-        NSLog(@"%@",model);
-    }];
-    headView.nameLable.text = model.name;
-    headView.totleLable.text = [NSString stringWithFormat:@"(共%@块)",model.totle];
+    ListHeadView *headView = [[ListHeadView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44) ];
+    headView.model = model;
     return headView;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    UserListModel *model = self.items[section];
-    NSString *string = [NSString stringWithFormat:@"%@(共%@块)",model.name,model.totle];
-    return string;
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
