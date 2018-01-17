@@ -20,6 +20,8 @@
 
 @property(nonatomic, strong) ListNavView *navView;
 
+@property (assign, nonatomic) BOOL preClick;
+
 
 @end
 
@@ -37,6 +39,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     self.dateItems = [NSMutableDictionary dictionary];
     self.currentDate = [NSDate date];
     [self initView];
+    self.preClick = YES;
 //    [self getTableViewData];
 }
 
@@ -82,7 +85,13 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     if ([UserInfo shareInstance].isAdmin) {
         self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
         [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
-            [self reloadDataAndUI];
+            NSString *todayString = [self.currentDate formatOnlyDay];
+            NSArray *array = [self.dateItems valueForKey:todayString];
+            if (!array || array.count == 0) {
+                [self getNewDateGlassDataWithPre:self.preClick];
+            }else{
+                [self reloadDataAndUI];
+            }
 //            [self.tableView.mj_footer endRefreshing];
             [self.tableView.mj_header endRefreshing];
             return value;
@@ -200,6 +209,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 
 #pragma mark - ListNavViewDelegate
 - (void)getNewDateGlassDataWithPre:(BOOL)preDay {
+    self.preClick = preDay;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView scrollRectToVisible:CGRectMake(0, 0, kScreenWidth, 44 ) animated:NO];
     });
