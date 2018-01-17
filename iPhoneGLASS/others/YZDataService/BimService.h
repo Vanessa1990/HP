@@ -71,7 +71,7 @@
 - (SHXPromise *)load:(NSString *)phone pwd:(NSString *)pwd;
 
 // 查询数据
-- (SHXPromise *)getListAttach:(NSString *)attach searchDict:(NSDictionary *)searchDict;
+- (SHXPromise *)getListSkip:(NSUInteger)skip limit:(NSUInteger)limit searchDict:(NSDictionary *)searchDict;
 
 // 获取用户下单日期
 - (SHXPromise *)getAllDate:(NSString *)userID;

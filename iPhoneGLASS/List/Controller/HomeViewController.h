@@ -19,6 +19,7 @@
 #import "UserInfo.h"
 #import "NSDate+YZBim.h"
 #import "ListHeadView.h"
+#import "MJRefresh.h"
 
 @interface HomeViewController : UIViewController
 
@@ -33,5 +34,7 @@
 @property(nonatomic, strong) NSArray *items;
 
 @property(nonatomic, strong) UITableView *tableView;
+
+@property (assign, nonatomic) NSUInteger skip;
 
 @end

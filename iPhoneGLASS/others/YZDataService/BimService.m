@@ -19,8 +19,8 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-//        self.address = @"http://localhost:3000";
-        self.address = @"http://47.96.157.244:3000";
+        self.address = @"http://localhost:3000";
+//        self.address = @"http://47.96.157.244:3000";
         // 陈鹏
 //        self.address = @"http://192.168.1.239:3000";
     }
@@ -234,13 +234,17 @@
 }
 
 // 查询数据
-- (SHXPromise *)getListAttach:(NSString *)attach searchDict:(NSDictionary *)searchDict
+- (SHXPromise *)getListSkip:(NSUInteger)skip limit:(NSUInteger)limit searchDict:(NSDictionary *)searchDict
 {
     NSString *url = [NSString stringWithFormat:@"%@order", self.baseAPI];
 //    url = [url stringByAppendingString:[NSString stringWithFormat:@"?%@",attach]];
     NSString *string = [Utils jsonString:searchDict];
 //    url = [url stringByAppendingString:[NSString stringWithFormat:@"&where=%@",string]];
-    url = [url stringByAppendingString:[NSString stringWithFormat:@"?where=%@",string]];
+    if (limit == 0) {
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"?where=%@",string]];
+    }else{
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"?limit=%zd&skip=%zd&where=%@",limit,skip,string]];
+    }
     return [AFNetworkingHelper getResource:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:nil];
 }
 

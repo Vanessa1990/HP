@@ -22,7 +22,7 @@
     model.date = dict[@"createdAt"];
     model.width = [NSString stringWithFormat:@"%@",dict[@"width"]];
     model.height = [NSString stringWithFormat:@"%@",dict[@"length"]];
-    
+    model.billnumber = dict[@"billnumber"]?dict[@"billnumber"]:@"";
 //    model.wind = [dict[@"wind"] boolValue];
 //    model.color = dict[@"color"];
     model.glassID = dict[@"_id"];

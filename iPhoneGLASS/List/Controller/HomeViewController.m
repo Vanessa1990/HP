@@ -21,7 +21,6 @@
 @property(nonatomic, strong) ListNavView *navView;
 
 
-
 @end
 
 static NSUInteger const secondsPerDay = 24 * 60 * 60;
@@ -36,8 +35,9 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     [self initNav];
     self.allDates = [NSArray array];
     self.dateItems = [NSMutableDictionary dictionary];
+    self.currentDate = [NSDate date];
     [self initView];
-    [self getTableViewData];
+//    [self getTableViewData];
 }
 
 - (void)initView {
@@ -51,6 +51,21 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     //tableview设置
     [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    MJRefreshNormalHeader *header =  [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getNewData];
+    }];
+    
+    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
+    [header setTitle:@"刷新" forState:MJRefreshStatePulling];
+    [header setTitle:@"刷新..." forState:MJRefreshStateRefreshing];
+    [header setTitle:@"刷新完成" forState:MJRefreshStateNoMoreData];
+    [header setTitle:@"刷新..." forState:MJRefreshStateWillRefresh];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        [self getTableViewData];
+//    }];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)initNav {
@@ -58,12 +73,18 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
 }
 
+- (void)getNewData {
+    self.skip = 0;
+    [self getTableViewData];
+}
+
 - (void)getTableViewData {
     if ([UserInfo shareInstance].isAdmin) {
-        self.currentDate = [NSDate date];
         self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
         [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
             [self reloadDataAndUI];
+//            [self.tableView.mj_footer endRefreshing];
+            [self.tableView.mj_header endRefreshing];
             return value;
         }];
     }else{
@@ -72,11 +93,12 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
             // 取出最近的时间赋值给 currentDate
             self.currentDate = [NSDate date];
             self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
-            [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
+            return [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
                 [self reloadDataAndUI];
+//                [self.tableView.mj_footer endRefreshing];
+                [self.tableView.mj_header endRefreshing];
                 return value;
             }];
-            return self.allDates;
         }];
     }
 }
@@ -89,6 +111,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 // 取出所有的分组
 - (NSArray *)getAllSections:(NSArray *)items {
     NSMutableArray *resIDs = [NSMutableArray array];
+
     // 取出组
     for (ListModel *m in items) {
         NSMutableString *section = [NSMutableString stringWithFormat:@"%@",m.name];
@@ -112,11 +135,11 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         NSString *todayString = [date formatOnlyDay];
         NSString *tomorrowString = [tomorrow formatOnlyDay];
         [searchDict setObject:@{@"$gte":todayString,@"$lt":tomorrowString} forKey:@"createdAt"];
+
         if (![UserInfo shareInstance].isAdmin) {
             [searchDict setObject:[UserInfo shareInstance].name forKey:@"name"];
         }
-       return [[[BimService instance] getListAttach:nil searchDict:searchDict] onFulfilled:^id(id value) {
-            
+        return [[[BimService instance] getListSkip:0 limit:0 searchDict:searchDict] onFulfilled:^id(id value) {
             NSMutableArray *itemArray = [NSMutableArray array];
             for (NSDictionary *dict in value) {
                 ListModel *model = [ListModel modelWithDict:dict];
@@ -178,7 +201,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 #pragma mark - ListNavViewDelegate
 - (void)getNewDateGlassDataWithPre:(BOOL)preDay {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView scrollRectToVisible:CGRectMake(0, 0, kScreenWidth, 44 ) animated:YES];
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, kScreenWidth, 44 ) animated:NO];
     });
     NSDate *newDay;
     if (preDay) {
@@ -190,10 +213,8 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         }
     }
     self.currentDate = newDay;
-    [[self getDateItems:newDay] onFulfilled:^id(id value) {
-        [self reloadDataAndUI];
-        return value;
-    }];
+    self.skip = 0;
+    [self getTableViewData];
 }
 
 
@@ -238,13 +259,13 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    UserListModel *model = self.items[indexPath.section];
-//    ListModel *listModel = model.listArray[indexPath.row];
-//    OrderInfoViewController *vc = [[OrderInfoViewController alloc] init];
-//    vc.model = listModel;
-//    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-//    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    [self presentViewController:vc animated:YES completion:nil];
+    UserListModel *model = self.items[indexPath.section];
+    ListModel *listModel = model.listArray[indexPath.row];
+    OrderInfoViewController *vc = [[OrderInfoViewController alloc] init];
+    vc.model = listModel;
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    [self presentViewController:vc animated:YES completion:nil];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

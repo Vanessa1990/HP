@@ -111,28 +111,44 @@
 
 -(void)sure {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if ([self textIsNotNull:self.beginDate] && [self textIsNotNull:self.endDate]) {
-        if ([self lessThenSevenDay:self.beginDate.text end:self.endDate.text]) {
-            NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
-            [timedict setValue:self.beginDate.text forKey:@"$gte"];
-            [timedict setValue:self.endDate.text forKey:@"$lt"];
-            if (timedict.count > 0) {
-                [dict setObject:timedict forKey:@"createdAt"];
-            }
-        }else {
-            [self showHudWithTitle:@"只能查看相差7天的数据"];
-            return;
-        }
-    }else{
-        [self showHudWithTitle:@"日期必须选择"];
-        return;
-    }
+    
+//    if (![self textIsNotNull:self.height] && ![self textIsNotNull:self.width]) {
+//        if ([self textIsNotNull:self.beginDate] && [self textIsNotNull:self.endDate]) {
+//            if (![self lessThenSevenDay:self.beginDate.text end:self.endDate.text]) {
+//                [self showHudWithTitle:@"只能查看相差7天的数据"];
+//                return;
+//            }
+//        }else{
+//            [self showHudWithTitle:@"日期必须选择"];
+//            return;
+//        }
+//    }else{
+//        if ([self textIsNotNull:self.height]) {
+//            [dict setValue:self.height.text forKey:@"length"];
+//        }
+//        if ([self textIsNotNull:self.width]) {
+//            [dict setValue:self.width.text forKey:@"width"];
+//        }
+//    }
+    
     if ([self textIsNotNull:self.height]) {
         [dict setValue:self.height.text forKey:@"length"];
     }
     if ([self textIsNotNull:self.width]) {
         [dict setValue:self.width.text forKey:@"width"];
     }
+    
+    NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
+    if ([self textIsNotNull:self.beginDate]) {
+        [timedict setValue:self.beginDate.text forKey:@"$gte"];
+    }
+    if ([self textIsNotNull:self.endDate]) {
+        [timedict setValue:self.endDate.text forKey:@"$lt"];
+    }
+    if (timedict.count > 0) {
+        [dict setObject:timedict forKey:@"createdAt"];
+    }
+
     if ([self textIsNotNull:self.thick]) {
         [dict setValue:self.thick.text forKey:@"category"];
     }

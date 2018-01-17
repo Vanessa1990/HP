@@ -138,7 +138,7 @@
 }
 
 - (SHXPromise *)searchWithDict:(NSDictionary *)searchDict seeSame:(BOOL)see {
-    return [[[BimService instance] getListAttach:nil searchDict:searchDict] onFulfilled:^id(NSArray *value) {
+    return [[[BimService instance] getListSkip:0 limit:1000 searchDict:searchDict] onFulfilled:^id(NSArray *value) {
         if (value && value.count > 0) {
             NSArray *ones = [self dealWithResultDicts:value seeSame:see][@"unfinish"];
             NSArray *twos = [self dealWithResultDicts:value seeSame:see][@"finish"];

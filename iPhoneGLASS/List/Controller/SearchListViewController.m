@@ -41,6 +41,7 @@ typedef enum : NSUInteger {
 
 @property (assign, nonatomic) int colorEven;
 
+
 @end
 
 @implementation SearchListViewController
@@ -91,7 +92,8 @@ typedef enum : NSUInteger {
 }
 
 - (void)getTableViewData {
-    [[[BimService instance] getListAttach:nil searchDict:self.searchDict] onFulfilled:^id(id value) {
+    // 最多搜索200条数据
+    [[[BimService instance] getListSkip:0 limit:200 searchDict:self.searchDict] onFulfilled:^id(id value) {
         NSMutableArray *itemArray = [NSMutableArray array];
         for (NSDictionary *dict in value) {
             ListModel *model = [ListModel modelWithDict:dict];
@@ -99,6 +101,7 @@ typedef enum : NSUInteger {
         }
         self.items = [self dealItems:itemArray];
         [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
         return value;
     } rejected:^id(NSError *reason) {
         return reason;

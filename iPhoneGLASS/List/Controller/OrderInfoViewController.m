@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *exsit;
 @property (weak, nonatomic) IBOutlet UILabel *date;
 @property (weak, nonatomic) IBOutlet UILabel *send;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet UILabel *orderNumber;
 
 @end
 
@@ -24,25 +26,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = YZ_Color(155, 155, 155, 0.5);
+    self.bgView.layer.cornerRadius = 6;
+    self.bgView.clipsToBounds = YES;
+    
+    self.name.text = [NSString stringWithFormat:@"%@%@",self.model.name,self.model.mark?self.model.mark:@""];
+    self.size.text = [NSString stringWithFormat:@"%@ : %@ * %@",self.model.thick,self.model.height,self.model.width];
+    self.totle.text = [NSString stringWithFormat:@"总数 : %zd",self.model.totalNumber];
+    self.exsit.text = [NSString stringWithFormat:@"已出库 : %zd",self.model.number];
+    self.date.text = [NSString stringWithFormat:@"日期 : %@",[[NSDate dateFromISOString:self.model.date] formatOnlyDay]];
+    NSMutableString *delivery = [NSMutableString string];
+    for (NSString *d in self.model.deliverymans) {
+        [delivery appendString:d];
+    }
+    self.send.text = [NSString stringWithFormat:@"配送 : %@",delivery.length > 0?delivery:@"暂无"];
+    self.orderNumber.text = [NSString stringWithFormat:@"订单号 : %@",self.model.billnumber];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-- (void)setModel:(ListModel *)model {
-    _model = model;
-    self.name.text = [NSString stringWithFormat:@"%@%@",model.name,model.mark];
-    self.size.text = [NSString stringWithFormat:@"%@:%@ * %@",model.thick,model.height,model.width];
-    self.totle.text = [NSString stringWithFormat:@"%zd",model.totalNumber];
-    self.exsit.text = [NSString stringWithFormat:@"%zd",model.number];
-    self.date.text = [[NSDate dateFromISOString:model.date] formatOnlyDay];
-    NSMutableString *delivery = [NSMutableString string];
-    for (NSString *d in model.deliverymans) {
-        [delivery appendString:d];
-    }
-    self.send.text = delivery.length > 0?delivery:@"暂无";
+- (IBAction)closeClick:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 @end

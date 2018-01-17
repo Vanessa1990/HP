@@ -40,5 +40,7 @@
 
 @property(nonatomic, strong) NSArray *deliverymans;
 
+@property(nonatomic, strong) NSString *billnumber;
+
 
 @end
