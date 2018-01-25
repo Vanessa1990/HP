@@ -15,11 +15,13 @@
 #import "RegistViewController.h"
 #import "MBProgressHUD.h"
 #import "ContactTableViewController.h"
+#import "BimService.h"
 
 @interface MoreTVC ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *telLable;
+@property(nonatomic, strong) UITextField *pwdTextField;
 
 @end
 
@@ -100,6 +102,7 @@
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"moreCellID"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     // Configure the cell...
@@ -107,7 +110,7 @@
 //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //        cell.textLabel.text = @"清除缓存";
 //    }
-    if ([UserInfo shareInstance].isAdmin) {
+    if ([UserInfo shareInstance].admin) {
         if (indexPath.row == 1) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"关于我们";
@@ -132,18 +135,35 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 0) {
-        if ([UserInfo shareInstance].isAdmin) {
+        if ([UserInfo shareInstance].admin) {
             ContactTableViewController *contactVC = [[ContactTableViewController alloc]init];
             [self.navigationController pushViewController:contactVC animated:YES];
         }else{
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.label.text = @"~_~暂不支持,敬请期待...";
-            [hud hideAnimated:YES afterDelay:1.0];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self resetPwd];
+            }];
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"修改密码" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            [alertVC addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                self.pwdTextField = textField;
+                textField.font = YZ_Font_XL;
+                textField.placeholder = @"请输入新的密码";
+            }];
+            [alertVC addAction:cancelAction];
+            [alertVC addAction:sureAction];
+            [self presentViewController:alertVC animated:YES completion:nil];
         }
     }else if (indexPath.row == 1) {
         AboutViewController *aboutVC = [[AboutViewController alloc]init];
         [self.navigationController pushViewController:aboutVC animated:YES];
     }
+}
+
+- (void)resetPwd {
+    [[[BimService instance] updateUser:[UserInfo shareInstance].userID newDict:@{@"password":self.pwdTextField.text}] onFulfilled:^id(id value) {
+        [self quit:nil];
+        return value;
+    }];
 }
 
 @end

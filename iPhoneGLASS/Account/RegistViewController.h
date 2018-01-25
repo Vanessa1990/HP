@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserModel.h"
 
 @protocol RegistViewControllerDelegate
 
@@ -17,5 +18,7 @@
 @interface RegistViewController : UIViewController
 
 @property(nonatomic, strong) id<RegistViewControllerDelegate>delegate;
+
+@property(nonatomic, strong) UserModel *user;
 
 @end

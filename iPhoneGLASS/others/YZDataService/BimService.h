@@ -62,10 +62,13 @@
 - (SHXPromise *)getAllUsers;
 
 // 注册新用户
-- (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd;
+- (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd admin:(BOOL)admin jsPermission:(BOOL)permission;
 
 // 更新用户
 - (SHXPromise *)updateUser:(NSString *)userId newDict:(NSDictionary *)newDict;
+
+// 删除用户
+- (SHXPromise *)deleteUser:(NSString *)userId;
 
 // 登录
 - (SHXPromise *)load:(NSString *)phone pwd:(NSString *)pwd;
@@ -74,7 +77,7 @@
 - (SHXPromise *)getListSkip:(NSUInteger)skip limit:(NSUInteger)limit searchDict:(NSDictionary *)searchDict;
 
 // 获取用户下单日期
-- (SHXPromise *)getAllDate:(NSString *)userID;
+- (SHXPromise *)getAllDate:(NSString *)name;
 
 // 更新数据
 - (SHXPromise *)updateGlassInfo:(NSString *)glassId newDict:(NSDictionary *)newDict;

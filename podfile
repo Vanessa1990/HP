@@ -20,5 +20,6 @@ target 'iPhoneGLASS' do
 
   pod 'Masonry', '~> 1.0.2'
   pod 'MJRefresh', '~> 3.1.14'
+  pod 'MJExtension', '~> 3.0.13'
 
 end

@@ -11,8 +11,10 @@
 
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate>
-
+// 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
+@property (assign, nonatomic) NSUInteger index;
+// 普通用户用到
 
 @property (nonatomic, strong) NSMutableDictionary *dateItems;
 
@@ -40,7 +42,16 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     self.currentDate = [NSDate date];
     [self initView];
     self.preClick = YES;
-//    [self getTableViewData];
+    if ([UserInfo shareInstance].admin) {
+        [self.tableView.mj_header beginRefreshing];
+    }else{
+        [[self getAllDates] onFulfilled:^id(id value) {
+            NSString *dateString = self.allDates[self.index];
+            self.currentDate = [NSDate dateFromISOString:dateString];
+            [self.tableView.mj_header beginRefreshing];
+            return value;
+        }];
+    }
 }
 
 - (void)initView {
@@ -65,15 +76,20 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     [header setTitle:@"刷新..." forState:MJRefreshStateWillRefresh];
     header.lastUpdatedTimeLabel.hidden = YES;
     self.tableView.mj_header = header;
-//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        [self getTableViewData];
-//    }];
-    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)initNav {
     self.navigationItem.titleView = self.navView;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+}
+
+- (SHXPromise *)getAllDates {
+    return [[[BimService instance] getAllDate:[UserInfo shareInstance].name] onFulfilled:^id(id value) {
+        NSLog(@"%@",value);
+        self.allDates = [NSArray arrayWithArray:value];
+        self.index = self.allDates.count - 1;
+        return value;
+    }];
 }
 
 - (void)getNewData {
@@ -82,34 +98,12 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 }
 
 - (void)getTableViewData {
-    if ([UserInfo shareInstance].isAdmin) {
-        self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
-        [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
-            NSString *todayString = [self.currentDate formatOnlyDay];
-            NSArray *array = [self.dateItems valueForKey:todayString];
-            if (!array || array.count == 0) {
-                [self getNewDateGlassDataWithPre:self.preClick];
-            }else{
-                [self reloadDataAndUI];
-            }
-//            [self.tableView.mj_footer endRefreshing];
-            [self.tableView.mj_header endRefreshing];
-            return value;
-        }];
-    }else{
-        [[[BimService instance] getAllDate:[UserInfo shareInstance].userID] onFulfilled:^id(NSArray *value) {
-            self.allDates = [NSArray arrayWithArray:value];
-            // 取出最近的时间赋值给 currentDate
-            self.currentDate = [NSDate date];
-            self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
-            return [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
-                [self reloadDataAndUI];
-//                [self.tableView.mj_footer endRefreshing];
-                [self.tableView.mj_header endRefreshing];
-                return value;
-            }];
-        }];
-    }
+    self.navView.currenDateLabel.text = [self.currentDate formatOnlyDay];
+    [[self getDateItems:self.currentDate] onFulfilled:^id(id value) {
+        [self reloadDataAndUI];
+        [self.tableView.mj_header endRefreshing];
+        return value;
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,7 +139,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         NSString *tomorrowString = [tomorrow formatOnlyDay];
         [searchDict setObject:@{@"$gte":todayString,@"$lt":tomorrowString} forKey:@"createdAt"];
 
-        if (![UserInfo shareInstance].isAdmin) {
+        if (![UserInfo shareInstance].admin) {
             [searchDict setObject:[UserInfo shareInstance].name forKey:@"name"];
         }
         return [[[BimService instance] getListSkip:0 limit:0 searchDict:searchDict] onFulfilled:^id(id value) {
@@ -215,11 +209,29 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     });
     NSDate *newDay;
     if (preDay) {
-        newDay = [NSDate dateWithTimeInterval:-24*60*60 sinceDate:self.currentDate];
+        if ([UserInfo shareInstance].admin) {
+            newDay = [NSDate dateWithTimeInterval:-24*60*60 sinceDate:self.currentDate];
+        }else{
+            if (self.index > 0) {
+                self.index--;
+                newDay = [NSDate dateFromISOString:self.allDates[self.index]];
+            }else{
+                return;
+            }
+        }
     }else{
-        newDay = [NSDate dateWithTimeInterval:24*60*60 sinceDate:self.currentDate];
-        if ([newDay timeIntervalSinceNow] > 0) {
-            return;
+        if ([UserInfo shareInstance].admin) {
+            newDay = [NSDate dateWithTimeInterval:24*60*60 sinceDate:self.currentDate];
+            if ([newDay timeIntervalSinceNow] > 0) {
+                return;
+            }
+        }else{
+            if (self.index < self.allDates.count - 1) {
+                self.index++;
+                newDay = [NSDate dateFromISOString:self.allDates[self.index]];
+            }else{
+                return;
+            }
         }
     }
     self.currentDate = newDay;
@@ -275,7 +287,6 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     vc.model = listModel;
     vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
-//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

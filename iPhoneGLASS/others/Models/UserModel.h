@@ -17,6 +17,8 @@
 @property(nonatomic, strong) NSString *password;
 @property(nonatomic, strong) NSString *phone;
 @property(nonatomic, strong) NSString *createdAt;
+@property (assign, nonatomic) BOOL admin;
+@property (assign, nonatomic) BOOL JSPermission;
 
  -(void)setValue:(id)value forUndefinedKey:(NSString *)key;
 

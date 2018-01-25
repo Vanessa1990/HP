@@ -23,8 +23,8 @@ static UserInfo *_instance = nil;
     return _instance;
 }
 
-- (BOOL)isAdmin {
-    return [self.tel isEqualToString:admin_tel];
+- (NSString *)tel {
+    return self.phone;
 }
 
 @end

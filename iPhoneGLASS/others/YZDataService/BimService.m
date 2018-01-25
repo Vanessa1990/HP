@@ -202,10 +202,10 @@
 }
 
 // 注册新用户
-- (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd
+- (SHXPromise *)registNewUser:(NSString *)name phone:(NSString *)phone pwd:(NSString *)pwd admin:(BOOL)admin jsPermission:(BOOL)permission
 {
     NSString *url = [NSString stringWithFormat:@"%@user/add", self.baseAPI];
-    NSDictionary *dict = @{@"name":name,@"phone":phone,@"password":pwd};
+    NSDictionary *dict = @{@"name":name,@"phone":phone,@"password":pwd,@"admin":@(admin),@"JSPermission":@(permission)};
     
     return [[self checkSameUser:phone] onFulfilled:^id(NSArray *value) {
         if (value && value.count > 0) {
@@ -249,17 +249,10 @@
 }
 
 // 获取用户下单日期
-- (SHXPromise *)getAllDate:(NSString *)userID
+- (SHXPromise *)getAllDate:(NSString *)name
 {
-    SHXPromise *promise = [SHXPromise new];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSMutableArray *array = [NSMutableArray array];
-    for (int i = 0; i < 30; i++) {
-        NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitDay value:i toDate:[NSDate date] options:0];
-        [array insertObject:date atIndex:0];
-    }
-    [promise resolve:array];
-    return promise;
+    NSString *url = [NSString stringWithFormat:@"%@order/date", self.baseAPI];
+    return [AFNetworkingHelper getResource:url parameters:@{@"name":name}];
 }
 
 // 更新数据
@@ -285,6 +278,11 @@
 
 - (SHXPromise *)deleteGlass:(NSString *)glassId {
     NSString *url = [NSString stringWithFormat:@"%@deleteOrder/%@", self.baseAPI,glassId];
+    return [AFNetworkingHelper deleteResource:url parameters:nil];
+}
+
+- (SHXPromise *)deleteUser:(NSString *)userId {
+    NSString *url = [NSString stringWithFormat:@"%@user/%@", self.baseAPI,userId];
     return [AFNetworkingHelper deleteResource:url parameters:nil];
 }
 

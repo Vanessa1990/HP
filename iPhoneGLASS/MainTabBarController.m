@@ -44,7 +44,7 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     
-    if ([UserInfo shareInstance].isAdmin) {
+    if ([UserInfo shareInstance].admin) {
         WriteInViewController *HomeVC = [[WriteInViewController alloc] init];
         [self setupChildVC:HomeVC title:@"入库" imageName:@"tab_write.png" selectedImageName:@"tab_write_s.png" array:array];
     }

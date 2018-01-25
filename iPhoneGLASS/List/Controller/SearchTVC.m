@@ -45,7 +45,7 @@
     [super viewDidLoad];
     self.title = @"筛选";
     
-    if (![UserInfo shareInstance].isAdmin) {
+    if (![UserInfo shareInstance].admin) {
         self.name.text = [UserInfo shareInstance].name;
         self.name.userInteractionEnabled = NO;
     }
@@ -189,7 +189,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([UserInfo shareInstance].isAdmin) {
+    if ([UserInfo shareInstance].admin) {
         return 3;
     }
     return 2;

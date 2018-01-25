@@ -7,6 +7,7 @@
 //
 
 #import "UserModel.h"
+#import <MJExtension.h>
 
 @implementation UserModel
 
@@ -17,8 +18,11 @@
     NSLog(@"%@",key);
 }
 
-//+ (instancetype)userWithDict:(NSDictionary *)dict {
-//
-//}
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{
+             @"userID" : @"_id"
+             };
+}
+
 
 @end

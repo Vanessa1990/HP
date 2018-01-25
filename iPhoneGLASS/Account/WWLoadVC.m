@@ -18,6 +18,7 @@
 #import "RegistViewController.h"
 #import "HomeViewController.h"
 #import "MainHomeViewController.h"
+#import <MJExtension.h>
 
 @interface WWLoadVC ()
 
@@ -59,9 +60,9 @@
     
     [super viewWillAppear:animated];
     
-    // test
-    self.phoneTextField.text = admin_tel;
-    self.pwdTextField.text = @"123456";
+//    // test
+//    self.phoneTextField.text = @"13338890965";
+//    self.pwdTextField.text = @"888888";
 }
 
 
@@ -75,10 +76,14 @@
         // 保存数据
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
         HS_PERSISTENT_SET_OBJECT(data, USER_INFO);
-        
-        [UserInfo shareInstance].name = value[@"name"];
-        [UserInfo shareInstance].tel = value[@"phone"];
-        [UserInfo shareInstance].userID = value[@"_id"];
+        UserModel *model = [UserModel mj_objectWithKeyValues:value];
+        [UserInfo shareInstance].userID = model.userID;
+        [UserInfo shareInstance].name = model.name;
+        [UserInfo shareInstance].phone = model.phone;
+        [UserInfo shareInstance].tel = model.phone;
+        [UserInfo shareInstance].password = model.password;
+        [UserInfo shareInstance].admin = model.admin;
+        [UserInfo shareInstance].JSPermission = model.JSPermission;
         
         //进入主界面
         MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];

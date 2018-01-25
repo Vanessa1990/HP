@@ -191,42 +191,28 @@
  */
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray *arr = self.contacts[indexPath.section];
+    UserModel *model = arr[indexPath.row];
     
-    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"修改" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        NSArray *arr = self.contacts[indexPath.section];
-        UserModel *model = arr[indexPath.row];
+    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"修改" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        
         [self reset:model];
     }];
+    UITableViewRowAction *deletedAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        [[[BimService instance] deleteUser:model.userID] onFulfilled:^id(id value) {
+            [self getData];
+            return value;
+        }];
+    }];
     
-    return @[action];
+    return @[deletedAction,action];
 }
 
 - (void)reset:(UserModel *)model {
-    UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"" message:@"修改账号" preferredStyle:UIAlertControllerStyleAlert];
-    self.resetModel = [[UserModel alloc] init];
-    [self addTextFieldWith:100 text:model.name vc:vc];
-    [self addTextFieldWith:200 text:model.phone vc:vc];
-    [self addTextFieldWith:300 text:model.password vc:vc];
-    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        self.resetModel.name?[dict setValue:self.resetModel.name forKey:@"name"]:0;
-        self.resetModel.phone?[dict setValue:self.resetModel.phone forKey:@"phone"]:0;
-        self.resetModel.password?[dict setValue:self.resetModel.password forKey:@"password"]:0;
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.label.text = @"正在修改...";
-        [[[BimService instance] updateUser:model.userID newDict:dict] onFulfilled:^id(id value) {
-            [hud hideAnimated:YES afterDelay:0.3];
-            return [self getData];
-        } rejected:^id(NSError *reason) {
-            hud.label.text = @"修改失败✘";
-            [hud hideAnimated:YES afterDelay:0.6];
-            return reason;
-        }];
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
-    [vc addAction:cancelAction];
-    [vc addAction:sureAction];
-    [self presentViewController:vc animated:YES completion:nil];
+    RegistViewController *registVC = [[RegistViewController alloc] init];
+    registVC.delegate = self;
+    registVC.user = model;
+    [self.navigationController pushViewController:registVC animated:YES];
 }
 
 - (void)addTextFieldWith:(NSInteger)tag text:(NSString *)text vc:(UIAlertController *)vc {

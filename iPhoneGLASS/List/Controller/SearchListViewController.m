@@ -63,7 +63,7 @@ typedef enum : NSUInteger {
 - (void)initNav{
     self.navigationItem.title = @"搜索结果";
     self.navigationItem.titleView = nil;
-    if ([UserInfo shareInstance].isAdmin) {
+    if ([UserInfo shareInstance].admin) {
         self.navigationItem.rightBarButtonItem = self.editButtonItem;
         self.edit = NO;
     }
