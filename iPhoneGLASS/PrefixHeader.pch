@@ -32,4 +32,7 @@
 
 #import <Masonry.h>
 
+#import "UIViewController+HP.h"
+#import "UITabBarController+YZBim.h"
+
 #endif

@@ -23,6 +23,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     self.navigationItem.title = @"关于我们";
+    [self setBackItem];
     self.automaticallyAdjustsScrollViewInsets = NO;
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, HP_Screen_Width, HP_Screen_Height - 64)];
     [self.view addSubview:_scrollView];

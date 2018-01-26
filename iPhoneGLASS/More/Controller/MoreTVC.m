@@ -35,9 +35,17 @@
     self.tableView.backgroundColor = YZ_ThemeGrayColor;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(quit:)];
-    
+    [self setShowTabItem];
     
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+    });
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -64,11 +72,6 @@
     HP_Delegate.window.rootViewController = nav;
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    [self.tabBarController.tabBar setHidden:NO];
-}
 
 #pragma mark - Table view data source
 
@@ -105,11 +108,6 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    // Configure the cell...
-//    if (indexPath.row == 0) {
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        cell.textLabel.text = @"清除缓存";
-//    }
     if ([UserInfo shareInstance].admin) {
         if (indexPath.row == 1) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

@@ -13,7 +13,7 @@
 - (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
     
     // 默认不需要动画
-    animated = NO;
+//    animated = NO;
     
     if ([self tabBarIsVisible] == visible) return;
     
@@ -25,6 +25,7 @@
     
     [UIView animateWithDuration:duration animations:^{
         self.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+        [self.view layoutIfNeeded];
     } completion:completion];
 }
 

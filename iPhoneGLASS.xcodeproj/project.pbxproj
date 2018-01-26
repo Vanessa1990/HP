@@ -70,6 +70,9 @@
 		7F9904511CEB19EF0039AAD5 /* MoreTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904501CEB19EF0039AAD5 /* MoreTVC.m */; };
 		7FAD3B491F2AF31400935E48 /* add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B471F2AF31400935E48 /* add_green.png */; };
 		7FAD3B4A1F2AF31400935E48 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B481F2AF31400935E48 /* call.png */; };
+		7FB1D1D6201B1E8000C0BD27 /* tab_show@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB1D1D4201B1E7F00C0BD27 /* tab_show@3x.png */; };
+		7FB1D1D7201B1E8000C0BD27 /* tab_show@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB1D1D5201B1E8000C0BD27 /* tab_show@2x.png */; };
+		7FB1D1D9201B1F9000C0BD27 /* nav_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB1D1D8201B1F9000C0BD27 /* nav_back.png */; };
 		7FB873161FFF71DB002DFD82 /* close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB873141FFF71DB002DFD82 /* close@3x.png */; };
 		7FB873171FFF71DB002DFD82 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB873151FFF71DB002DFD82 /* close@2x.png */; };
 		7FBF1EB21FE78FB400BA1739 /* ListNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBF1EB11FE78FB400BA1739 /* ListNavView.m */; };
@@ -115,6 +118,7 @@
 		7FCDB32A1F2F0F8E00759928 /* MoreTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FCDB3281F2F0F8E00759928 /* MoreTableCell.xib */; };
 		7FCDB32E1F2F6D5F00759928 /* NSDate+YZBim.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCDB32D1F2F6D5F00759928 /* NSDate+YZBim.m */; };
 		7FDD6AC31F2F722B00599005 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDD6AC21F2F722B00599005 /* Utils.m */; };
+		7FF35452201B03760052DA85 /* UIViewController+HP.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF35451201B03760052DA85 /* UIViewController+HP.m */; };
 		7FFB0D861FF09B7000D56CC7 /* unchoose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FFB0D821FF09B6F00D56CC7 /* unchoose@3x.png */; };
 		7FFB0D871FF09B7000D56CC7 /* choose@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FFB0D831FF09B6F00D56CC7 /* choose@3x.png */; };
 		7FFB0D881FF09B7000D56CC7 /* unchoose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FFB0D841FF09B7000D56CC7 /* unchoose@2x.png */; };
@@ -262,6 +266,9 @@
 		7F9904501CEB19EF0039AAD5 /* MoreTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreTVC.m; sourceTree = "<group>"; };
 		7FAD3B471F2AF31400935E48 /* add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_green.png; sourceTree = "<group>"; };
 		7FAD3B481F2AF31400935E48 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
+		7FB1D1D4201B1E7F00C0BD27 /* tab_show@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_show@3x.png"; sourceTree = "<group>"; };
+		7FB1D1D5201B1E8000C0BD27 /* tab_show@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_show@2x.png"; sourceTree = "<group>"; };
+		7FB1D1D8201B1F9000C0BD27 /* nav_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back.png; sourceTree = "<group>"; };
 		7FB873141FFF71DB002DFD82 /* close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@3x.png"; sourceTree = "<group>"; };
 		7FB873151FFF71DB002DFD82 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		7FBF1EB01FE78FB400BA1739 /* ListNavView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListNavView.h; sourceTree = "<group>"; };
@@ -339,6 +346,8 @@
 		7FCDB32D1F2F6D5F00759928 /* NSDate+YZBim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+YZBim.m"; sourceTree = "<group>"; };
 		7FDD6AC11F2F722B00599005 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		7FDD6AC21F2F722B00599005 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		7FF35450201B03760052DA85 /* UIViewController+HP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HP.h"; sourceTree = "<group>"; };
+		7FF35451201B03760052DA85 /* UIViewController+HP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HP.m"; sourceTree = "<group>"; };
 		7FFB0D821FF09B6F00D56CC7 /* unchoose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchoose@3x.png"; sourceTree = "<group>"; };
 		7FFB0D831FF09B6F00D56CC7 /* choose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose@3x.png"; sourceTree = "<group>"; };
 		7FFB0D841FF09B7000D56CC7 /* unchoose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchoose@2x.png"; sourceTree = "<group>"; };
@@ -723,6 +732,9 @@
 		7FAD3B461F2AF31400935E48 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				7FB1D1D8201B1F9000C0BD27 /* nav_back.png */,
+				7FB1D1D5201B1E8000C0BD27 /* tab_show@2x.png */,
+				7FB1D1D4201B1E7F00C0BD27 /* tab_show@3x.png */,
 				7FB873151FFF71DB002DFD82 /* close@2x.png */,
 				7FB873141FFF71DB002DFD82 /* close@3x.png */,
 				7FFB0D851FF09B7000D56CC7 /* choose@2x.png */,
@@ -773,6 +785,8 @@
 				7FCDB2911F2EBEC400759928 /* MainNavigationController.m */,
 				7FCDB2931F2EC07A00759928 /* UITabBarController+YZBim.h */,
 				7FCDB2941F2EC07A00759928 /* UITabBarController+YZBim.m */,
+				7FF35450201B03760052DA85 /* UIViewController+HP.h */,
+				7FF35451201B03760052DA85 /* UIViewController+HP.m */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -968,6 +982,7 @@
 				7FC22FD61F62825100717CEE /* launch@2x.png in Resources */,
 				269ED3D11F60EF340047AF86 /* tab_home_s@3x.png in Resources */,
 				269ED3C61F60EE5C0047AF86 /* tab_write_s@2x.png in Resources */,
+				7FB1D1D9201B1F9000C0BD27 /* nav_back.png in Resources */,
 				7F06A6F01CEAF101006B9CA4 /* WWLoadVC.xib in Resources */,
 				269ED3C71F60EE5C0047AF86 /* tab_write@2x.png in Resources */,
 				269ED3BC1F60E1A10047AF86 /* tab_write.png in Resources */,
@@ -988,6 +1003,7 @@
 				7FC22FD51F62825100717CEE /* launch.png in Resources */,
 				7FCDB32A1F2F0F8E00759928 /* MoreTableCell.xib in Resources */,
 				7FFB0D881FF09B7000D56CC7 /* unchoose@2x.png in Resources */,
+				7FB1D1D6201B1E8000C0BD27 /* tab_show@3x.png in Resources */,
 				7FCDB29D1F2EC18A00759928 /* tab_more_s@2x.png in Resources */,
 				7FCDB29E1F2EC18A00759928 /* tab_more_s@3x.png in Resources */,
 				269ED3CA1F60EEB50047AF86 /* tab_write_s@3x.png in Resources */,
@@ -999,6 +1015,7 @@
 				7FAD3B491F2AF31400935E48 /* add_green.png in Resources */,
 				7FCDB2A11F2EC18A00759928 /* tab_more@3x.png in Resources */,
 				7FB873171FFF71DB002DFD82 /* close@2x.png in Resources */,
+				7FB1D1D7201B1E8000C0BD27 /* tab_show@2x.png in Resources */,
 				269ED3D31F60EF340047AF86 /* tab_home@3x.png in Resources */,
 				7FFB0D861FF09B7000D56CC7 /* unchoose@3x.png in Resources */,
 				7FFB0D8E1FF0F85800D56CC7 /* SendOrderViewController.xib in Resources */,
@@ -1209,6 +1226,7 @@
 				7FCDB3291F2F0F8E00759928 /* MoreTableCell.m in Sources */,
 				7FCDB2921F2EBEC400759928 /* MainNavigationController.m in Sources */,
 				7FCDB2A41F2ED46D00759928 /* HomeViewController.m in Sources */,
+				7FF35452201B03760052DA85 /* UIViewController+HP.m in Sources */,
 				7F0E98B11CFE7F120051C503 /* STToolbar.m in Sources */,
 				7F900CB11F932CEF002D9972 /* MainHomeViewController.m in Sources */,
 				7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */,

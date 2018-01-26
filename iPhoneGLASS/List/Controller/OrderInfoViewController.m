@@ -41,6 +41,7 @@
     }
     self.send.text = [NSString stringWithFormat:@"配送 : %@",delivery.length > 0?delivery:@"暂无"];
     self.orderNumber.text = [NSString stringWithFormat:@"订单号 : %@",self.model.billnumber];
+
 }
 
 - (void)didReceiveMemoryWarning {

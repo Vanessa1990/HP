@@ -41,6 +41,8 @@
     [super viewDidLoad];
     self.title = @"所有客户";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(add:)];
+    [self setBackItem];
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;

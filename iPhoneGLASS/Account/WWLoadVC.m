@@ -54,15 +54,14 @@
     self.loadBtn.layer.cornerRadius = 10;
     self.loadBtn.clipsToBounds = YES;
 
+    // test
+    self.phoneTextField.text = @"13852689266";
+    self.pwdTextField.text = @"888888";
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    
-//    // test
-//    self.phoneTextField.text = @"13338890965";
-//    self.pwdTextField.text = @"888888";
 }
 
 
@@ -86,9 +85,10 @@
         [UserInfo shareInstance].JSPermission = model.JSPermission;
         
         //进入主界面
-        MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
-        UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
-        HP_Delegate.window.rootViewController = navc;
+//        MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
+//        UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
+        MainTabBarController *mainVC = [[MainTabBarController alloc] init];
+        HP_Delegate.window.rootViewController = mainVC;
         
         return value;
     }rejected:^id(NSError *reason) {

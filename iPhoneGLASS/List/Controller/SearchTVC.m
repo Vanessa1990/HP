@@ -51,6 +51,7 @@
     }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(sure)];
     [self.finishState addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventValueChanged];
+    [self setBackItem];
     
 }
 
@@ -82,7 +83,9 @@
     self.width.text = @"";
     self.height.text = @"";
     self.finishState.selectedSegmentIndex = 0;
-    self.name.text = @"";
+    if ([UserInfo shareInstance].admin){
+        self.name.text = @"";
+    }
 }
 
 - (BOOL)textIsNotNull:(UITextField *)textField {
@@ -111,26 +114,7 @@
 
 -(void)sure {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
-//    if (![self textIsNotNull:self.height] && ![self textIsNotNull:self.width]) {
-//        if ([self textIsNotNull:self.beginDate] && [self textIsNotNull:self.endDate]) {
-//            if (![self lessThenSevenDay:self.beginDate.text end:self.endDate.text]) {
-//                [self showHudWithTitle:@"只能查看相差7天的数据"];
-//                return;
-//            }
-//        }else{
-//            [self showHudWithTitle:@"日期必须选择"];
-//            return;
-//        }
-//    }else{
-//        if ([self textIsNotNull:self.height]) {
-//            [dict setValue:self.height.text forKey:@"length"];
-//        }
-//        if ([self textIsNotNull:self.width]) {
-//            [dict setValue:self.width.text forKey:@"width"];
-//        }
-//    }
-    
+
     if ([self textIsNotNull:self.height]) {
         [dict setValue:self.height.text forKey:@"length"];
     }

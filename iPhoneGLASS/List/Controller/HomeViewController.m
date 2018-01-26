@@ -9,7 +9,6 @@
 #import "HomeViewController.h"
 #import "OrderInfoViewController.h"
 
-
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate>
 // 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
@@ -24,6 +23,7 @@
 
 @property (assign, nonatomic) BOOL preClick;
 
+@property (assign, nonatomic) BOOL reGetData;
 
 @end
 
@@ -54,6 +54,13 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+    });
+}
+
 - (void)initView {
     self.tableView = [[UITableView alloc] init];
     [self.view addSubview:self.tableView];
@@ -80,7 +87,8 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 
 - (void)initNav {
     self.navigationItem.titleView = self.navView;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+    [self setShowTabItem];
 }
 
 - (SHXPromise *)getAllDates {
@@ -94,6 +102,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 
 - (void)getNewData {
     self.skip = 0;
+    self.reGetData = YES;
     [self getTableViewData];
 }
 
@@ -131,7 +140,8 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 - (SHXPromise *)getDateItems:(NSDate *)date
 {
     SHXPromise *promise = [SHXPromise new];
-    if (![self.dateItems objectForKey:[date formatOnlyDay]]) {
+    if (![self.dateItems objectForKey:[date formatOnlyDay]] || self.reGetData) {
+        self.reGetData = NO;
         NSMutableDictionary *searchDict = [NSMutableDictionary dictionary];
         
         NSDate *tomorrow = [date dateByAddingTimeInterval:secondsPerDay];

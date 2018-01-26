@@ -19,10 +19,8 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.address = @"http://localhost:3000";
-//        self.address = @"http://47.96.157.244:3000";
-        // 陈鹏
-//        self.address = @"http://192.168.1.239:3000";
+//        self.address = @"http://localhost:3000";
+        self.address = @"http://47.96.157.244:3000";
     }
     return self;
 }

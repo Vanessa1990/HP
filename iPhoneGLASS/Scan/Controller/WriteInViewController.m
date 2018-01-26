@@ -13,6 +13,7 @@
 #import "BimService.h"
 #import "ListModel.h"
 #import "KeyBoardView.h"
+#import <Masonry.h>
 
 #define KeyboardHeight 300
 
@@ -42,14 +43,31 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"入库";
 
+    [self initView];
+    [self keyBoard:YES];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看订单" style:UIBarButtonItemStylePlain target:self action:@selector(seeMore:)];
+    [self setShowTabItem];
+}
+
+- (void)initView {
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, 44)];
     [self.view addSubview:self.searchBar];
+    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(64);
+        make.height.mas_equalTo(44);
+    }];
     self.searchBar.placeholder = @"请输入搜索条件,以 * 连接";
     self.searchBar.delegate = self;
-//    self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
+    //    self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108, kScreenWidth, kScreenHeight - 108 - 49)];
     [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(0);
+        make.top.mas_equalTo(self.searchBar.mas_bottom);
+    }];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
@@ -57,14 +75,18 @@
     
     self.searchItems = [NSMutableArray array];
     [self.view addSubview:self.keyBoard];
-    [self keyBoard:YES];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看订单" style:UIBarButtonItemStylePlain target:self action:@selector(seeMore:)];
+    [self.keyBoard mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(0);
+        make.height.mas_equalTo(KeyboardHeight);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    self.searchBar.text = @"505+1448";
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,9 +96,13 @@
 
 - (void)keyBoard:(BOOL)show {
     CGRect frame = show ? CGRectMake(0, kScreenHeight - KeyboardHeight, kScreenWidth, KeyboardHeight) : CGRectMake(0, kScreenHeight, kScreenWidth, KeyboardHeight);
+    CGFloat bottom = show?0:KeyboardHeight;
     [UIView animateWithDuration:0.3 animations:^{
-        self.keyBoard.frame = frame;
-        [self.view layoutIfNeeded];
+//        self.keyBoard.frame = frame;
+//        [self.view layoutIfNeeded];
+        [self.keyBoard mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(bottom);
+        }];
     }];
 }
 
@@ -182,12 +208,9 @@
     if (self.writeInModel) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:self.writeInModel.name forKey:@"name"];
-//        [dict setValue:self.writeInModel.name forKey:@"name"];
         VC = [[SearchListViewController alloc] initWithSearchDict:dict sort:YES];
-    }else{
-        VC = [[HomeViewController alloc] init];
+        [self.navigationController pushViewController:VC animated:YES];
     }
-    [self.navigationController pushViewController:VC animated:YES];
 }
 
 

@@ -41,6 +41,8 @@ typedef enum : NSUInteger {
 
 @property (assign, nonatomic) int colorEven;
 
+@property(nonatomic, strong) MJRefreshAutoNormalFooter *footView;
+
 
 @end
 
@@ -67,6 +69,7 @@ typedef enum : NSUInteger {
         self.navigationItem.rightBarButtonItem = self.editButtonItem;
         self.edit = NO;
     }
+    [self setBackItem];
 }
 
 
@@ -92,20 +95,68 @@ typedef enum : NSUInteger {
 }
 
 - (void)getTableViewData {
-    // 最多搜索200条数据
-    [[[BimService instance] getListSkip:0 limit:200 searchDict:self.searchDict] onFulfilled:^id(id value) {
+    NSMutableDictionary *searchDict = [NSMutableDictionary dictionaryWithDictionary:self.searchDict];
+    NSMutableArray *itemArray = [NSMutableArray array];
+    
+    if (!self.searchDict[@"finish"]) {// 1 完成 0 未完成
+        [searchDict setValue:@0 forKey:@"finish"];
+        [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *unfinishs) {
+            [itemArray addObjectsFromArray:unfinishs];
+            if (itemArray.count < 200) {
+                [searchDict setValue:@1 forKey:@"finish"];
+                return [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *finishs) {
+                    [itemArray addObjectsFromArray:finishs];
+                    [self relaodData:itemArray];
+                    if (itemArray.count >= 200) {
+                        self.tableView.mj_footer = self.footView;
+                    }else{
+                        self.tableView.mj_footer = nil;
+                    }
+                    return itemArray;
+                }];
+            }else{
+                [self relaodData:itemArray];
+                self.tableView.mj_footer = self.footView;
+            }
+            return itemArray;
+        } rejected:^id(NSError *reason) {
+            [self.tableView.mj_header endRefreshing];
+            return reason;
+        }];
+    }else{
+        [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *value) {
+            [itemArray addObjectsFromArray:value];
+            [self relaodData:itemArray];
+            if (itemArray.count >= 200) {
+                self.tableView.mj_footer = self.footView;
+            }else{
+                self.tableView.mj_footer = nil;
+            }
+            return itemArray;
+        } rejected:^id(NSError *reason) {
+            [self.tableView.mj_header endRefreshing];
+            return reason;
+        }];
+    }
+}
+
+- (SHXPromise *)searchDataFromNetDB:(NSDictionary *)searchDict {
+    return [[[BimService instance] getListSkip:0 limit:200 searchDict:searchDict] onFulfilled:^id(id value) {
         NSMutableArray *itemArray = [NSMutableArray array];
         for (NSDictionary *dict in value) {
             ListModel *model = [ListModel modelWithDict:dict];
             [itemArray addObject:model];
         }
-        self.items = [self dealItems:itemArray];
-        [self.tableView reloadData];
-        [self.tableView.mj_header endRefreshing];
-        return value;
+        return itemArray;
     } rejected:^id(NSError *reason) {
         return reason;
     }];
+}
+
+- (void)relaodData:(NSArray *)items {
+    self.items = [self dealItems:items];
+    [self.tableView reloadData];
+    [self.tableView.mj_header endRefreshing];
 }
 
 - (void)sendClick:(UIButton *)button {
@@ -191,6 +242,68 @@ typedef enum : NSUInteger {
     [self.tableView reloadData];
 }
 
+
+#pragma mark - Table view data source
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ListCellID"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UserListModel *model = self.items[indexPath.section];
+    ListModel *listModel = model.listArray[indexPath.row];
+    cell.listModel = listModel;
+    cell.edit = self.isEdit;
+    cell.choose = [self.chooseItems containsObject:listModel];
+//    if (indexPath.row > 0) {
+//        ListModel *preListModel = model.listArray[indexPath.row - 1];
+//        NSString *date1 = [[NSDate dateFromISOString:preListModel.date] formatOnlyDay];
+//        NSString *date2 = [[NSDate dateFromISOString:listModel.date] formatOnlyDay];
+//        if (![date1 isEqualToString:date2]) {
+//            self.colorEven = (self.colorEven + 1) % 2;
+//        }
+//    }else{
+//        self.colorEven = 0;
+//    }
+//    cell.backgroundColor = self.colors[self.colorEven % 2];
+    if (self.sort) {// 入库后查看当前用户所有订单(显示日期)
+        cell.showDate = YES;
+    }
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UserListModel *model = self.items[indexPath.section];
+    ListModel *listModel = model.listArray[indexPath.row];
+    if ([self.chooseItems containsObject:listModel]) {
+        [self.chooseItems removeObject:listModel];
+    }else{
+        [self.chooseItems addObject:listModel];
+    }
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UserListModel *model = self.items[section];
+    ListHeadView *headView = [[ListHeadView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44) chooseClick:^(UserListModel *model, BOOL choose) {
+        for (ListModel *listModel in model.listArray) {
+            if (choose) {
+                if (![self.chooseItems containsObject:listModel]) {
+                    [self.chooseItems addObject:listModel];
+                }
+            }else{
+                if ([self.chooseItems containsObject:listModel]) {
+                    [self.chooseItems removeObject:listModel];
+                }
+            }
+        }
+        [self.tableView reloadData];
+    }];
+    headView.model = model;
+    headView.edit = self.isEdit;
+    return headView;
+}
+
+
+#pragma mark - set && get
+
 - (UIBarButtonItem *)editButtonItem {
     if (!_editbuttonItem) {
         _editbuttonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(editClick:)];
@@ -229,62 +342,17 @@ typedef enum : NSUInteger {
 }
 
 
-#pragma mark - Table view data source
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ListCellID"];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    UserListModel *model = self.items[indexPath.section];
-    ListModel *listModel = model.listArray[indexPath.row];
-    cell.listModel = listModel;
-    cell.edit = self.isEdit;
-    cell.choose = [self.chooseItems containsObject:listModel];
-    if (indexPath.row > 0) {
-        ListModel *preListModel = model.listArray[indexPath.row - 1];
-        NSString *date1 = [[NSDate dateFromISOString:preListModel.date] formatOnlyDay];
-        NSString *date2 = [[NSDate dateFromISOString:listModel.date] formatOnlyDay];
-        if (![date1 isEqualToString:date2]) {
-            self.colorEven = (self.colorEven + 1) % 2;
-        }
-    }else{
-        self.colorEven = 0;
-    }
-    cell.backgroundColor = self.colors[self.colorEven % 2];
-    if (self.sort) {// 入库后查看当前用户所有订单(显示日期)
-        cell.showDate = YES;
-    }
-    return cell;
-}
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UserListModel *model = self.items[indexPath.section];
-    ListModel *listModel = model.listArray[indexPath.row];
-    if ([self.chooseItems containsObject:listModel]) {
-        [self.chooseItems removeObject:listModel];
-    }else{
-        [self.chooseItems addObject:listModel];
+- (MJRefreshAutoNormalFooter *)footView {
+    if (!_footView) {
+        _footView = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+            [self.tableView.mj_footer endRefreshing];
+        }];
+        [_footView setTitle:@"最多显示200条\n未完成数据/已完成数据" forState:MJRefreshStateNoMoreData];
+        [_footView setTitle:@"最多显示200条\n未完成数据/已完成数据" forState:MJRefreshStateIdle];
+        [_footView setTitle:@"加载..." forState:MJRefreshStateRefreshing];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UserListModel *model = self.items[section];
-    ListHeadView *headView = [[ListHeadView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44) chooseClick:^(UserListModel *model, BOOL choose) {
-        for (ListModel *listModel in model.listArray) {
-            if (choose) {
-                if (![self.chooseItems containsObject:listModel]) {
-                    [self.chooseItems addObject:listModel];
-                }
-            }else{
-                if ([self.chooseItems containsObject:listModel]) {
-                    [self.chooseItems removeObject:listModel];
-                }
-            }
-        }
-        [self.tableView reloadData];
-    }];
-    headView.model = model;
-    headView.edit = self.isEdit;
-    return headView;
+    return _footView;
 }
 
 @end

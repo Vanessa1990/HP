@@ -34,7 +34,7 @@ UINavigationControllerDelegate, UIImagePickerControllerDelegate>
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"搜索";
-
+    [self setShowTabItem];
     // 主要实现扫描功能
     [self isOnorOffCamera];
     
@@ -46,6 +46,9 @@ UINavigationControllerDelegate, UIImagePickerControllerDelegate>
     //6.启动会话
     [self.session startRunning];
     self.scan = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+    });
 }
 
 #pragma mark 2.判断 有无摄像头

@@ -47,7 +47,9 @@
         self.jsY.selected = self.user.JSPermission;
         self.jsN.selected = !self.user.JSPermission;
         [self.registButton setTitle:@"修改" forState:UIControlStateNormal];
+        self.navigationItem.title = @"修改用户信息";
     }
+    [self setBackItem];
 }
 
 - (void)didReceiveMemoryWarning {

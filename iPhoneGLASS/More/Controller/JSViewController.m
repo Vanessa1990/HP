@@ -27,9 +27,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+   
+    [self initNav];
+    [self initView];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+    });
+}
+
+- (void)initNav {
     self.title = @"计算半径";
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"计算" style:UIBarButtonItemStyleDone target:self action:@selector(jsClick:)];
+    [self setShowTabItem];
+}
+
+- (void)initView {
     CGFloat y = 30 + 64;
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.image = [UIImage imageNamed:@"jsBG.png"];
@@ -61,13 +83,6 @@
     y += 44;
     self.duLable = [[UILabel alloc] initWithFrame:CGRectMake(0, y, 300, 44)];
     [resultView addSubview:self.duLable];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"计算" style:UIBarButtonItemStyleDone target:self action:@selector(jsClick:)];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (UITextField *)getTextFieldWithX:(CGFloat)x y:(CGFloat)y {
