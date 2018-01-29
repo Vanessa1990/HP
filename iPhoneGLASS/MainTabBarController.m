@@ -75,6 +75,7 @@
     MainNavigationController *mainnc = [[MainNavigationController alloc] initWithRootViewController:VC];
     
     VC.title = title;
+    VC.tabBarItem.title = title;
     UIImage *maImage1 = [UIImage imageNamed:imageName];
     UIImage *maImage2 = [UIImage imageNamed:selectedImageName];
     VC.tabBarItem.image = [maImage1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

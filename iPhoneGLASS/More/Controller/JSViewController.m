@@ -46,7 +46,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)initNav {
-    self.title = @"计算半径";
+//    self.title = @"计算半径";
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清零" style:UIBarButtonItemStyleDone target:self action:@selector(clearClick:)];
     [self setShowTabItem];
