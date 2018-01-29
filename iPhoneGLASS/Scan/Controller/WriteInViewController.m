@@ -95,11 +95,8 @@
 }
 
 - (void)keyBoard:(BOOL)show {
-    CGRect frame = show ? CGRectMake(0, kScreenHeight - KeyboardHeight, kScreenWidth, KeyboardHeight) : CGRectMake(0, kScreenHeight, kScreenWidth, KeyboardHeight);
     CGFloat bottom = show?0:KeyboardHeight;
     [UIView animateWithDuration:0.3 animations:^{
-//        self.keyBoard.frame = frame;
-//        [self.view layoutIfNeeded];
         [self.keyBoard mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.mas_equalTo(bottom);
         }];
@@ -107,6 +104,9 @@
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    if ([self.tabBarController tabBarIsVisible]) {
+        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+    }
     [self keyBoard:YES];
     return NO;
 }

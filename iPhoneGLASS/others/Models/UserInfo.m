@@ -27,4 +27,14 @@ static UserInfo *_instance = nil;
     return self.phone;
 }
 
+- (void)setUserInfoWithModel:(UserModel *)model {
+    self.userID = model.userID;
+    self.name = model.name;
+    self.phone = model.phone;
+    self.tel = model.phone;
+    self.password = model.password;
+    self.admin = model.admin;
+    self.JSPermission = model.JSPermission;
+}
+
 @end

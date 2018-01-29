@@ -48,19 +48,19 @@
 
     if ([UserInfo shareInstance].admin) {
         WriteInViewController *vc = [[WriteInViewController alloc] init];
-        [self setupChildVC:vc title:@"管理" imageName:@"tab_write.png" selectedImageName:@"tab_write_s.png" array:array];
+        [self setupChildVC:vc title:@"管理" imageName:@"tab_manager.png" selectedImageName:@"tab_manager_s.png" array:array];
         self.selectedIndex = 1;
     }else{
         self.selectedIndex = 0;
     }
     HomeViewController *listVC = [[HomeViewController alloc] init];
-    [self setupChildVC:listVC title:@"列表" imageName:@"tab_home.png" selectedImageName:@"tab_home_s.png" array:array];
+    [self setupChildVC:listVC title:@"列表" imageName:@"tab_list.png" selectedImageName:@"tab_list_s.png" array:array];
     if ([UserInfo shareInstance].JSPermission) {
         JSViewController *vc = [[JSViewController alloc] init];
-        [self setupChildVC:vc title:@"计算" imageName:@"tab_write.png" selectedImageName:@"tab_write_s.png" array:array];
+        [self setupChildVC:vc title:@"计算" imageName:@"tab_js.png" selectedImageName:@"tab_js_s.png" array:array];
     }
     MoreTVC *moreVC = [[MoreTVC alloc] init];
-    [self setupChildVC:moreVC title:@"更多" imageName:@"tab_home.png" selectedImageName:@"tab_home_s.png" array:array];
+    [self setupChildVC:moreVC title:@"更多" imageName:@"tab_more.png" selectedImageName:@"tab_more_s.png" array:array];
     
     self.viewControllers = array;
 }

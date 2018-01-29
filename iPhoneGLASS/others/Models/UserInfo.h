@@ -19,4 +19,6 @@
 
 + (instancetype)shareInstance;
 
+- (void)setUserInfoWithModel:(UserModel *)model;
+
 @end

@@ -39,12 +39,12 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
-    });
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+//    });
+//}
 
 
 - (void)didReceiveMemoryWarning {
@@ -58,13 +58,9 @@
     NSString *tableName = @"hp_glass_table";
     [store clearTable:tableName];
     
-    NSString *name = @"";
-    NSString *pwd = @"";
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    [user setObject:nil forKey:@"user"];
-    
-    HP_Delegate.name = name;
-    HP_Delegate.pwd = pwd;
+    // 清空本地数据
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:@{}];
+    HS_PERSISTENT_SET_OBJECT(data, USER_INFO);
     
     //进入登录页面
     WWLoadVC *loadVC = [[WWLoadVC alloc]init];

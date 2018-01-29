@@ -24,26 +24,12 @@
     // Override point for customization after application launch
 
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = YZ_WhiteColor;
+    //进入登录页面
+    WWLoadVC *loadVC = [[WWLoadVC alloc] init];
+    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:loadVC];
+    self.window.rootViewController = navc;
     
-    // 判断是否登录
-    BOOL logged = self.logged;
-    if (!logged) {
-        //进入登录页面
-        WWLoadVC *loadVC = [[WWLoadVC alloc] init];
-        UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:loadVC];
-        self.window.rootViewController = navc;
-    }else {
-        //进入主界面
-        MainTabBarController *mainTVC = [UIStoryboard storyboardWithName:@"Main" bundle:nil].instantiateInitialViewController;
-        self.window.rootViewController = mainTVC;
-        
-        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-        self.logged = [user boolForKey:@"logged"];
-        self.phoneNumber = [user valueForKey:@"phoneNumber"];
-        self.name = [user valueForKey:@"name"];
-        self.pwd = [user valueForKey:@"pwd"];
-        
-    }
     [self.window makeKeyAndVisible];
     
     YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"hp_glass.db"];

@@ -48,6 +48,24 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     
+    // 获取本地数据
+    NSData *data = HS_PERSISTENT_GET_OBJECT(USER_INFO);
+    if (data) {
+        NSDictionary *userDict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if (userDict && userDict[LOAD_DATE]) {
+            NSDate *loadDate = userDict[LOAD_DATE];
+            NSTimeInterval time = [loadDate timeIntervalSinceNow];
+            if (time < 60 * 60 * 24 * 3) {
+                // 进去主页面
+                UserModel *model = [UserModel mj_objectWithKeyValues:userDict];
+                [[UserInfo shareInstance] setUserInfoWithModel:model];
+                MainTabBarController *mainVC = [[MainTabBarController alloc] init];
+                HP_Delegate.window.rootViewController = mainVC;
+                return;
+            }
+        }
+    }
+    
     self.navigationItem.title = @"登录";
     self.view.backgroundColor = [UIColor whiteColor];
     // 设置文本和按钮的圆角
@@ -72,21 +90,17 @@
 - (void)load {
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[[BimService instance] load:self.phoneTextField.text pwd:self.pwdTextField.text] onFulfilled:^id(id value) {
-        // 保存数据
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value];
+       
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:value];
+        UserModel *model = [UserModel mj_objectWithKeyValues:dict];
+        [[UserInfo shareInstance] setUserInfoWithModel:model];
+        
+         // 保存数据
+        [dict setValue:[NSDate date] forKey:LOAD_DATE];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
         HS_PERSISTENT_SET_OBJECT(data, USER_INFO);
-        UserModel *model = [UserModel mj_objectWithKeyValues:value];
-        [UserInfo shareInstance].userID = model.userID;
-        [UserInfo shareInstance].name = model.name;
-        [UserInfo shareInstance].phone = model.phone;
-        [UserInfo shareInstance].tel = model.phone;
-        [UserInfo shareInstance].password = model.password;
-        [UserInfo shareInstance].admin = model.admin;
-        [UserInfo shareInstance].JSPermission = model.JSPermission;
         
         //进入主界面
-//        MainHomeViewController *mainTVC = [[MainHomeViewController alloc] init];
-//        UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:mainTVC];
         MainTabBarController *mainVC = [[MainTabBarController alloc] init];
         HP_Delegate.window.rootViewController = mainVC;
         

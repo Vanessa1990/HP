@@ -13,6 +13,7 @@
 
 #pragma mark - ---------------UserDefault---------------
 NSString *const USER_INFO = @"userInfo";
+NSString *const LOAD_DATE = @"loadDate";
 
 
 #pragma mark - ---------------CommonImage---------------

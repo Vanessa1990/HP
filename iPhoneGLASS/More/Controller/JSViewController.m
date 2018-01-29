@@ -8,7 +8,13 @@
 
 #import "JSViewController.h"
 
-@interface JSViewController ()<UITextFieldDelegate>
+typedef enum : NSUInteger {
+    TextFieldTypeHeight = 1000,
+    TextFieldTypeHu,
+    TextFieldTypeXuan,
+} TextFieldType;
+
+@interface JSViewController ()<UITextFieldDelegate, UIScrollViewDelegate>
 
 @property(nonatomic, strong) UITextField *hcTextField;
 
@@ -19,6 +25,8 @@
 @property(nonatomic, strong) UILabel *rLable;
 
 @property(nonatomic, strong) UILabel *duLable;
+
+@property (assign, nonatomic) BOOL jsWithH;
 
 @end
 
@@ -37,52 +45,80 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
-    });
-}
-
 - (void)initNav {
     self.title = @"计算半径";
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"计算" style:UIBarButtonItemStyleDone target:self action:@selector(jsClick:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清零" style:UIBarButtonItemStyleDone target:self action:@selector(clearClick:)];
     [self setShowTabItem];
 }
 
 - (void)initView {
-    CGFloat y = 30 + 64;
+    UIScrollView *mainView = [[UIScrollView alloc] init];
+    mainView.delegate = self;
+    [self.view addSubview:mainView];
+    [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.image = [UIImage imageNamed:@"jsBG.png"];
-    imageView.frame = CGRectMake((kScreenWidth - 300) / 2, 30 + 64, 300, 300);
     imageView.userInteractionEnabled = YES;
-    [self.view addSubview:imageView];
+    [mainView addSubview:imageView];
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(300);
+        make.top.mas_equalTo(30);
+        make.left.mas_equalTo(self.view).offset((kScreenWidth - 300) / 2);
+        make.right.mas_equalTo(self.view).offset(-(kScreenWidth - 300) / 2);
+        make.left.mas_equalTo(mainView).offset((kScreenWidth - 300) / 2);
+        make.right.mas_equalTo(mainView).offset(-(kScreenWidth - 300) / 2);
+    }];
     
     self.hcTextField = [self getTextFieldWithX:40 y:20];
     self.hcTextField.delegate = self;
+    self.hcTextField.tag = TextFieldTypeHu;
     [imageView addSubview:self.hcTextField];
     self.gTextField = [self getTextFieldWithX:194 y:64];
+    self.gTextField.delegate = self;
+    self.gTextField.tag = TextFieldTypeHeight;
     [imageView addSubview:self.gTextField];
     self.xcTextField = [self getTextFieldWithX:111 y:161];
     self.xcTextField.delegate = self;
+    self.xcTextField.tag = TextFieldTypeXuan;
     [imageView addSubview:self.xcTextField];
     
-    y += 300 + 15;
-    UIView *resultView = [[UIView alloc] initWithFrame:CGRectMake((kScreenWidth - 300) / 2, y, 300, kScreenHeight - y)];
-    [self.view addSubview:resultView];
+    UIView *resultView = [[UIView alloc] init];
+    [mainView addSubview:resultView];
     
-    y = 0;
-    UILabel *tip = [[UILabel alloc] initWithFrame:CGRectMake(0, y, 100, 44)];
+    UILabel *tip = [[UILabel alloc] init];
     tip.font = [UIFont boldSystemFontOfSize:19];
     tip.text = @"更多结果 :";
     [resultView addSubview:tip];
-    y += 44;
-    self.rLable = [[UILabel alloc] initWithFrame:CGRectMake(0, y, 300, 44)];
+    [tip mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+    }];
+   
+    self.rLable = [[UILabel alloc] init];
     [resultView addSubview:self.rLable];
-    y += 44;
-    self.duLable = [[UILabel alloc] initWithFrame:CGRectMake(0, y, 300, 44)];
+    [self.rLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.top.mas_equalTo(tip.mas_bottom).offset(20);
+    }];
+   
+    self.duLable = [[UILabel alloc] init];
     [resultView addSubview:self.duLable];
+    [self.duLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.top.mas_equalTo(self.rLable.mas_bottom).offset(20);
+    }];
+    
+    [resultView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(imageView);
+        make.top.mas_equalTo(imageView.mas_bottom).offset(15);
+        make.height.mas_equalTo(kScreenHeight - 364);
+        make.bottom.mas_equalTo(0);
+    }];
+
 }
 
 - (UITextField *)getTextFieldWithX:(CGFloat)x y:(CGFloat)y {
@@ -96,13 +132,19 @@
     [self.view endEditing:YES];
 }
 
-- (void)jsClick:(id)sender {
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.view endEditing:YES];
+}
+
+- (void)jsClick:(UITextField *)sender {
     double x = [self.xcTextField.text doubleValue];//弦长
     double h = [self.gTextField.text doubleValue];//高度
     double l = [self.hcTextField.text doubleValue];//弧长
     
-    if ( x && x > 0){
+    if (x < h && !self.jsWithH) return;
+    if (l < h && self.jsWithH) return;
+    
+    if (!self.jsWithH){
         
         //根据弦长得半径
         double r = (h / 2) + ((x * x) / (8 * h));
@@ -166,9 +208,23 @@
     return hu;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+- (void)clearClick:(id)sender {
     self.hcTextField.text = @"";
     self.xcTextField.text = @"";
+    self.gTextField.text = @"";
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (textField.tag == TextFieldTypeHu) {
+            self.jsWithH = YES;
+        }else if (textField.tag == TextFieldTypeXuan) {
+            self.jsWithH = NO;
+        }
+        [self jsClick:nil];
+    });
+    return YES;
+}
+
 
 @end

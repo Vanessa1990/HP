@@ -120,6 +120,12 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     // Dispose of any resources that can be recreated.
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if ([self.tabBarController tabBarIsVisible]) {
+        [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
+    }
+}
+
 // 取出所有的分组
 - (NSArray *)getAllSections:(NSArray *)items {
     NSMutableArray *resIDs = [NSMutableArray array];
