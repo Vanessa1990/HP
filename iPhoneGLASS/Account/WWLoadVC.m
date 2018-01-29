@@ -72,9 +72,9 @@
     self.loadBtn.layer.cornerRadius = 10;
     self.loadBtn.clipsToBounds = YES;
 
-    // test
-    self.phoneTextField.text = @"13852689266";
-    self.pwdTextField.text = @"888888";
+//    // test
+//    self.phoneTextField.text = @"13852689266";
+//    self.pwdTextField.text = @"888888";
 }
 
 -(void)viewWillAppear:(BOOL)animated{
