@@ -17,7 +17,7 @@
 
 @end
 
-@interface SearchTVC : UITableViewController
+@interface SearchTVC : UIViewController
 
 @property (nonatomic, strong) id <SearchTVCDelegate> delegate;
 

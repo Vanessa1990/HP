@@ -28,16 +28,16 @@
 - (void)setUp {
     self.currenDateLabel = [[UILabel alloc] init];
     [self addSubview:self.currenDateLabel];
-    self.currenDateLabel.font = YZ_Font(13);
+    self.currenDateLabel.font = YZ_Font(18);
     self.currenDateLabel.textAlignment = NSTextAlignmentCenter;
     [self.currenDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(80);
+        make.width.mas_equalTo(120);
         make.top.bottom.mas_equalTo(0);
         make.center.mas_equalTo(self);
     }];
     
     self.preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.preBtn setTitle:@"<<" forState:UIControlStateNormal];
+    [self.preBtn setImage:[UIImage imageNamed:@"list_pre"] forState:UIControlStateNormal];
     self.preBtn.titleLabel.textAlignment = NSTextAlignmentRight;
     [self.preBtn setTitleColor:YZ_ThemeColor forState:UIControlStateNormal];
     [self addSubview:self.preBtn];
@@ -48,7 +48,7 @@
     }];
     
     self.nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.nextBtn setTitle:@">>" forState:UIControlStateNormal];
+    [self.nextBtn setImage:[UIImage imageNamed:@"list_next"] forState:UIControlStateNormal];
     self.nextBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
     [self.nextBtn setTitleColor:YZ_ThemeColor forState:UIControlStateNormal];
     [self addSubview:self.nextBtn];

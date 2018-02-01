@@ -250,7 +250,7 @@
 - (SHXPromise *)getAllDate:(NSString *)name
 {
     NSString *url = [NSString stringWithFormat:@"%@order/date", self.baseAPI];
-    return [AFNetworkingHelper getResource:url parameters:@{@"name":name}];
+    return [AFNetworkingHelper getResource:url parameters:@{@"name":name}] ;
 }
 
 // 更新数据

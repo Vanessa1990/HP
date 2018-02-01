@@ -47,7 +47,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     }else{
         [[self getAllDates] onFulfilled:^id(id value) {
             NSString *dateString = self.allDates[self.index];
-            self.currentDate = [NSDate dateFromISOString:dateString];
+            self.currentDate = [NSDate dateFormDayString:dateString];
             [self.tableView.mj_header beginRefreshing];
             return value;
         }];
@@ -93,8 +93,15 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 
 - (SHXPromise *)getAllDates {
     return [[[BimService instance] getAllDate:[UserInfo shareInstance].name] onFulfilled:^id(id value) {
-        NSLog(@"%@",value);
-        self.allDates = [NSArray arrayWithArray:value];
+        NSMutableArray *array = [NSMutableArray array];
+        for (NSString *dateString in value) {
+            NSDate *date = [NSDate dateFromISOString:dateString];
+            NSString *newDateString = [date formatOnlyDay];
+            if (![array containsObject:newDateString]) {
+                [array addObject:newDateString];
+            }
+        }
+        self.allDates = [NSArray arrayWithArray:array];
         self.index = self.allDates.count - 1;
         return value;
     }];
@@ -213,7 +220,8 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 #pragma mark - event
 -(void)search {
     
-    SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
+//    SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
+    SearchTVC *searchTVC = [[SearchTVC alloc] init];
     [self.navigationController pushViewController:searchTVC animated:YES];
 }
 
@@ -230,7 +238,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         }else{
             if (self.index > 0) {
                 self.index--;
-                newDay = [NSDate dateFromISOString:self.allDates[self.index]];
+                newDay = [NSDate dateFormDayString:self.allDates[self.index]];
             }else{
                 return;
             }
@@ -244,7 +252,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         }else{
             if (self.index < self.allDates.count - 1) {
                 self.index++;
-                newDay = [NSDate dateFromISOString:self.allDates[self.index]];
+                newDay = [NSDate dateFormDayString:self.allDates[self.index]];
             }else{
                 return;
             }

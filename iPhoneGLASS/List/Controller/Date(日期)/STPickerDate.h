@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef enum : NSUInteger {
     PickerTypeDate,
     PickerTypeThick,
+    PickerTypeFinish,
 } PickerType;
 
 @interface STPickerDate : UIButton

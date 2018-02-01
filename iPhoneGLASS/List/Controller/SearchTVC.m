@@ -18,16 +18,19 @@
 #import "UserModel.h"
 #import "MBProgressHUD.h"
 
-@interface SearchTVC ()<UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *beginDate;
-@property (weak, nonatomic) IBOutlet UITextField *endDate;
-@property (weak, nonatomic) IBOutlet UITextField *thick;
-@property (weak, nonatomic) IBOutlet UITextField *width;
-@property (weak, nonatomic) IBOutlet UITextField *height;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *finishState;
-@property (weak, nonatomic) IBOutlet UITextField *name;
+@interface SearchTVC ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic, strong) UITableView *tableView;
+@property (strong, nonatomic)  UITextField *beginDate;
+@property (strong, nonatomic)  UITextField *endDate;
+@property (strong, nonatomic)  UITextField *thick;
+@property (strong, nonatomic)  UITextField *width;
+@property (strong, nonatomic)  UITextField *height;
+@property (strong, nonatomic)  UISegmentedControl *finishState;
+@property (strong, nonatomic)  UITextField *name;
+@property(nonatomic, strong) UITextField *finish;
 
 @property(nonatomic,strong) NSMutableDictionary *searchDic;
+
 
 @end
 
@@ -41,16 +44,48 @@
     return _searchDic;
 }
 
+- (void)initView {
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) style:UITableViewStyleGrouped];
+    [self.view addSubview:self.tableView];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    UIView *footView = [[UIView alloc] init];
+    [self.view addSubview:footView];
+    [footView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(0);
+        make.height.mas_equalTo(50);
+    }];
+    UIButton *resetBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [resetBtn setTitle:@"重置" forState:UIControlStateNormal];
+    [resetBtn setBackgroundColor:YZ_PinkColor];
+    UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [sureBtn setBackgroundColor:YZ_ThemeColor];
+    [footView addSubview:resetBtn];
+    [footView addSubview:sureBtn];
+    [resetBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.bottom.mas_equalTo(0);
+    }];
+    [sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.top.bottom.mas_equalTo(0);
+        make.width.mas_equalTo(resetBtn);
+        make.left.mas_equalTo(resetBtn.mas_right);
+    }];
+    [resetBtn addTarget:self action:@selector(resetSearchDict:) forControlEvents:UIControlEventTouchUpInside];
+    [sureBtn addTarget:self action:@selector(sure) forControlEvents:UIControlEventTouchUpInside];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"筛选";
+    
+    [self initView];
     
     if (![UserInfo shareInstance].admin) {
         self.name.text = [UserInfo shareInstance].name;
         self.name.userInteractionEnabled = NO;
     }
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(sure)];
-    [self.finishState addTarget:self action:@selector(changeState:) forControlEvents:UIControlEventValueChanged];
     [self setBackItem];
     
 }
@@ -76,13 +111,13 @@
     [self.searchDic setValue:@(seg.selectedSegmentIndex) forKey:@"isFinish"];
     
 }
-- (IBAction)resetSearchDict:(id)sender {
+- (void)resetSearchDict:(id)sender {
     self.beginDate.text = @"";
     self.endDate.text = @"";
     self.thick.text = @"";
     self.width.text = @"";
     self.height.text = @"";
-    self.finishState.selectedSegmentIndex = 0;
+    self.finish.text = @"";
     if ([UserInfo shareInstance].admin){
         self.name.text = @"";
     }
@@ -136,12 +171,18 @@
     if ([self textIsNotNull:self.thick]) {
         [dict setValue:self.thick.text forKey:@"category"];
     }
-    if ([self textIsNotNull:self.name]) {
-        [dict setValue:self.name.text forKey:@"name"];
+    if (![UserInfo shareInstance].admin) {
+        [dict setValue:[UserInfo shareInstance].name forKey:@"name"];
+    }else{
+        if ([self textIsNotNull:self.name]) {
+            [dict setValue:self.name.text forKey:@"name"];
+        }
     }
-    int finish = (int)self.finishState.selectedSegmentIndex;
-    if (finish > 0) {
-        [dict setObject:@(finish == 2) forKey:@"finish"];
+    
+    if ([self.finish.text isEqualToString:@"未完成"]) {
+        [dict setObject:@(NO) forKey:@"finish"];
+    }else if ([self.finish.text isEqualToString:@"已完成"]) {
+        [dict setObject:@(YES) forKey:@"finish"];
     }
     
     SearchListViewController *VC = [[SearchListViewController alloc] initWithSearchDict:dict sort:YES];
@@ -152,7 +193,7 @@
     
     if (textField == self.beginDate || textField == self.endDate ) {
         [self.view endEditing:YES];
-        STPickerDate *pickView = [[STPickerDate alloc]initWithType:PickerTypeDate];
+        STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeDate];
         pickView.finishBlock = ^(NSString *date){
             textField.text = date;
         };
@@ -160,9 +201,25 @@
         return NO;
     }else if (textField == self.thick){
         [self.view endEditing:YES];
-        STPickerDate *pickView = [[STPickerDate alloc]initWithType:PickerTypeThick];
+        STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeThick];
         pickView.finishBlock = ^(NSString *date){
-            textField.text = date;
+            if (!date) {
+                textField.text = @"全部";
+            }else {
+                textField.text = date;
+            }
+        };
+        [pickView show];
+        return NO;
+    }else if (textField == self.finish){
+        [self.view endEditing:YES];
+        STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeFinish];
+        pickView.finishBlock = ^(NSString *date){
+            if (!date) {
+                textField.text = @"全部";
+            }else {
+                textField.text = date;
+            }
         };
         [pickView show];
         return NO;
@@ -172,11 +229,96 @@
     
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.view endEditing:YES];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([UserInfo shareInstance].admin) {
         return 3;
     }
     return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }else if (section == 1) {
+        return 4;
+    }else {
+        return 1;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchCellID"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.section == 0) {
+        cell.textLabel.text = @"日期";
+        self.endDate = [self currentVCTextFieldShowInCell:cell];
+        UILabel *middleView = [[UILabel alloc] init];
+        middleView.text = @"---";
+        [middleView sizeToFit];
+        [cell.contentView addSubview:middleView];
+        [middleView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(self.endDate.mas_left).offset(-5);
+            make.top.bottom.mas_equalTo(0);
+        }];
+        self.beginDate = [self currentVCTextField];
+        [cell.contentView addSubview:self.beginDate];
+        [self.beginDate mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(middleView.mas_left).offset(-5);
+            make.centerY.mas_equalTo(cell.textLabel);
+            make.width.mas_equalTo(100);
+        }];
+    }else if (indexPath.section == 1){
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"规格";
+            self.thick = [self currentVCTextFieldShowInCell:cell];
+        }else if (indexPath.row == 1) {
+            cell.textLabel.text = @"长";
+            self.height = [self currentVCTextFieldShowInCell:cell];
+            self.height.keyboardType = UIKeyboardTypeNumberPad;
+        }else if (indexPath.row == 2) {
+            cell.textLabel.text = @"长宽";
+            self.width = [self currentVCTextFieldShowInCell:cell];
+            self.width.keyboardType = UIKeyboardTypeNumberPad;
+        }else {
+            cell.textLabel.text = @"完成状态";
+            self.finish = [self currentVCTextFieldShowInCell:cell];
+        }
+    }else{
+        cell.textLabel.text = @"姓名";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.name = [self currentVCTextFieldShowInCell:cell];
+        self.name.userInteractionEnabled = NO;
+    }
+    
+    return cell;
+    
+}
+
+- (UITextField *)currentVCTextFieldShowInCell:(UITableViewCell *)cell {
+    UITextField *textField = [self currentVCTextField];
+    textField.textAlignment = NSTextAlignmentCenter;
+    [cell.contentView addSubview:textField];
+    [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.mas_equalTo(cell.textLabel);
+        make.width.mas_equalTo(100);
+    }];
+    return textField;
+}
+
+- (UITextField *)currentVCTextField {
+    UITextField *textField = [[UITextField alloc] init];
+    textField.delegate = self;
+    textField.borderStyle = UITextBorderStyleRoundedRect;
+    return textField;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
