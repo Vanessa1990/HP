@@ -11,7 +11,7 @@
 @protocol ListNavViewDelegate
 
 - (void)getNewDateGlassDataWithPre:(BOOL)preDay;
-
+- (void)chooseDate:(BOOL)open;
 
 @end
 
@@ -22,6 +22,7 @@
 @property(nonatomic, strong) UILabel *currenDateLabel;
 @property(nonatomic, strong) UIButton *nextBtn;
 @property(nonatomic, strong) UIButton *preBtn;
+@property(nonatomic, strong) UIButton *dataBtn;
 @property(nonatomic, strong) id <ListNavViewDelegate>delegate;
 
 @end

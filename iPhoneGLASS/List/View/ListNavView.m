@@ -36,30 +36,42 @@
         make.center.mas_equalTo(self);
     }];
     
-    self.preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.preBtn setImage:[UIImage imageNamed:@"list_pre"] forState:UIControlStateNormal];
-    self.preBtn.titleLabel.textAlignment = NSTextAlignmentRight;
-    [self.preBtn setTitleColor:YZ_ThemeColor forState:UIControlStateNormal];
-    [self addSubview:self.preBtn];
-    [self.preBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(0);
-        make.top.bottom.mas_equalTo(0);
-        make.right.mas_equalTo(self.currenDateLabel.mas_left).offset(0);
-    }];
+//    self.preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.preBtn setImage:[UIImage imageNamed:@"list_pre"] forState:UIControlStateNormal];
+//    self.preBtn.titleLabel.textAlignment = NSTextAlignmentRight;
+//    [self.preBtn setTitleColor:YZ_ThemeColor forState:UIControlStateNormal];
+//    [self addSubview:self.preBtn];
+//    [self.preBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(0);
+//        make.top.bottom.mas_equalTo(0);
+//        make.right.mas_equalTo(self.currenDateLabel.mas_left).offset(0);
+//    }];
+//
+//    self.nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.nextBtn setImage:[UIImage imageNamed:@"list_next"] forState:UIControlStateNormal];
+//    self.nextBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+//    [self.nextBtn setTitleColor:YZ_ThemeColor forState:UIControlStateNormal];
+//    [self addSubview:self.nextBtn];
+//    [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.mas_equalTo(0);
+//        make.top.bottom.mas_equalTo(0);
+//        make.left.mas_equalTo(self.currenDateLabel.mas_right).offset(0);
+//    }];
+//
+//    [self.preBtn addTarget:self action:@selector(preClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.nextBtn addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.nextBtn setImage:[UIImage imageNamed:@"list_next"] forState:UIControlStateNormal];
-    self.nextBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
-    [self.nextBtn setTitleColor:YZ_ThemeColor forState:UIControlStateNormal];
-    [self addSubview:self.nextBtn];
-    [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.dataBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.dataBtn setImage:[UIImage imageNamed:@"list_date"] forState:UIControlStateNormal];
+    [self.dataBtn setImage:[UIImage imageNamed:@"list_date"] forState:UIControlStateSelected];
+    self.dataBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+    [self addSubview:self.dataBtn];
+    [self.dataBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(0);
         make.top.bottom.mas_equalTo(0);
         make.left.mas_equalTo(self.currenDateLabel.mas_right).offset(0);
     }];
-    
-    [self.preBtn addTarget:self action:@selector(preClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.nextBtn addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dataBtn addTarget:self action:@selector(chooseData:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)preClick:(id)sender {
@@ -68,6 +80,13 @@
 
 - (void)nextClick:(id)sender {
     [self changeDate:NO];
+}
+
+- (void)chooseData:(UIButton *)sender {
+    if ([(id)self.delegate respondsToSelector:@selector(chooseDate:)]) {
+        sender.selected = !sender.selected;
+        [self.delegate chooseDate:sender.selected];
+    }
 }
 
 - (void)changeDate:(BOOL)pre {

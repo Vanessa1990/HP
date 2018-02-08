@@ -8,8 +8,10 @@
 
 #import "HomeViewController.h"
 #import "OrderInfoViewController.h"
+#import "CalendarView.h"
+#import <JTCalendar/JTCalendar.h>
 
-@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate>
+@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,CalendarViewDelegate>
 // 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
 @property (assign, nonatomic) NSUInteger index;
@@ -25,11 +27,44 @@
 
 @property (assign, nonatomic) BOOL reGetData;
 
+// 日历
+@property(nonatomic, strong) CalendarView *calendarView;
+@property (strong, nonatomic) JTCalendarManager *calendarManager;
+@property (strong, nonatomic) JTCalendarMenuView *calendarMenuView;
+@property (strong, nonatomic) JTHorizontalCalendarView *calendarContentView;
+
 @end
 
 static NSUInteger const secondsPerDay = 24 * 60 * 60;
+static NSUInteger const calendarH = 320;
 
 @implementation HomeViewController
+
+- (JTCalendarMenuView *)calendarMenuView {
+    if (!_calendarMenuView) {
+        _calendarMenuView = [[JTCalendarMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
+    }
+    return _calendarMenuView;
+}
+
+- (JTHorizontalCalendarView *)calendarContentView
+{
+    if (!_calendarContentView) {
+        _calendarContentView = [[JTHorizontalCalendarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
+    }
+    return _calendarContentView;
+}
+
+- (JTCalendarManager *)calendarManager
+{
+    if (!_calendarManager) {
+        _calendarManager = [[JTCalendarManager alloc] init];
+        [_calendarManager setMenuView:self.calendarMenuView];
+        [_calendarManager setContentView:self.calendarContentView];
+        _calendarManager.delegate = self;
+    }
+    return _calendarManager;
+}
 
 
 - (void)viewDidLoad {
@@ -131,6 +166,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     if ([self.tabBarController tabBarIsVisible]) {
         [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
     }
+    [self chooseDate:NO];
 }
 
 // 取出所有的分组
@@ -263,6 +299,33 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     [self getTableViewData];
 }
 
+- (void)chooseDate:(BOOL)open {
+    if (!self.calendarView) {
+        self.calendarView = [[CalendarView alloc] initWithDelegate:self];
+        [self.view addSubview:self.calendarView];
+        [self.calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.mas_equalTo(0);
+            make.top.mas_equalTo(-calendarH);
+            make.height.mas_equalTo(calendarH);
+        }];
+    }
+    [self.calendarView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(open?0:-calendarH);
+    }];
+    if (open) {
+        self.calendarView.currentDate = self.currentDate;
+        self.calendarView.dates = [UserInfo shareInstance].admin?nil:self.allDates;
+    }
+}
+
+
+#pragma mark - CalendarViewDelegate
+- (void)calendarView:(CalendarView *)view didTouchDate:(NSDate *)date {
+    [self chooseDate:NO];
+    self.currentDate = date;
+    self.skip = 0;
+    [self getTableViewData];
+}
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
