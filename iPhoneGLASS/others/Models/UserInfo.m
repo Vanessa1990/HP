@@ -7,6 +7,8 @@
 //
 
 #import "UserInfo.h"
+#import "BimService.h"
+#import "NSDate+YZBim.h"
 
 static UserInfo *_instance = nil;
 

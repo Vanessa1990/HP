@@ -8,8 +8,11 @@
 
 #import "HomeViewController.h"
 #import "OrderInfoViewController.h"
+#import "CalendarView.h"
+#import <JTCalendar/JTCalendar.h>
+#import "HPRefreshHeader.h"
 
-@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate>
+@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,CalendarViewDelegate>
 // 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
 @property (assign, nonatomic) NSUInteger index;
@@ -25,11 +28,44 @@
 
 @property (assign, nonatomic) BOOL reGetData;
 
+// 日历
+@property(nonatomic, strong) CalendarView *calendarView;
+@property (strong, nonatomic) JTCalendarManager *calendarManager;
+@property (strong, nonatomic) JTCalendarMenuView *calendarMenuView;
+@property (strong, nonatomic) JTHorizontalCalendarView *calendarContentView;
+
 @end
 
 static NSUInteger const secondsPerDay = 24 * 60 * 60;
+static NSUInteger const calendarH = 320;
 
 @implementation HomeViewController
+
+- (JTCalendarMenuView *)calendarMenuView {
+    if (!_calendarMenuView) {
+        _calendarMenuView = [[JTCalendarMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
+    }
+    return _calendarMenuView;
+}
+
+- (JTHorizontalCalendarView *)calendarContentView
+{
+    if (!_calendarContentView) {
+        _calendarContentView = [[JTHorizontalCalendarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
+    }
+    return _calendarContentView;
+}
+
+- (JTCalendarManager *)calendarManager
+{
+    if (!_calendarManager) {
+        _calendarManager = [[JTCalendarManager alloc] init];
+        [_calendarManager setMenuView:self.calendarMenuView];
+        [_calendarManager setContentView:self.calendarContentView];
+        _calendarManager.delegate = self;
+    }
+    return _calendarManager;
+}
 
 
 - (void)viewDidLoad {
@@ -47,7 +83,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     }else{
         [[self getAllDates] onFulfilled:^id(id value) {
             NSString *dateString = self.allDates[self.index];
-            self.currentDate = [NSDate dateFromISOString:dateString];
+            self.currentDate = [NSDate dateFormDayString:dateString];
             [self.tableView.mj_header beginRefreshing];
             return value;
         }];
@@ -72,16 +108,10 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     //tableview设置
     [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    MJRefreshNormalHeader *header =  [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    HPRefreshHeader *header =  [HPRefreshHeader headerWithRefreshingBlock:^{
         [self getNewData];
     }];
     
-    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
-    [header setTitle:@"刷新" forState:MJRefreshStatePulling];
-    [header setTitle:@"刷新..." forState:MJRefreshStateRefreshing];
-    [header setTitle:@"刷新完成" forState:MJRefreshStateNoMoreData];
-    [header setTitle:@"刷新..." forState:MJRefreshStateWillRefresh];
-    header.lastUpdatedTimeLabel.hidden = YES;
     self.tableView.mj_header = header;
 }
 
@@ -93,8 +123,15 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 
 - (SHXPromise *)getAllDates {
     return [[[BimService instance] getAllDate:[UserInfo shareInstance].name] onFulfilled:^id(id value) {
-        NSLog(@"%@",value);
-        self.allDates = [NSArray arrayWithArray:value];
+        NSMutableArray *array = [NSMutableArray array];
+        for (NSString *dateString in value) {
+            NSDate *date = [NSDate dateFromISOString:dateString];
+            NSString *newDateString = [date formatOnlyDay];
+            if (![array containsObject:newDateString]) {
+                [array addObject:newDateString];
+            }
+        }
+        self.allDates = [NSArray arrayWithArray:array];
         self.index = self.allDates.count - 1;
         return value;
     }];
@@ -124,6 +161,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     if ([self.tabBarController tabBarIsVisible]) {
         [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
     }
+    [self chooseDate:NO];
 }
 
 // 取出所有的分组
@@ -213,7 +251,8 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 #pragma mark - event
 -(void)search {
     
-    SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
+//    SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
+    SearchTVC *searchTVC = [[SearchTVC alloc] init];
     [self.navigationController pushViewController:searchTVC animated:YES];
 }
 
@@ -230,7 +269,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         }else{
             if (self.index > 0) {
                 self.index--;
-                newDay = [NSDate dateFromISOString:self.allDates[self.index]];
+                newDay = [NSDate dateFormDayString:self.allDates[self.index]];
             }else{
                 return;
             }
@@ -244,7 +283,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         }else{
             if (self.index < self.allDates.count - 1) {
                 self.index++;
-                newDay = [NSDate dateFromISOString:self.allDates[self.index]];
+                newDay = [NSDate dateFormDayString:self.allDates[self.index]];
             }else{
                 return;
             }
@@ -255,6 +294,33 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     [self getTableViewData];
 }
 
+- (void)chooseDate:(BOOL)open {
+    if (!self.calendarView) {
+        self.calendarView = [[CalendarView alloc] initWithDelegate:self];
+        [self.view addSubview:self.calendarView];
+        [self.calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.mas_equalTo(0);
+            make.top.mas_equalTo(-calendarH);
+            make.height.mas_equalTo(calendarH);
+        }];
+    }
+    [self.calendarView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(open?0:-calendarH);
+    }];
+    if (open) {
+        self.calendarView.currentDate = self.currentDate;
+        self.calendarView.dates = [UserInfo shareInstance].admin?nil:self.allDates;
+    }
+}
+
+
+#pragma mark - CalendarViewDelegate
+- (void)calendarView:(CalendarView *)view didTouchDate:(NSDate *)date {
+    [self chooseDate:NO];
+    self.currentDate = date;
+    self.skip = 0;
+    [self getTableViewData];
+}
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

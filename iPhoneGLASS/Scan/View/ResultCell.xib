@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -80,6 +80,12 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jem-lJ-09M">
+                        <rect key="frame" x="56" y="91" width="37.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="YIZ-CY-wA9" firstAttribute="leading" secondItem="T0H-F4-cxn" secondAttribute="trailing" constant="10" id="2hO-5n-e0I"/>
@@ -90,8 +96,10 @@
                     <constraint firstItem="Sgb-mb-obQ" firstAttribute="centerY" secondItem="T0H-F4-cxn" secondAttribute="centerY" id="HZD-wk-n0U"/>
                     <constraint firstItem="Sgb-mb-obQ" firstAttribute="leading" secondItem="YIZ-CY-wA9" secondAttribute="trailing" constant="10" id="Hk4-wg-btM"/>
                     <constraint firstItem="lph-fN-qeQ" firstAttribute="leading" secondItem="azm-c6-gX0" secondAttribute="leading" id="Ixn-Np-F3S"/>
+                    <constraint firstItem="Jem-lJ-09M" firstAttribute="leading" secondItem="lph-fN-qeQ" secondAttribute="trailing" constant="10" id="KM2-3n-2GJ"/>
                     <constraint firstItem="azm-c6-gX0" firstAttribute="leading" secondItem="vEr-BT-vEW" secondAttribute="leading" id="RBJ-TH-uAg"/>
                     <constraint firstItem="1E0-OV-Pfe" firstAttribute="centerY" secondItem="Sgb-mb-obQ" secondAttribute="centerY" id="UOe-aJ-wDG"/>
+                    <constraint firstItem="Jem-lJ-09M" firstAttribute="centerY" secondItem="lph-fN-qeQ" secondAttribute="centerY" id="XBw-rz-Tkl"/>
                     <constraint firstItem="vEr-BT-vEW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Y5f-pI-bMV"/>
                     <constraint firstAttribute="trailing" secondItem="1E0-OV-Pfe" secondAttribute="trailing" constant="50" id="Z4p-ay-I0v"/>
                     <constraint firstAttribute="bottom" secondItem="eXf-2o-UCF" secondAttribute="bottom" constant="10" id="bwH-iX-mIV"/>
@@ -117,6 +125,7 @@
             <connections>
                 <outlet property="dateLabel" destination="eXf-2o-UCF" id="uNT-WI-d3b"/>
                 <outlet property="length" destination="T0H-F4-cxn" id="udb-Du-Uwm"/>
+                <outlet property="moreLabel" destination="Jem-lJ-09M" id="bJT-qa-jtf"/>
                 <outlet property="nameLabel" destination="vEr-BT-vEW" id="xvH-De-lb6"/>
                 <outlet property="typeLabel" destination="Fuj-Vk-V9N" id="2si-Ny-9Tz"/>
                 <outlet property="width" destination="Sgb-mb-obQ" id="JyR-Kg-9Ju"/>

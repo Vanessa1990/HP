@@ -33,6 +33,9 @@ static NSInteger const yearSum = 200;
 @property (nonatomic, assign)NSInteger day;
 /** 7.厚 */
 @property (nonatomic, strong)NSArray *thickArray;
+/** 8.完成度 */
+@property (nonatomic, strong)NSArray *finishArray;
+
 @property (nonatomic, strong)NSString *returnDate;
 
 @end
@@ -45,6 +48,7 @@ static NSInteger const yearSum = 200;
     
     self = [self init];
     self.type = type;
+     [self loadData];
     return self;
 }
 
@@ -53,7 +57,6 @@ static NSInteger const yearSum = 200;
     self = [super init];
     if (self) {
         [self setupUI];
-        [self loadData];
     }
     return self;
 }
@@ -71,12 +74,18 @@ static NSInteger const yearSum = 200;
 
 - (void)loadData
 {
-    _year  = [NSCalendar currentYear];
-    _month = [NSCalendar currentMonth];
-    _day   = [NSCalendar currentDay];
-    [self.pickerView selectRow:(_year - yearMin) inComponent:0 animated:NO];
-    [self.pickerView selectRow:(_month - 1) inComponent:1 animated:NO];
-    [self.pickerView selectRow:(_day - 1) inComponent:2 animated:NO];
+    if (self.type == PickerTypeDate) {
+        _year  = [NSCalendar currentYear];
+        _month = [NSCalendar currentMonth];
+        _day   = [NSCalendar currentDay];
+        [self.pickerView selectRow:(_year - yearMin) inComponent:0 animated:NO];
+        [self.pickerView selectRow:(_month - 1) inComponent:1 animated:NO];
+        [self.pickerView selectRow:(_day - 1) inComponent:2 animated:NO];
+    }else{
+        self.returnDate = @"全部";
+        [self.pickerView selectRow:0 inComponent:1 animated:NO];
+    }
+    
 }
 
 #pragma mark - --- delegate 视图委托 ---
@@ -102,7 +111,13 @@ static NSInteger const yearSum = 200;
         if (component == 0) {
             return 0;
         }else if(component == 1) {
-            return 6;
+            if (self.type == PickerTypeThick) {
+                return 6;
+            }else if (self.type == PickerTypeFinish){
+                return 3;
+            }else{
+                return 0;
+            }
         }else {
             return 0;
         }
@@ -146,7 +161,13 @@ static NSInteger const yearSum = 200;
         }
     } else {
         if (component == 1) {
-            text = self.thickArray[row];
+            if (self.type == PickerTypeThick){
+                text = self.thickArray[row];
+            }else if (self.type == PickerTypeFinish){
+                text = self.finishArray[row];
+            }else {
+                text = @"";
+            }
         }
         
     }
@@ -166,6 +187,7 @@ static NSInteger const yearSum = 200;
     }else {
         date = self.returnDate;
     }
+    
     if (self.finishBlock) {        
         self.finishBlock(date);
     }
@@ -188,8 +210,11 @@ static NSInteger const yearSum = 200;
         self.day   = [self.pickerView selectedRowInComponent:2] + 1;
         
         self.toolbar.title = [NSString stringWithFormat:@"%d年%d月%d日", self.year, self.month, self.day];
-    } else {
+    } else if (self.type == PickerTypeThick) {
         self.returnDate = self.thickArray[[self.pickerView selectedRowInComponent:1]];
+        self.toolbar.title = [NSString stringWithFormat:@"%@",self.returnDate];
+    } else {
+        self.returnDate = self.finishArray[[self.pickerView selectedRowInComponent:1]];
         self.toolbar.title = [NSString stringWithFormat:@"%@",self.returnDate];
     }
     
@@ -279,6 +304,14 @@ static NSInteger const yearSum = 200;
         _thickArray = @[@"全部",@"4mm",@"5mm",@"6mm",@"8mm",@"10mm",@"12mm"];
     }
     return _thickArray;
+}
+
+-(NSArray *)finishArray {
+    
+    if (!_finishArray) {
+        _finishArray = @[@"全部",@"未完成",@"已完成"];
+    }
+    return _finishArray;
 }
 
 @end
