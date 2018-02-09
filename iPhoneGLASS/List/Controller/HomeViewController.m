@@ -10,6 +10,7 @@
 #import "OrderInfoViewController.h"
 #import "CalendarView.h"
 #import <JTCalendar/JTCalendar.h>
+#import "HPRefreshHeader.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,CalendarViewDelegate>
 // 普通用户用到
@@ -107,16 +108,10 @@ static NSUInteger const calendarH = 320;
     //tableview设置
     [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    MJRefreshNormalHeader *header =  [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    HPRefreshHeader *header =  [HPRefreshHeader headerWithRefreshingBlock:^{
         [self getNewData];
     }];
     
-    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
-    [header setTitle:@"刷新" forState:MJRefreshStatePulling];
-    [header setTitle:@"刷新..." forState:MJRefreshStateRefreshing];
-    [header setTitle:@"刷新完成" forState:MJRefreshStateNoMoreData];
-    [header setTitle:@"刷新..." forState:MJRefreshStateWillRefresh];
-    header.lastUpdatedTimeLabel.hidden = YES;
     self.tableView.mj_header = header;
 }
 

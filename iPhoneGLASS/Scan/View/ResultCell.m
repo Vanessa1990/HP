@@ -31,12 +31,13 @@
 - (void)setModel:(ListModel *)model {
     _model = model;
     self.nameLabel.text = model.name;
+    self.moreLabel.text = model.mark;
     self.length.text = model.height;
     self.width.text = model.width;
     self.typeLabel.text = model.thick;
     self.writeCount.text = [NSString stringWithFormat:@"%ld/%ld",model.number,model.totalNumber];
     NSDate *date = [NSDate dateFromISOString:model.date];
-    self.dateLabel.text = [date format];
+    self.dateLabel.text = [date formatMonthAndDay];
 }
 
 

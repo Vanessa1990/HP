@@ -20,8 +20,8 @@
 
 + (instancetype)calendarView;
 - (instancetype)initWithDelegate:(id<CalendarViewDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<CalendarViewDelegate>)delegate muti:(BOOL)muti;
 @property(nonatomic, strong) id<CalendarViewDelegate> delegate;
-
 
 @property (assign, nonatomic) NSDate *currentDate;
 @property(nonatomic, strong) NSArray *dates;

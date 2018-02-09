@@ -29,5 +29,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *width;
 @property (weak, nonatomic) IBOutlet UILabel *writeCount;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *moreLabel;
 
 @end

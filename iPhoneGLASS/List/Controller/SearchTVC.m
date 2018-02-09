@@ -25,12 +25,13 @@
 @property (strong, nonatomic)  UITextField *thick;
 @property (strong, nonatomic)  UITextField *width;
 @property (strong, nonatomic)  UITextField *height;
-@property (strong, nonatomic)  UISegmentedControl *finishState;
+@property (strong, nonatomic)  UIButton *fuzzyBtn;
 @property (strong, nonatomic)  UITextField *name;
 @property(nonatomic, strong) UITextField *finish;
 
 @property(nonatomic,strong) NSMutableDictionary *searchDic;
-
+@property (assign, nonatomic) BOOL fuzzySearch;
+@property(nonatomic, strong) UITextField *fuzzy;
 
 @end
 
@@ -74,6 +75,7 @@
     }];
     [resetBtn addTarget:self action:@selector(resetSearchDict:) forControlEvents:UIControlEventTouchUpInside];
     [sureBtn addTarget:self action:@selector(sure) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (void)viewDidLoad {
@@ -118,9 +120,12 @@
     self.width.text = @"";
     self.height.text = @"";
     self.finish.text = @"";
+    self.fuzzySearch = NO;
+    self.fuzzy.text = @"";
     if ([UserInfo shareInstance].admin){
         self.name.text = @"";
     }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (BOOL)textIsNotNull:(UITextField *)textField {
@@ -151,10 +156,26 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
     if ([self textIsNotNull:self.height]) {
-        [dict setValue:self.height.text forKey:@"length"];
+        if (self.fuzzySearch && self.fuzzy.text) {
+            int fn = [self.fuzzy.text intValue];
+            int hn = [self.height.text intValue];
+            NSString *hgte = [NSString stringWithFormat:@"%d",hn-fn];
+            NSString *hlt = [NSString stringWithFormat:@"%d",hn+fn];
+            [dict setValue:@{@"$gte":hgte,@"$lt":hlt} forKey:@"length"];
+        }else{
+            [dict setValue:self.height.text forKey:@"length"];
+        }
     }
     if ([self textIsNotNull:self.width]) {
-        [dict setValue:self.width.text forKey:@"width"];
+        if (self.fuzzySearch && self.fuzzy.text) {
+            int fn = [self.fuzzy.text intValue];
+            int wn = [self.width.text intValue];
+            NSString *hgte = [NSString stringWithFormat:@"%d",wn-fn];
+            NSString *hlt = [NSString stringWithFormat:@"%d",wn+fn];
+            [dict setValue:@{@"$gte":hgte,@"$lt":hlt} forKey:@"width"];
+        }else{
+            [dict setValue:self.width.text forKey:@"width"];
+        }
     }
     
     NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
@@ -229,13 +250,19 @@
     
 }
 
+- (void)fuzzyStateChange:(UIButton *)sender {
+//    sender.selected = !sender.selected;
+    self.fuzzySearch = !self.fuzzySearch;
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.view endEditing:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([UserInfo shareInstance].admin) {
-        return 3;
+        return 4;
     }
     return 2;
 }
@@ -245,6 +272,8 @@
         return 1;
     }else if (section == 1) {
         return 4;
+    }else if (section == 2) {
+        return self.fuzzySearch?2:1;
     }else {
         return 1;
     }
@@ -291,6 +320,31 @@
             cell.textLabel.text = @"完成状态";
             self.finish = [self currentVCTextFieldShowInCell:cell];
         }
+    }else if (indexPath.section == 2){
+        if (indexPath.row == 0) {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"searchCellID2"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchCellID2"];
+                cell.textLabel.text = @"模糊搜索";
+                self.fuzzyBtn = [[UIButton alloc] init];
+                [self.fuzzyBtn setImage:[UIImage imageNamed:@"choose"] forState:UIControlStateSelected];
+                [self.fuzzyBtn setImage:[UIImage imageNamed:@"unchoose"] forState:UIControlStateNormal];
+                [self.fuzzyBtn addTarget:self action:@selector(fuzzyStateChange:) forControlEvents:UIControlEventTouchUpInside];
+                [cell.contentView addSubview:self.fuzzyBtn];
+                [self.fuzzyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.right.mas_equalTo(-15);
+                    make.centerY.mas_equalTo(cell.textLabel);
+//                    make.width.mas_equalTo(100);
+                    make.height.width.mas_equalTo(44);
+                }];
+            }
+            self.fuzzyBtn.selected = self.fuzzySearch;
+        }else {
+            cell.textLabel.text = @"范围";
+            self.fuzzy = [self currentVCTextFieldShowInCell:cell];
+            self.fuzzy.keyboardType = UIKeyboardTypeNumberPad;
+        }
     }else{
         cell.textLabel.text = @"姓名";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -322,7 +376,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         ContactTableViewController *vc = [[ContactTableViewController alloc] initWithSelectedBlock:^(UserModel *model) {
             self.name.text = model.name;
             [self.navigationController popViewControllerAnimated:YES];

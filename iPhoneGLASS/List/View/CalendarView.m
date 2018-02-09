@@ -24,15 +24,21 @@
 @property (weak, nonatomic) IBOutlet JTCalendarMenuView *calendarMenuView;
 @property(nonatomic, strong) NSDate *relaodDate;
 @property (weak, nonatomic) IBOutlet UIButton *nextMounthBtn;
+@property (assign, nonatomic) BOOL muti;
 
 @end
 
 @implementation CalendarView
 
-- (instancetype)initWithDelegate:(id<CalendarViewDelegate>)delegate {
+- (instancetype)initWithDelegate:(id<CalendarViewDelegate>)delegate muti:(BOOL)muti {
     CalendarView *view = [CalendarView calendarView];
     view.delegate = delegate;
+    view.muti = muti;
     return view;
+}
+
+- (instancetype)initWithDelegate:(id<CalendarViewDelegate>)delegate {
+    return [self initWithDelegate:delegate muti:NO];
 }
 
 - (JTCalendarManager *)calendarManager
@@ -51,6 +57,7 @@
     self.calendarManager.delegate = self;
     [self.calendarManager setDate:[NSDate date]];
     _currentDate = _currentDate?_currentDate:[NSDate new];
+    _datesSelected = [NSMutableArray array];
 }
 
 + (instancetype)calendarView {
@@ -115,9 +122,14 @@
 - (void)calendar:(JTCalendarManager *)calendar didTouchDayView:(UIView<JTCalendarDay> *)dayView {
     NSString *dateString = [dayView.date formatOnlyDay];
     if ((self.dates && [self.dates containsObject:dateString]) || !self.dates) {
-        _datesSelected = [NSMutableArray arrayWithObject:dayView.date];
-        [self.calendarManager reload];
-        [self.delegate calendarView:self didTouchDate:dayView.date];
+        if (self.muti) {
+            [_datesSelected addObject:dayView.date];
+            [self.calendarManager reload];
+        }else{
+            _datesSelected = [NSMutableArray arrayWithObject:dayView.date];
+            [self.calendarManager reload];
+            [self.delegate calendarView:self didTouchDate:dayView.date];
+        }
     }
 }
 //改变日历的代理方法
