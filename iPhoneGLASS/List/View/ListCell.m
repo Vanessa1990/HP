@@ -65,6 +65,7 @@
     self.dataLabel.hidden = YES;
     
     self.typeLabel = [[UILabel alloc] init];
+    self.typeLabel.numberOfLines = 0;
     [self.contentView addSubview:self.typeLabel];
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.editImageView.mas_right).offset(10);
@@ -84,12 +85,12 @@
     
     self.sizeLabel = [[UILabel alloc] init];
     [self.contentView addSubview:self.sizeLabel];
-    self.countLabel.textAlignment = NSTextAlignmentCenter;
+    self.sizeLabel.textAlignment = NSTextAlignmentCenter;
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.typeLabel.mas_right);
         make.right.mas_equalTo(self.countLabel.mas_left);
         make.top.mas_equalTo(0);
-        make.width.mas_equalTo(self.typeLabel).offset(-30);
+        make.width.mas_equalTo(self.typeLabel).offset(0);
         make.height.mas_equalTo(self.contentView.bounds.size.height);
     }];
 }

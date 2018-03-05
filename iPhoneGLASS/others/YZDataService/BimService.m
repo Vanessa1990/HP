@@ -21,6 +21,8 @@
     if (self = [super init]) {
 //        self.address = @"http://localhost:3000";
         self.address = @"http://47.96.157.244:3000";
+//        self.address = @"http://172.16.169.215:3000";
+
     }
     return self;
 }

@@ -313,7 +313,7 @@
             self.height = [self currentVCTextFieldShowInCell:cell];
             self.height.keyboardType = UIKeyboardTypeNumberPad;
         }else if (indexPath.row == 2) {
-            cell.textLabel.text = @"长宽";
+            cell.textLabel.text = @"宽";
             self.width = [self currentVCTextFieldShowInCell:cell];
             self.width.keyboardType = UIKeyboardTypeNumberPad;
         }else {
@@ -384,7 +384,6 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
-
 
 
 @end

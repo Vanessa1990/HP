@@ -13,6 +13,7 @@ typedef enum : NSUInteger {
     PickerTypeDate,
     PickerTypeThick,
     PickerTypeFinish,
+    PickerTypeFinishTwo,
 } PickerType;
 
 @interface STPickerDate : UIButton

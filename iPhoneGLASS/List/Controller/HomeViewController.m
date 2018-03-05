@@ -33,6 +33,7 @@
 @property (strong, nonatomic) JTCalendarManager *calendarManager;
 @property (strong, nonatomic) JTCalendarMenuView *calendarMenuView;
 @property (strong, nonatomic) JTHorizontalCalendarView *calendarContentView;
+@property(nonatomic, strong) UIView *bgView;
 
 @end
 
@@ -71,7 +72,8 @@ static NSUInteger const calendarH = 320;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   
+    self.automaticallyAdjustsScrollViewInsets = YES;
+    
     [self initNav];
     self.allDates = [NSArray array];
     self.dateItems = [NSMutableDictionary dictionary];
@@ -295,6 +297,7 @@ static NSUInteger const calendarH = 320;
 }
 
 - (void)chooseDate:(BOOL)open {
+    CGFloat top = IOS11_OR_LATER?0:64;
     if (!self.calendarView) {
         self.calendarView = [[CalendarView alloc] initWithDelegate:self];
         [self.view addSubview:self.calendarView];
@@ -303,16 +306,26 @@ static NSUInteger const calendarH = 320;
             make.top.mas_equalTo(-calendarH);
             make.height.mas_equalTo(calendarH);
         }];
+        self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        self.bgView.backgroundColor = YZ_Color(33, 33, 33, 0.3);
+        UITapGestureRecognizer *tapges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCalendar)];
+        [self.bgView addGestureRecognizer:tapges];
     }
     [self.calendarView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(open?0:-calendarH);
+        make.top.mas_equalTo(open?top:-calendarH);
     }];
     if (open) {
         self.calendarView.currentDate = self.currentDate;
         self.calendarView.dates = [UserInfo shareInstance].admin?nil:self.allDates;
+        [self.view insertSubview:self.bgView belowSubview:self.calendarView];
+    }else{
+        [self.bgView removeFromSuperview];
     }
 }
 
+- (void)closeCalendar {
+    [self.navView closeCalendar];
+}
 
 #pragma mark - CalendarViewDelegate
 - (void)calendarView:(CalendarView *)view didTouchDate:(NSDate *)date {
@@ -386,6 +399,7 @@ static NSUInteger const calendarH = 320;
     }
     return _navView;
 }
+
 
 - (NSArray *)items {
     if (!_items) {

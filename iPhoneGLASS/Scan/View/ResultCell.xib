@@ -30,8 +30,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNn-5w-cvo">
-                        <rect key="frame" x="314" y="11" width="40" height="36"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNn-5w-cvo">
+                        <rect key="frame" x="313" y="12.5" width="41" height="36"/>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <state key="normal" title="入库"/>
                         <connections>
@@ -124,6 +124,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateLabel" destination="eXf-2o-UCF" id="uNT-WI-d3b"/>
+                <outlet property="inButton" destination="RNn-5w-cvo" id="gZe-rV-qnB"/>
                 <outlet property="length" destination="T0H-F4-cxn" id="udb-Du-Uwm"/>
                 <outlet property="moreLabel" destination="Jem-lJ-09M" id="bJT-qa-jtf"/>
                 <outlet property="nameLabel" destination="vEr-BT-vEW" id="xvH-De-lb6"/>

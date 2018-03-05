@@ -22,5 +22,6 @@
 @property(nonatomic, strong) UILabel *currenDateLabel;
 @property(nonatomic, strong) UIButton *dataBtn;
 @property(nonatomic, strong) id <ListNavViewDelegate>delegate;
+- (void)closeCalendar;
 
 @end

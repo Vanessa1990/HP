@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HPChooseView">
+            <rect key="frame" x="0.0" y="0.0" width="858" height="83"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="487-h2-XmM" customClass="HPChooseViewButton">
+                    <rect key="frame" x="0.0" y="1" width="265" height="81"/>
+                    <state key="normal" title="姓名"/>
+                    <state key="selected" title="姓名"/>
+                    <connections>
+                        <action selector="chooseName:" destination="iN0-l3-epB" eventType="touchUpInside" id="HYs-ea-22K"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pen-Bc-cNz" customClass="HPChooseViewButton">
+                    <rect key="frame" x="266" y="1" width="265" height="81"/>
+                    <state key="normal" title="未完成"/>
+                    <state key="selected" title="未完成"/>
+                    <connections>
+                        <action selector="chooseState:" destination="iN0-l3-epB" eventType="touchUpInside" id="GBe-LR-zHQ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="59d-KJ-ZBG" customClass="HPChooseViewButton">
+                    <rect key="frame" x="532" y="1" width="265" height="81"/>
+                    <state key="normal" title="全部"/>
+                    <connections>
+                        <action selector="chooseMonth:" destination="iN0-l3-epB" eventType="touchUpInside" id="tnX-S1-v50"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVR-U3-u4e">
+                    <rect key="frame" x="798" y="1" width="60" height="81"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="xz4-4k-bH3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="清空×">
+                        <color key="titleColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="clearClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="JZn-gb-Upa"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="59d-KJ-ZBG" secondAttribute="bottom" constant="1" id="126-we-ap0"/>
+                <constraint firstItem="487-h2-XmM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="1mA-Xb-1XB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gVR-U3-u4e" secondAttribute="bottom" constant="1" id="3dY-tC-bNM"/>
+                <constraint firstItem="pen-Bc-cNz" firstAttribute="width" secondItem="487-h2-XmM" secondAttribute="width" id="J9Z-Cf-nWh"/>
+                <constraint firstItem="gVR-U3-u4e" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="1" id="Nyr-52-6UU"/>
+                <constraint firstItem="59d-KJ-ZBG" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="1" id="PLa-es-xS9"/>
+                <constraint firstItem="59d-KJ-ZBG" firstAttribute="width" secondItem="487-h2-XmM" secondAttribute="width" id="Qfd-lR-2UE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="487-h2-XmM" secondAttribute="bottom" constant="1" id="T6k-jh-39c"/>
+                <constraint firstItem="pen-Bc-cNz" firstAttribute="leading" secondItem="487-h2-XmM" secondAttribute="trailing" constant="1" id="Wxx-G8-R0v"/>
+                <constraint firstItem="59d-KJ-ZBG" firstAttribute="leading" secondItem="pen-Bc-cNz" secondAttribute="trailing" constant="1" id="fBg-Th-vtW"/>
+                <constraint firstItem="pen-Bc-cNz" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="1" id="ffE-St-o4u"/>
+                <constraint firstItem="487-h2-XmM" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="1" id="hdU-iL-zgZ"/>
+                <constraint firstItem="gVR-U3-u4e" firstAttribute="leading" secondItem="59d-KJ-ZBG" secondAttribute="trailing" constant="1" id="mUf-UI-NIF"/>
+                <constraint firstAttribute="trailing" secondItem="gVR-U3-u4e" secondAttribute="trailing" id="qKH-4Z-BtI"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="pen-Bc-cNz" secondAttribute="bottom" constant="1" id="rkH-bw-0jY"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="finishBtn" destination="pen-Bc-cNz" id="x4Y-Ec-FtT"/>
+                <outlet property="nameBtn" destination="487-h2-XmM" id="AGg-vC-QOV"/>
+                <outlet property="yearBtn" destination="59d-KJ-ZBG" id="aWU-ms-6H9"/>
+            </connections>
+            <point key="canvasLocation" x="187" y="-190.5"/>
+        </view>
+    </objects>
+</document>

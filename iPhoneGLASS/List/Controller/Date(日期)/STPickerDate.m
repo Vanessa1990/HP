@@ -81,6 +81,9 @@ static NSInteger const yearSum = 200;
         [self.pickerView selectRow:(_year - yearMin) inComponent:0 animated:NO];
         [self.pickerView selectRow:(_month - 1) inComponent:1 animated:NO];
         [self.pickerView selectRow:(_day - 1) inComponent:2 animated:NO];
+    }else if (self.type == PickerTypeFinishTwo) {
+        self.returnDate = @"未完成";
+        [self.pickerView selectRow:0 inComponent:0 animated:NO];
     }else{
         self.returnDate = @"全部";
         [self.pickerView selectRow:0 inComponent:1 animated:NO];
@@ -115,6 +118,8 @@ static NSInteger const yearSum = 200;
                 return 6;
             }else if (self.type == PickerTypeFinish){
                 return 3;
+            }else if (self.type == PickerTypeFinishTwo){
+                return 2;
             }else{
                 return 0;
             }
@@ -163,7 +168,7 @@ static NSInteger const yearSum = 200;
         if (component == 1) {
             if (self.type == PickerTypeThick){
                 text = self.thickArray[row];
-            }else if (self.type == PickerTypeFinish){
+            }else if (self.type == PickerTypeFinish || self.type == PickerTypeFinishTwo){
                 text = self.finishArray[row];
             }else {
                 text = @"";
@@ -309,7 +314,7 @@ static NSInteger const yearSum = 200;
 -(NSArray *)finishArray {
     
     if (!_finishArray) {
-        _finishArray = @[@"全部",@"未完成",@"已完成"];
+        _finishArray = self.type == PickerTypeFinishTwo?@[@"未完成",@"已完成"]:@[@"全部",@"未完成",@"已完成"];
     }
     return _finishArray;
 }

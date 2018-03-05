@@ -9,6 +9,12 @@
 #import "ResultCell.h"
 #import "NSDate+YZBim.h"
 
+@interface ResultCell ()
+
+@property (weak, nonatomic) IBOutlet UIButton *inButton;
+
+@end
+
 @implementation ResultCell
 
 - (void)awakeFromNib {
