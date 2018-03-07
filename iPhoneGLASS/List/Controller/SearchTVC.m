@@ -33,6 +33,9 @@
 @property (assign, nonatomic) BOOL fuzzySearch;
 @property(nonatomic, strong) UITextField *fuzzy;
 
+//@property(nonatomic, strong) CalendarView *calendarView;
+//@property(nonatomic, strong) UIView *bgView;
+
 @end
 
 @implementation SearchTVC

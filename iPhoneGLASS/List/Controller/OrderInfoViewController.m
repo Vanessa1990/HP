@@ -35,10 +35,7 @@
     self.totle.text = [NSString stringWithFormat:@"总数 : %zd",self.model.totalNumber];
     self.exsit.text = [NSString stringWithFormat:@"已出库 : %zd",self.model.number];
     self.date.text = [NSString stringWithFormat:@"日期 : %@",[[NSDate dateFromISOString:self.model.date] formatOnlyDay]];
-    NSMutableString *delivery = [NSMutableString string];
-    for (NSString *d in self.model.deliverymans) {
-        [delivery appendString:d];
-    }
+    NSString *delivery = [self.model.deliverymans componentsJoinedByString:@","];
     self.send.text = [NSString stringWithFormat:@"配送 : %@",delivery.length > 0?delivery:@"暂无"];
     self.orderNumber.text = [NSString stringWithFormat:@"订单号 : %@",self.model.billnumber];
 

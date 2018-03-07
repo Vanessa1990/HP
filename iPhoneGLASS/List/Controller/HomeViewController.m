@@ -27,6 +27,7 @@
 @property (assign, nonatomic) BOOL preClick;
 
 @property (assign, nonatomic) BOOL reGetData;
+@property(nonatomic, strong) UIButton *reloadButton;
 
 // 日历
 @property(nonatomic, strong) CalendarView *calendarView;
@@ -34,6 +35,7 @@
 @property (strong, nonatomic) JTCalendarMenuView *calendarMenuView;
 @property (strong, nonatomic) JTHorizontalCalendarView *calendarContentView;
 @property(nonatomic, strong) UIView *bgView;
+
 
 @end
 
@@ -66,6 +68,16 @@ static NSUInteger const calendarH = 320;
         _calendarManager.delegate = self;
     }
     return _calendarManager;
+}
+
+- (UIButton *)reloadButton {
+    if (!_reloadButton) {
+        _reloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_reloadButton setImage:[UIImage imageNamed:@"reload.png"] forState:UIControlStateNormal];
+        _reloadButton.backgroundColor = [UIColor clearColor];
+        [_reloadButton addTarget:self action:@selector(upAndReload) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _reloadButton;
 }
 
 
@@ -115,12 +127,25 @@ static NSUInteger const calendarH = 320;
     }];
     
     self.tableView.mj_header = header;
+    
+    [self.view addSubview:self.reloadButton];
+    [self.reloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-30);
+        make.bottom.mas_equalTo(-60);
+        make.width.height.mas_equalTo(50);
+    }];
 }
 
 - (void)initNav {
     self.navigationItem.titleView = self.navView;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
     [self setShowTabItem];
+}
+
+- (void)upAndReload {
+//    [self.tableView scrollsToTop];
+//    [self getNewData];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (SHXPromise *)getAllDates {
@@ -226,16 +251,21 @@ static NSUInteger const calendarH = 320;
         model.name = section;
         NSUInteger totle = 0;
         NSMutableArray *lists = [NSMutableArray array];
+        int arrivedGlassCount = 0;
         for (ListModel *m in items) {
             NSString *middle = m.mark?[NSMutableString stringWithFormat:@"%@+%@",m.name,m.mark]:m.name;
             if ([section isEqualToString:middle]) {
                 totle += m.totalNumber;
                 [lists addObject:m];
+                if (m.deliverymans && m.deliverymans.count > 0) {
+                    arrivedGlassCount++;
+                }
             }
         }
         if (totle > 0){
             model.totle = [NSString stringWithFormat:@"%zd",totle];
             model.listArray = lists;
+            model.arrived = arrivedGlassCount > 0;
             [res addObject:model];
         }
         
@@ -254,6 +284,7 @@ static NSUInteger const calendarH = 320;
 -(void)search {
     
 //    SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
+    self.calendarView = nil;
     SearchTVC *searchTVC = [[SearchTVC alloc] init];
     [self.navigationController pushViewController:searchTVC animated:YES];
 }

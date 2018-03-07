@@ -95,7 +95,7 @@
     //获得增加后的时间并记录起来
     self.relaodDate = [calendar dateByAddingComponents:adcomps toDate:self.relaodDate options:0];
     //设置日历当前显示的时间
-    [self.calendarManager setDate:self.relaodDate];
+    [self.calendarManager setDate:self.relaodDate];//self.relaodDate
     [self relaodMenu];
 }
 
@@ -128,7 +128,9 @@
         }else{
             _datesSelected = [NSMutableArray arrayWithObject:dayView.date];
             [self.calendarManager reload];
-            [self.delegate calendarView:self didTouchDate:dayView.date];
+            if ([(id)self.delegate respondsToSelector:@selector(calendarView:didTouchDate:)]) {
+                [self.delegate calendarView:self didTouchDate:dayView.date];
+            }
         }
     }
 }
@@ -138,42 +140,35 @@
     dayView.textLabel.font = YZ_Font_L;
     dayView.dotView.hidden = YES;
     //日期为今天的样式
-    if([_calendarManager.dateHelper date:self.currentDate isTheSameDayThan:dayView.date]){
-        dayView.circleView.hidden = NO;
-        dayView.circleView.backgroundColor = YZ_ThemeColor;
-        dayView.textLabel.textColor = [UIColor whiteColor];
-    }
-    //日期为选中模式的样式
-    else if([self isInDatesSelected:dayView.date]){
-        dayView.circleView.hidden = NO;
-        dayView.circleView.backgroundColor = YZ_PinkColor;
-        dayView.textLabel.textColor = [UIColor whiteColor];
-    }
-    else {
-//        //这个为本月内第一个星期里上月日期的样式
-//         if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:dayView.date]){
-//            dayView.circleView.hidden = NO;
-//            dayView.dotView.hidden = YES;
-//            dayView.circleView.backgroundColor = YZ_Color(218, 244, 253, 0.6);
-//            dayView.textLabel.textColor = [UIColor lightGrayColor];
-//        }
-        //    // 这个为下月内第一个星期里今天的样式
-        //    else if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:dayView.date]){
-        //        dayView.circleView.hidden = YES;
-        //        dayView.dotView.hidden = NO;
-        //        dayView.dotView.backgroundColor = [UIColor redColor];
-        //        dayView.textLabel.textColor = [UIColor blackColor];
-        //    }
-        NSString *dateString = [dayView.date formatOnlyDay];
-        if ((self.dates && [self.dates containsObject:dateString]) || !self.dates) {
-            dayView.circleView.hidden = YES;
-            dayView.textLabel.textColor = [UIColor blackColor];
+    if ([dayView.date isKindOfClass:[NSDate class]]) {
+        if([_calendarManager.dateHelper date:self.currentDate isTheSameDayThan:dayView.date]){
+            dayView.circleView.hidden = NO;
+            dayView.circleView.backgroundColor = YZ_ThemeColor;
+            dayView.textLabel.textColor = [UIColor whiteColor];
         }
-        else{
-            dayView.circleView.hidden = YES;
-            dayView.textLabel.textColor = YZ_Color(155, 155, 155, 0.6);
+        //日期为选中模式的样式
+        else if([self isInDatesSelected:dayView.date]){
+            dayView.circleView.hidden = NO;
+            dayView.circleView.backgroundColor = YZ_PinkColor;
+            dayView.textLabel.textColor = [UIColor whiteColor];
+        }
+        else {
+            //        //这个为本月内第一个星期里上月日期的样式
+            //         if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:dayView.date]){
+            //        }
+            //    // 这个为下月内第一个星期里今天的样式
+            //    else if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:dayView.date]){
+            //    }
+            NSString *dateString = [dayView.date formatOnlyDay];
+            if ((self.dates && [self.dates containsObject:dateString]) || !self.dates) {
+                dayView.circleView.hidden = YES;
+                dayView.textLabel.textColor = [UIColor blackColor];
+            }
+            else{
+                dayView.circleView.hidden = YES;
+                dayView.textLabel.textColor = YZ_Color(155, 155, 155, 0.6);
+            }
         }
     }
-    
 }
 @end

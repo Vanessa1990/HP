@@ -28,7 +28,7 @@
 }
 - (void)setModel:(ListModel *)model {
     _model = model;
-    self.count = model.number;
+    self.count = model.sendCount;
     self.typeLabel.text = model.thick;
     self.sizeLabel.text = [NSString stringWithFormat:@"%@ * %@ * %zd ",model.height,model.width,model.totalNumber];
     self.countLable.text = [NSString stringWithFormat:@"%zd",self.count];

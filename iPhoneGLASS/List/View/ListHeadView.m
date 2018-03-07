@@ -19,6 +19,8 @@
 
 @property (strong, nonatomic) UILabel *dateLable;
 
+@property(nonatomic, strong) UIImageView *arrivedImageView;
+
 @end
 
 @implementation ListHeadView
@@ -57,6 +59,15 @@
             make.right.mas_equalTo(-15);
             make.centerY.mas_equalTo(0);
         }];
+        
+        self.arrivedImageView = [[UIImageView alloc] init];
+        self.arrivedImageView.image = [UIImage imageNamed:@"arrive"];
+        [self addSubview:self.arrivedImageView];
+        [self.arrivedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(self.totleLable.mas_left).offset(-10);
+            make.centerY.mas_equalTo(0);
+            make.width.height.mas_equalTo(30);
+        }];
     }
     return self;
 }
@@ -65,6 +76,7 @@
     _model = model;
     self.nameLable.text = model.name;
     self.totleLable.text = [NSString stringWithFormat:@"(共%@块)",model.totle];
+    self.arrivedImageView.hidden = !model.arrived;
 }
 
 - (void)setEdit:(BOOL)edit {

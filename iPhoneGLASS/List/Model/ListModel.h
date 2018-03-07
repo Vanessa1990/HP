@@ -42,5 +42,7 @@
 
 @property(nonatomic, strong) NSString *billnumber;
 
+@property(nonatomic, assign) NSUInteger sendCount;
+
 
 @end

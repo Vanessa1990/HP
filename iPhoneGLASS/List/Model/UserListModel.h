@@ -17,4 +17,6 @@
 
 @property(nonatomic,strong) NSArray <ListModel *>*listArray;
 
+@property (assign, nonatomic) BOOL arrived;
+
 @end

@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *sendPLabel;
 @property (weak, nonatomic) IBOutlet UITextField *billPLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property(nonatomic, strong) NSMutableDictionary *sendItems;
+//@property(nonatomic, strong) NSMutableDictionary *sendItems;
 @property (assign, nonatomic) NSUInteger allcount;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
@@ -28,7 +28,12 @@
 
 - (instancetype)initWithModels:(NSArray *)models {
     if (self = [super init]) {
-        self.models = models;
+        NSMutableArray *array = [NSMutableArray array];
+        for (ListModel *model in models) {
+            model.sendCount = model.totalNumber;
+            [array addObject:model];
+        }
+        self.models = [NSArray arrayWithArray:array];
     }
     return self;
 }
@@ -40,13 +45,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
-    self.sendItems = [NSMutableDictionary dictionary];
     [self.tableView registerNib:[UINib nibWithNibName:@"SendOrderCell" bundle:nil] forCellReuseIdentifier:@"SendCellID"];
     ListModel *model = self.models[0];
     NSUInteger count = 0;
     for (ListModel *lm in self.models) {
-        count += lm.number?lm.number:0;
-        [self.sendItems setValue:@(lm.number) forKey:lm.glassID];
+        count += lm.sendCount?lm.sendCount:0;
     }
     self.allcount = count;
     self.nameLabel.text = model.name;
@@ -63,15 +66,21 @@
 }
 
 - (void)sure {
-    NSDictionary *sendDict = @{@"deliveryman":@[self.sendPLabel.text],@"billnumber":self.billPLabel.text};
+    NSMutableDictionary *sendDict = [NSMutableDictionary dictionaryWithDictionary: @{@"deliveryman":@[self.sendPLabel.text],@"billnumber":self.billPLabel.text}];
     NSMutableArray *ps = [NSMutableArray array];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.label.text = @"正在上传";
     hud.mode = MBProgressHUDModeIndeterminate;
-    for (NSString *key in self.sendItems) {
-        NSInteger count = [self.sendItems[key] integerValue];
-        if (count > 0) {
-            [ps addObject:[[BimService instance] updateGlassInfo:key newDict:sendDict]];
+    for (ListModel *model in self.models) {
+        if (model.sendCount > 0) {
+            if (!model.deliverymans || model.deliverymans.count == 0) {
+                [sendDict setObject:@[[NSString stringWithFormat:@"%@:%zd",self.sendPLabel.text,model.sendCount]] forKey:@"deliveryman"];
+            }else{
+                NSMutableArray *ds = [NSMutableArray arrayWithArray:model.deliverymans];
+                [ds addObject:[NSString stringWithFormat:@"%@:%zd",self.sendPLabel.text,model.sendCount]];
+                [sendDict setObject:ds forKey:@"deliveryman"];
+            }
+            [ps addObject:[[BimService instance] updateGlassInfo:model.glassID newDict:sendDict]];
         }
     }
     [[SHXPromise all:ps] onFulfilled:^id(id value) {
@@ -93,6 +102,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SendOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SendCellID"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.models[indexPath.row];
     cell.delegate = self;
     return cell;
@@ -100,11 +110,10 @@
 
 #pragma mark - SendOrderCellDelegate
 - (void)sendOrderCellCountClick:(ListModel *)model count:(NSInteger)count {
-    NSNumber *oldCount = [self.sendItems valueForKey:model.glassID];
-    NSUInteger oldC = [oldCount integerValue];
-    self.allcount -= oldC;
+    self.allcount -= model.sendCount;
     self.allcount += count;
-    self.sendItems[model.glassID] = @(count);
+    model.sendCount = count;
+    [self.tableView reloadData];
     self.countLabel.text = [NSString stringWithFormat:@"%zd",self.allcount];
 }
 
