@@ -42,6 +42,8 @@
 @property (strong, nonatomic) NSString *year;
 @property (strong, nonatomic) NSString *month;
 @property(nonatomic, strong) UIButton *searchButton;
+@property(nonatomic, strong) UIView *navView;
+@property(nonatomic, strong) UIButton *scanBtn;
 
 @end
 
@@ -52,38 +54,39 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"入库";
+    self.navigationItem.titleView = self.navView;
     [self initView];
     [self keyBoard:YES];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看订单" style:UIBarButtonItemStylePlain target:self action:@selector(seeMore:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看订单" style:UIBarButtonItemStylePlain target:self action:@selector(seeMore:)];
     [self setShowTabItem];
 }
 
 - (void)initView {
     self.automaticallyAdjustsScrollViewInsets = YES;
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth-100, 44)];
-    [self.view addSubview:self.searchBar];
-    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(0);
-        make.top.mas_equalTo(64);
-        make.height.mas_equalTo(44);
-    }];
-    self.searchBar.placeholder = @"请输入搜索条件,以 * 连接";
-    self.searchBar.delegate = self;
-    //    self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
-    self.searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.searchButton setTitle:@"搜索" forState:UIControlStateNormal];
-    [self.searchButton setTitleColor:YZ_GrayColor61 forState:UIControlStateNormal];
-    self.searchButton.backgroundColor = YZ_ThemeGrayColor;
-    self.searchButton.titleLabel.font = YZ_Font(15);
-    [self.searchButton addTarget:self action:@selector(searchFunc) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.searchButton];
-    [self.searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(0);
-        make.top.bottom.mas_equalTo(self.searchBar);
-        make.width.mas_equalTo(60);
-        make.left.mas_equalTo(self.searchBar.mas_right);
-    }];
+//    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth-100, 44)];
+//    [self.view addSubview:self.searchBar];
+//    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(0);
+//        make.top.mas_equalTo(64);
+//        make.height.mas_equalTo(44);
+//    }];
+//    self.searchBar.placeholder = @"请输入搜索条件,以 * 连接";
+//    self.searchBar.delegate = self;
+//    //    self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
+//    self.searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.searchButton setTitle:@"搜索" forState:UIControlStateNormal];
+//    [self.searchButton setTitleColor:YZ_GrayColor61 forState:UIControlStateNormal];
+//    self.searchButton.backgroundColor = YZ_ThemeGrayColor;
+//    self.searchButton.titleLabel.font = YZ_Font(15);
+//    [self.searchButton addTarget:self action:@selector(searchFunc) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:self.searchButton];
+//    [self.searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.mas_equalTo(0);
+//        make.top.bottom.mas_equalTo(self.searchBar);
+//        make.width.mas_equalTo(60);
+//        make.left.mas_equalTo(self.searchBar.mas_right);
+//    }];
     
     
     HPChooseView *chooseView = [[[NSBundle mainBundle] loadNibNamed:@"HPChooseView" owner:0 options:nil] lastObject];
@@ -93,7 +96,7 @@
     [chooseView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.height.mas_equalTo(35);
-        make.top.mas_equalTo(self.searchBar.mas_bottom);
+        make.top.mas_equalTo(64);
     }];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108, kScreenWidth, kScreenHeight - 108 - 49)];
@@ -143,6 +146,18 @@
     }
     [self keyBoard:YES];
     return NO;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchBar.text.length == 0) {
+        self.scanBtn.hidden = NO;
+    }else{
+        self.scanBtn.hidden = YES;
+    }
+}
+
+- (void)scan:(UIButton *)sender {
+    
 }
 
 #pragma mark - HPChooseViewDelegate
@@ -201,6 +216,7 @@
 - (void)chooseNumber:(int)number {
     NSString *string = self.searchBar.text?self.searchBar.text:@"";
     self.searchBar.text = [NSString stringWithFormat:@"%@%d",string,number];
+    self.scanBtn.hidden = YES;
 }
 
 - (void)deleteNumber {
@@ -209,6 +225,32 @@
         NSString *newStr = [string substringToIndex:string.length - 1];
         self.searchBar.text = newStr;
     }
+    if (!self.searchBar.text || self.searchBar.text.length == 0) {
+        self.scanBtn.hidden = NO;
+    }
+}
+
+- (NSDictionary *)searchDictionary {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (!self.finishState) {
+        [dict setObject:@(NO) forKey:@"finish"];
+    }else {
+        [dict setObject:@(YES) forKey:@"finish"];
+    }
+    if (self.name) {
+        [dict setValue:self.name forKey:@"name"];
+    }
+    if (self.year) {
+        NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
+        [timedict setValue:self.year forKey:@"$gte"];
+        NSDate *date = [NSDate dateFormDayString:self.year];
+        NSDate *endDate = [date dateByAddingTimeInterval:24*60*60];
+        [timedict setValue:[endDate formatOnlyDay] forKey:@"$lt"];
+        if (timedict.count > 0) {
+            [dict setObject:timedict forKey:@"createdAt"];
+        }
+    }
+    return [NSDictionary dictionaryWithDictionary:dict];
 }
 
 - (void)searchFunc {
@@ -243,25 +285,8 @@
         // 搜索长+宽
         searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"length":allValue[0],@"width":allValue[1]}];
     }
-
-    if (!self.finishState) {
-        [searchDict setObject:@(NO) forKey:@"finish"];
-    }else {
-        [searchDict setObject:@(YES) forKey:@"finish"];
-    }
-    if (self.name) {
-        [searchDict setValue:self.name forKey:@"name"];
-    }
-    if (self.year) {
-        NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
-        [timedict setValue:self.year forKey:@"$gte"];
-        NSDate *date = [NSDate dateFormDayString:self.year];
-        NSDate *endDate = [date dateByAddingTimeInterval:24*60*60];
-        [timedict setValue:[endDate formatOnlyDay] forKey:@"$lt"];
-        if (timedict.count > 0) {
-            [searchDict setObject:timedict forKey:@"createdAt"];
-        }
-    }
+    [searchDict setValuesForKeysWithDictionary:[self searchDictionary]];
+    
     
     [[self searchWithDict:searchDict seeSame:NO] onFulfilled:^id(id value) {
         searchDict = [NSMutableDictionary dictionary];
@@ -272,24 +297,7 @@
             // 搜索宽+长
             searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"width":allValue[0],@"length":allValue[1]}];
         }
-        if (!self.finishState) {
-            [searchDict setObject:@(NO) forKey:@"finish"];
-        }else {
-            [searchDict setObject:@(YES) forKey:@"finish"];
-        }
-        if (self.name) {
-            [searchDict setValue:self.name forKey:@"name"];
-        }
-        if (self.year) {
-            NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
-            [timedict setValue:self.year forKey:@"$gte"];
-            NSDate *date = [NSDate dateFormDayString:self.year];
-            NSDate *endDate = [date dateByAddingTimeInterval:24*60*60];
-            [timedict setValue:[endDate formatOnlyDay] forKey:@"$lt"];
-            if (timedict.count > 0) {
-                [searchDict setObject:timedict forKey:@"createdAt"];
-            }
-        }
+        [searchDict setValuesForKeysWithDictionary:[self searchDictionary]];
         return [[self searchWithDict:searchDict seeSame:YES] onFulfilled:^id(id value) {
             [self.tableView reloadData];
             return value;
@@ -300,15 +308,14 @@
 - (void)addSeparator {
     NSString *string = self.searchBar.text?self.searchBar.text:@"";
     self.searchBar.text = [NSString stringWithFormat:@"%@*",string];
+    self.scanBtn.hidden = YES;
 }
 
 - (SHXPromise *)searchWithDict:(NSDictionary *)searchDict seeSame:(BOOL)see {
     return [[[BimService instance] getListSkip:0 limit:200 searchDict:searchDict] onFulfilled:^id(NSArray *value) {
         if (value && value.count > 0) {
             NSArray *ones = [self dealWithResultDicts:value seeSame:see];
-//            NSArray *twos = [self dealWithResultDicts:value seeSame:see][@"finish"];
             [self.searchItems addObjectsFromArray:ones];
-//            [self.finishItems addObjectsFromArray:twos];
         }
         return value;
     }];
@@ -334,11 +341,11 @@
 }
 
 - (void)seeMore:(id)sender {
-    
     HomeViewController *VC;
     if (self.writeInModel) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:self.writeInModel.name forKey:@"name"];
+        [dict setObject:self.writeInModel.date forKey:@"createdAt"];
         VC = [[SearchListViewController alloc] initWithSearchDict:dict sort:YES];
         [self.navigationController pushViewController:VC animated:YES];
     }
@@ -504,7 +511,13 @@
         }];
         [self presentViewController:alertvc animated:YES completion:nil];
     }];
-    return @[action];
+    
+    UITableViewRowAction *actionInfo = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"更多" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        ListModel *model = self.searchItems[indexPath.row];
+        self.writeInModel = model;
+        [self seeMore:nil];
+    }];
+    return @[actionInfo,action];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -519,6 +532,64 @@
         _keyBoard.delegate = self;
     }
     return _keyBoard;
+}
+
+- (UIView *)navView
+{
+    if (!_navView) {
+        _navView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth - 60, 44)];
+       
+        [_navView addSubview:self.searchBar];
+        [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.bottom.mas_equalTo(0);
+            make.width.mas_equalTo(kScreenWidth - 80 - 60);
+        }];
+       
+        [self.searchBar addSubview:self.scanBtn];
+        [self.scanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.top.bottom.mas_equalTo(0);
+            make.width.mas_equalTo(44);
+        }];
+        
+        [_navView addSubview:self.searchButton];
+        [self.searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.top.bottom.mas_equalTo(0);
+            make.width.mas_equalTo(60);
+            make.left.mas_equalTo(self.searchBar.mas_right);
+        }];
+    }
+    return _navView;
+}
+
+- (UISearchBar *)searchBar {
+    if (!_searchBar) {
+        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        _searchBar.placeholder = @"长 * 宽";
+        _searchBar.delegate = self;
+        [_searchBar setScopeBarButtonTitleTextAttributes:@{NSFontAttributeName:YZ_Font(14)} forState:UIControlStateNormal];
+    }
+    return _searchBar;
+}
+
+- (UIButton *)scanBtn {
+    if (!_scanBtn) {
+        _scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_scanBtn setImage:[UIImage imageNamed:@"scan.png"] forState:UIControlStateNormal];
+        [_scanBtn addTarget:self action:@selector(scan:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _scanBtn;
+}
+
+- (UIButton *)searchButton {
+    if (!_searchButton) {
+        _searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_searchButton setTitle:@"搜索" forState:UIControlStateNormal];
+        [_searchButton setTitleColor:YZ_GrayColor61 forState:UIControlStateNormal];
+        _searchButton.backgroundColor = YZ_ThemeGrayColor;
+        _searchButton.titleLabel.font = YZ_Font(15);
+        [_searchButton addTarget:self action:@selector(searchFunc) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _searchButton;
 }
 
 @end

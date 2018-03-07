@@ -10,6 +10,7 @@
 #import "SendOrderCell.h"
 #import "BimService.h"
 #import "MBProgressHUD.h"
+#import "NSDate+YZBim.h"
 
 @interface SendOrderViewController ()<UITableViewDelegate,UITableViewDataSource,SendOrderCellDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(nonatomic, strong) NSMutableDictionary *sendItems;
 @property (assign, nonatomic) NSUInteger allcount;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end
 
@@ -34,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"发货详情";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
@@ -47,6 +50,7 @@
     }
     self.allcount = count;
     self.nameLabel.text = model.name;
+    self.dateLabel.text = [[NSDate dateFromISOString:model.date] formatOnlyDay];
     self.countLabel.text = [NSString stringWithFormat:@"%zd",count];
     [self.tableView reloadData];
     

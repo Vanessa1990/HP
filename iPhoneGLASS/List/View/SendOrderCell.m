@@ -30,7 +30,7 @@
     _model = model;
     self.count = model.number;
     self.typeLabel.text = model.thick;
-    self.sizeLabel.text = [NSString stringWithFormat:@"%@ * %@ ( %zd 已出库数量)",model.height,model.width,model.number];
+    self.sizeLabel.text = [NSString stringWithFormat:@"%@ * %@ * %zd ",model.height,model.width,model.totalNumber];
     self.countLable.text = [NSString stringWithFormat:@"%zd",self.count];
 }
 

@@ -70,6 +70,9 @@
 		7F9904401CEAFF080039AAD5 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F99043F1CEAFF080039AAD5 /* MainTabBarController.m */; };
 		7F99044A1CEB04D50039AAD5 /* WWLoadTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */; };
 		7F9904511CEB19EF0039AAD5 /* MoreTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9904501CEB19EF0039AAD5 /* MoreTVC.m */; };
+		7FA9D258204F7937003382B0 /* scan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9D255204F7936003382B0 /* scan.png */; };
+		7FA9D259204F7937003382B0 /* scan@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9D256204F7936003382B0 /* scan@3x.png */; };
+		7FA9D25A204F7937003382B0 /* scan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9D257204F7937003382B0 /* scan@2x.png */; };
 		7FAD3B491F2AF31400935E48 /* add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B471F2AF31400935E48 /* add_green.png */; };
 		7FAD3B4A1F2AF31400935E48 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B481F2AF31400935E48 /* call.png */; };
 		7FB1D1D6201B1E8000C0BD27 /* tab_show@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB1D1D4201B1E7F00C0BD27 /* tab_show@3x.png */; };
@@ -298,6 +301,9 @@
 		7F9904491CEB04D50039AAD5 /* WWLoadTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWLoadTextField.m; sourceTree = "<group>"; };
 		7F99044F1CEB19EF0039AAD5 /* MoreTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreTVC.h; sourceTree = "<group>"; };
 		7F9904501CEB19EF0039AAD5 /* MoreTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreTVC.m; sourceTree = "<group>"; };
+		7FA9D255204F7936003382B0 /* scan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scan.png; sourceTree = "<group>"; };
+		7FA9D256204F7936003382B0 /* scan@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scan@3x.png"; sourceTree = "<group>"; };
+		7FA9D257204F7937003382B0 /* scan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scan@2x.png"; sourceTree = "<group>"; };
 		7FAD3B471F2AF31400935E48 /* add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_green.png; sourceTree = "<group>"; };
 		7FAD3B481F2AF31400935E48 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
 		7FB1D1D4201B1E7F00C0BD27 /* tab_show@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_show@3x.png"; sourceTree = "<group>"; };
@@ -804,6 +810,9 @@
 		7FAD3B461F2AF31400935E48 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				7FA9D255204F7936003382B0 /* scan.png */,
+				7FA9D257204F7937003382B0 /* scan@2x.png */,
+				7FA9D256204F7936003382B0 /* scan@3x.png */,
 				7F452A64204D19FE004EFE4E /* close.png */,
 				7F452A71204D1F85004EFE4E /* close@2x.png */,
 				7F452A70204D1F85004EFE4E /* close@3x.png */,
@@ -1084,6 +1093,7 @@
 				7FB1D1D9201B1F9000C0BD27 /* nav_back@2x..png in Resources */,
 				7F06A6F01CEAF101006B9CA4 /* WWLoadVC.xib in Resources */,
 				7FD8E48A2022FC4A00BB343A /* nav_back@3x.png in Resources */,
+				7FA9D259204F7937003382B0 /* scan@3x.png in Resources */,
 				7FB1D1FF201EC51100C0BD27 /* tab_manager.png in Resources */,
 				7FB1D22C2022F5D900C0BD27 /* list_pre@2x.png in Resources */,
 				7FB1D22F2022F5D900C0BD27 /* list_next@2x.png in Resources */,
@@ -1134,9 +1144,11 @@
 				7FB1D1D7201B1E8000C0BD27 /* tab_show@2x.png in Resources */,
 				7FB1D204201EC51100C0BD27 /* tab_js@3x.png in Resources */,
 				7FEF0BAD202AEC99007AD53D /* list_date@2x.png in Resources */,
+				7FA9D258204F7937003382B0 /* scan.png in Resources */,
 				269ED3D31F60EF340047AF86 /* tab_home@3x.png in Resources */,
 				7FB1D1EC201EBB6100C0BD27 /* tab_more.png in Resources */,
 				7FFB0D861FF09B7000D56CC7 /* unchoose@3x.png in Resources */,
+				7FA9D25A204F7937003382B0 /* scan@2x.png in Resources */,
 				7FFB0D8E1FF0F85800D56CC7 /* SendOrderViewController.xib in Resources */,
 				7FB1D202201EC51100C0BD27 /* tab_manager_s@3x.png in Resources */,
 				7F0E98CA1CFEAFF10051C503 /* ResultViewController.xib in Resources */,

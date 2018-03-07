@@ -96,8 +96,16 @@
     [super layoutSubviews];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.imageView.contentMode = UIViewContentModeCenter;
-    self.titleLabel.frame = CGRectMake(0, 0, self.bounds.size.width * 0.7, self.bounds.size.height);
-    self.imageView.frame = CGRectMake(self.bounds.size.width * 0.7, 0, self.bounds.size.width * 0.2, self.bounds.size.height);
+    CGSize titleSize = self.titleLabel.frame.size;
+    CGSize imageSize = self.imageView.frame.size;
+    CGFloat x = (self.bounds.size.width - titleSize.width - imageSize.width - 5)/2;
+    CGFloat width = titleSize.width;
+    if (x < 0) {
+        x = 3;
+        width = self.bounds.size.width - 6 - imageSize.width - 5;
+    }
+    self.titleLabel.frame = CGRectMake(x, 0, width, self.bounds.size.height);
+    self.imageView.frame = CGRectMake(x + width + 5, 0, imageSize.width, self.bounds.size.height);
 }
 
 
