@@ -37,7 +37,8 @@
     self.currenDateLabel.font = YZ_Font(16);
     self.currenDateLabel.textAlignment = NSTextAlignmentCenter;
     [self.currenDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.width.mas_equalTo(self.bounds.size.width*0.5);
+        make.width.mas_equalTo(100);
+        make.height.mas_offset(44);
         make.top.bottom.left.right.mas_equalTo(0);
 //        make.centerX.mas_equalTo(self).offset(-10);
     }];
