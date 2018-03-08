@@ -132,11 +132,11 @@
 }
 
 - (IBAction)sureClick:(id)sender {
-    if ([(id)self.delegate respondsToSelector:@selector(chooseDate:)]) {
+    if ([(id)self.delegate respondsToSelector:@selector(chooseDateViewController:chooseDate:)]) {
         if (self.muti) {
-            [self.delegate chooseDate:@[_beginDate,_endDate]];
+            [self.delegate chooseDateViewController:self chooseDate:@[_beginDate,_endDate]];
         }else{
-            [self.delegate chooseDate:self.currentDate];
+            [self.delegate chooseDateViewController:self chooseDate:self.currentDate];
         }
         [self cancelClick:nil];
     }

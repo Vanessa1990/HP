@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ChooseDateViewController;
 
 @protocol ChooseDateViewControllerDelegate
 
-- (void)chooseDate:(id)date;
+- (void)chooseDateViewController:(ChooseDateViewController *)vc chooseDate:(id)date;
 
 @end
 

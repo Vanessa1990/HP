@@ -11,8 +11,9 @@
 #import "CalendarView.h"
 #import <JTCalendar/JTCalendar.h>
 #import "HPRefreshHeader.h"
+#import "ChooseDateViewController.h"
 
-@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,CalendarViewDelegate,ListHeadViewDelegate>
+@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,ChooseDateViewControllerDelegate,ListHeadViewDelegate>
 // 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
 @property (assign, nonatomic) NSUInteger index;
@@ -35,7 +36,7 @@
 @property (strong, nonatomic) JTCalendarMenuView *calendarMenuView;
 @property (strong, nonatomic) JTHorizontalCalendarView *calendarContentView;
 @property(nonatomic, strong) UIView *bgView;
-
+@property(nonatomic, strong) ChooseDateViewController *chooseVC;
 
 @end
 
@@ -342,34 +343,62 @@ static NSUInteger const calendarH = 320;
 }
 
 - (void)chooseDate:(BOOL)open {
-    CGFloat top = IOS11_OR_LATER?0:64;
-    if (!self.calendarView) {
-        self.calendarView = [[CalendarView alloc] initWithDelegate:self];
-        [self.view addSubview:self.calendarView];
-        [self.calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.mas_equalTo(0);
-            make.top.mas_equalTo(-calendarH);
-            make.height.mas_equalTo(calendarH);
-        }];
-        self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-        self.bgView.backgroundColor = YZ_Color(33, 33, 33, 0.3);
-        UITapGestureRecognizer *tapges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCalendar)];
-        [self.bgView addGestureRecognizer:tapges];
-    }
-    [self.calendarView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(open?top:-calendarH);
-    }];
     if (open) {
-        self.calendarView.currentDate = self.currentDate;
-        self.calendarView.dates = [UserInfo shareInstance].admin?nil:self.allDates;
-        [self.view insertSubview:self.bgView belowSubview:self.calendarView];
+        ChooseDateViewController *chooseVC = [[ChooseDateViewController alloc] init];
+        chooseVC.currentDate = [NSDate date];
+        chooseVC.muti = NO;
+        chooseVC.delegate = self;
+        if (![UserInfo shareInstance].admin) {
+            chooseVC.dates = self.allDates;
+        }
+        self.chooseVC = chooseVC;
+        chooseVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:chooseVC animated:NO completion:nil];
+        
     }else{
-        [self.bgView removeFromSuperview];
+        if (self.chooseVC) {
+            [self.chooseVC dismissViewControllerAnimated:NO completion:nil];
+        }
     }
+//    return;
+//    CGFloat top = IOS11_OR_LATER?0:64;
+//    if (!self.calendarView) {
+//        self.calendarView = [[CalendarView alloc] initWithDelegate:self];
+//        [self.view addSubview:self.calendarView];
+//        [self.calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.mas_equalTo(0);
+//            make.top.mas_equalTo(-calendarH);
+//            make.height.mas_equalTo(calendarH);
+//        }];
+//        self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+//        self.bgView.backgroundColor = YZ_Color(33, 33, 33, 0.3);
+//        UITapGestureRecognizer *tapges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCalendar)];
+//        [self.bgView addGestureRecognizer:tapges];
+//    }
+//    [self.calendarView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(open?top:-calendarH);
+//    }];
+//    if (open) {
+//        self.calendarView.currentDate = self.currentDate;
+//        self.calendarView.dates = [UserInfo shareInstance].admin?nil:self.allDates;
+//        [self.view insertSubview:self.bgView belowSubview:self.calendarView];
+//    }else{
+//        [self.bgView removeFromSuperview];
+//    }
 }
 
 - (void)closeCalendar {
     [self.navView closeCalendar];
+}
+
+#pragma mark - ChooseDateViewControllerDelegate
+- (void)chooseDateViewController:(ChooseDateViewController *)vc chooseDate:(NSDate *)date {
+    if (date) {
+        [self chooseDate:NO];
+        self.currentDate = date;
+        self.skip = 0;
+        [self getTableViewData];
+    }
 }
 
 #pragma mark - CalendarViewDelegate

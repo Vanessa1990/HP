@@ -128,8 +128,8 @@
     self.fuzzy.text = @"";
     if ([UserInfo shareInstance].admin){
         self.name.text = @"";
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
     }
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (BOOL)textIsNotNull:(UITextField *)textField {
@@ -273,7 +273,7 @@
 }
 
 #pragma mark - ChooseDateVC delegate
-- (void)chooseDate:(NSArray *)dates {
+- (void)chooseDateViewController:(ChooseDateViewController *)vc chooseDate:(NSArray *)dates {
     if ([dates isKindOfClass:[NSArray class]]) {
         NSString *beginS = [(NSDate *)dates[0] formatOnlyDay];
         NSString *endS = [(NSDate *)dates[1] formatOnlyDay];
