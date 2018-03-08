@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "UserListModel.h"
+@class ListHeadView;
 
 typedef void(^ChooseBlock)(UserListModel *model,BOOL choose);
 
 @protocol ListHeadViewDelegate
+
+- (void)listHeadView:(ListHeadView *)view model:(UserListModel *)model open:(BOOL)open;
 
 @end
 
@@ -24,6 +27,8 @@ typedef void(^ChooseBlock)(UserListModel *model,BOOL choose);
 @property (assign, nonatomic) BOOL edit;
 
 @property (assign, nonatomic) BOOL choosed;
+
+@property(nonatomic, strong) id <ListHeadViewDelegate>delgate;
 
 
 @end

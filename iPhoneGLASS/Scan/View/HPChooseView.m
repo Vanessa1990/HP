@@ -38,26 +38,14 @@
     }
 }
 
-- (void)setYear:(NSString *)year {
-    _year = year;
-    if (year) {
-        NSDate *date = [NSDate dateFormDayString:year];
-        [self.yearBtn setTitle:[date formatMonthAndDay] forState:UIControlStateNormal];
-        [self.yearBtn setTitle:[date formatMonthAndDay] forState:UIControlStateSelected];
+- (void)setDateRangeString:(NSString *)dateRangeString {
+    _dateRangeString = dateRangeString;
+    if (dateRangeString) {
+        [self.yearBtn setTitle:dateRangeString forState:UIControlStateNormal];
+        [self.yearBtn setTitle:dateRangeString forState:UIControlStateSelected];
     }else{
         [self.yearBtn setTitle:@"全部" forState:UIControlStateNormal];
         [self.yearBtn setTitle:@"全部" forState:UIControlStateSelected];
-    }
-}
-
-- (void)setMonth:(NSString *)month {
-    _month = month;
-    if (month) {
-        [self.monthBtn setTitle:month forState:UIControlStateNormal];
-        [self.monthBtn setTitle:month forState:UIControlStateSelected];
-    }else{
-        [self.monthBtn setTitle:@"全部" forState:UIControlStateNormal];
-        [self.monthBtn setTitle:@"全部" forState:UIControlStateSelected];
     }
 }
 
@@ -72,7 +60,7 @@
     [self.delegate chooseViewChooseYear];
 }
 - (IBAction)chooseDate:(id)sender {
-    [self.delegate chooseViewChooseMonth];
+    [self.delegate chooseViewChooseYear];
 }
 - (IBAction)clearClick:(id)sender {
     [self.delegate chooseViewClear];

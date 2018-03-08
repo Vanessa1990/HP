@@ -19,4 +19,6 @@
 
 @property (assign, nonatomic) BOOL arrived;
 
+@property (assign, nonatomic) BOOL openList;
+
 @end

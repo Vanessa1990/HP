@@ -14,11 +14,12 @@
 #import "ScanViewController.h"
 #import "SearchListViewController.h"
 #import "ContactTableViewController.h"
+#import "ChooseDateViewController.h"
 #import "UserInfo.h"
 #import "UserModel.h"
 #import "MBProgressHUD.h"
 
-@interface SearchTVC ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface SearchTVC ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,ChooseDateViewControllerDelegate>
 @property(nonatomic, strong) UITableView *tableView;
 @property (strong, nonatomic)  UITextField *beginDate;
 @property (strong, nonatomic)  UITextField *endDate;
@@ -181,15 +182,21 @@
         }
     }
     
-    NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
-    if ([self textIsNotNull:self.beginDate]) {
-        [timedict setValue:self.beginDate.text forKey:@"$gte"];
-    }
-    if ([self textIsNotNull:self.endDate]) {
-        [timedict setValue:self.endDate.text forKey:@"$lt"];
-    }
-    if (timedict.count > 0) {
-        [dict setObject:timedict forKey:@"createdAt"];
+    if (self.beginDate.text.length > 0) {
+        NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
+        NSArray *dates = [self.beginDate.text componentsSeparatedByString:@"~"];
+        if (dates.count == 1) {
+            NSString *beginS = dates[0];
+            NSDate *tomorrow = [[NSDate dateFormDayString:beginS] dateByAddingTimeInterval:24*60*60];
+            NSString *tomorrowString = [tomorrow formatOnlyDay];
+            [dict setObject:@{@"$gte":beginS,@"$lt":tomorrowString} forKey:@"createdAt"];
+        }else if (dates.count == 2){
+            [timedict setValue:dates[0] forKey:@"$gte"];
+            NSDate *endDate = [[NSDate dateFormDayString:dates[1]] dateByAddingTimeInterval:24*60*60];
+            NSString *endString = [endDate formatOnlyDay];
+            [timedict setValue:endString forKey:@"$lt"];
+            [dict setObject:timedict forKey:@"createdAt"];
+        }
     }
 
     if ([self textIsNotNull:self.thick]) {
@@ -217,11 +224,17 @@
     
     if (textField == self.beginDate || textField == self.endDate ) {
         [self.view endEditing:YES];
-        STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeDate];
-        pickView.finishBlock = ^(NSString *date){
-            textField.text = date;
-        };
-        [pickView show];
+//        STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeDate];
+//        pickView.finishBlock = ^(NSString *date){
+//            textField.text = date;
+//        };
+//        [pickView show];
+        ChooseDateViewController *chooseVC = [[ChooseDateViewController alloc] init];
+        chooseVC.currentDate = [NSDate date];
+        chooseVC.muti = YES;
+        chooseVC.delegate = self;
+        chooseVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [self presentViewController:chooseVC animated:NO completion:nil];
         return NO;
     }else if (textField == self.thick){
         [self.view endEditing:YES];
@@ -259,6 +272,19 @@
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
 }
 
+#pragma mark - ChooseDateVC delegate
+- (void)chooseDate:(NSArray *)dates {
+    if ([dates isKindOfClass:[NSArray class]]) {
+        NSString *beginS = [(NSDate *)dates[0] formatOnlyDay];
+        NSString *endS = [(NSDate *)dates[1] formatOnlyDay];
+        if ([beginS isEqualToString:endS]) {
+            self.beginDate.text = [NSString stringWithFormat:@"%@",beginS];
+        }else{
+            self.beginDate.text = [NSString stringWithFormat:@"%@~%@",beginS,endS];
+        }
+    }
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.view endEditing:YES];
 }
@@ -291,21 +317,22 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {
         cell.textLabel.text = @"日期";
-        self.endDate = [self currentVCTextFieldShowInCell:cell];
-        UILabel *middleView = [[UILabel alloc] init];
-        middleView.text = @"---";
-        [middleView sizeToFit];
-        [cell.contentView addSubview:middleView];
-        [middleView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(self.endDate.mas_left).offset(-5);
-            make.top.bottom.mas_equalTo(0);
-        }];
+//        self.endDate = [self currentVCTextFieldShowInCell:cell];
+//        UILabel *middleView = [[UILabel alloc] init];
+//        middleView.text = @"---";
+//        [middleView sizeToFit];
+//        [cell.contentView addSubview:middleView];
+//        [middleView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.mas_equalTo(self.endDate.mas_left).offset(-5);
+//            make.top.bottom.mas_equalTo(0);
+//        }];
         self.beginDate = [self currentVCTextField];
+        self.beginDate.textAlignment = NSTextAlignmentRight;
         [cell.contentView addSubview:self.beginDate];
         [self.beginDate mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(middleView.mas_left).offset(-5);
+            make.right.mas_equalTo(-15);
             make.centerY.mas_equalTo(cell.textLabel);
-            make.width.mas_equalTo(100);
+            make.width.mas_equalTo(200);
         }];
     }else if (indexPath.section == 1){
         if (indexPath.row == 0) {
@@ -374,6 +401,7 @@
 - (UITextField *)currentVCTextField {
     UITextField *textField = [[UITextField alloc] init];
     textField.delegate = self;
+    textField.font = YZ_Font(15);
     textField.borderStyle = UITextBorderStyleRoundedRect;
     return textField;
 }

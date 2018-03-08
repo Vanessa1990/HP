@@ -18,6 +18,13 @@
 #import "STPickerDate.h"
 #import <Masonry.h>
 
+typedef enum : NSUInteger {
+    DateRangeTypeWeek = 7,
+    DateRangeTypeHalfMonth = 15,
+    DateRangeTypeMonth = 30,
+    DateRangeTypeTwoMonth = 60
+} DateRangeType;
+
 #define KeyboardHeight 300
 
 @interface WriteInViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, ResultCellDelegate,KeyBoardViewDelegate,UITextFieldDelegate,HPChooseViewDelegate>
@@ -39,11 +46,11 @@
 @property(nonatomic, strong) HPChooseView *chooseView;
 @property(nonatomic, strong) NSString *name;
 @property (assign, nonatomic) BOOL finishState;
-@property (strong, nonatomic) NSString *year;
-@property (strong, nonatomic) NSString *month;
 @property(nonatomic, strong) UIButton *searchButton;
 @property(nonatomic, strong) UIView *navView;
-@property(nonatomic, strong) UIButton *scanBtn;
+//@property(nonatomic, strong) UIButton *scanBtn;
+@property (assign, nonatomic) BOOL searching;
+@property (assign, nonatomic) DateRangeType dateRange;
 
 @end
 
@@ -57,38 +64,16 @@
     self.navigationItem.titleView = self.navView;
     [self initView];
     [self keyBoard:YES];
-    
+    self.searching = NO;
+    self.dateRange = DateRangeTypeWeek;
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看订单" style:UIBarButtonItemStylePlain target:self action:@selector(seeMore:)];
     [self setShowTabItem];
 }
 
+
 - (void)initView {
     self.automaticallyAdjustsScrollViewInsets = YES;
-//    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth-100, 44)];
-//    [self.view addSubview:self.searchBar];
-//    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(0);
-//        make.top.mas_equalTo(64);
-//        make.height.mas_equalTo(44);
-//    }];
-//    self.searchBar.placeholder = @"请输入搜索条件,以 * 连接";
-//    self.searchBar.delegate = self;
-//    //    self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
-//    self.searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [self.searchButton setTitle:@"搜索" forState:UIControlStateNormal];
-//    [self.searchButton setTitleColor:YZ_GrayColor61 forState:UIControlStateNormal];
-//    self.searchButton.backgroundColor = YZ_ThemeGrayColor;
-//    self.searchButton.titleLabel.font = YZ_Font(15);
-//    [self.searchButton addTarget:self action:@selector(searchFunc) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:self.searchButton];
-//    [self.searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.mas_equalTo(0);
-//        make.top.bottom.mas_equalTo(self.searchBar);
-//        make.width.mas_equalTo(60);
-//        make.left.mas_equalTo(self.searchBar.mas_right);
-//    }];
-    
-    
+   
     HPChooseView *chooseView = [[[NSBundle mainBundle] loadNibNamed:@"HPChooseView" owner:0 options:nil] lastObject];
     chooseView.delegate = self;
     self.chooseView = chooseView;
@@ -99,17 +84,13 @@
         make.top.mas_equalTo(64);
     }];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108, kScreenWidth, kScreenHeight - 108 - 49)];
+   
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.mas_equalTo(0);
         make.top.mas_equalTo(chooseView.mas_bottom);
     }];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.tableFooterView = [UIView new];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCellID"];
-    
+
     self.searchItems = [NSMutableArray array];
     [self.view addSubview:self.keyBoard];
     [self.keyBoard mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -120,7 +101,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.searchBar.text = @"505+1448";
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.tabBarController setTabBarVisible:NO animated:YES completion:nil];
     });
@@ -148,13 +128,13 @@
     return NO;
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchBar.text.length == 0) {
-        self.scanBtn.hidden = NO;
-    }else{
-        self.scanBtn.hidden = YES;
-    }
-}
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    if (searchBar.text.length == 0) {
+//        self.scanBtn.hidden = NO;
+//    }else{
+//        self.scanBtn.hidden = YES;
+//    }
+//}
 
 - (void)scan:(UIButton *)sender {
     
@@ -164,12 +144,10 @@
 - (void)chooseViewClear {
     self.name = nil;
     self.finishState = NO;
-    self.year = nil;
-    self.month = nil;
+    self.dateRange = DateRangeTypeWeek;
     self.chooseView.name = nil;
     self.chooseView.finish = NO;
-    self.chooseView.year = nil;
-    self.chooseView.month = nil;
+    self.chooseView.dateRangeString = nil;
 }
 
 -  (void)chooseViewChooseState {
@@ -181,8 +159,11 @@
         }else {
             if ([date isEqualToString:@"已完成"]) {
                 self.finishState = YES;
+                self.dateRange = DateRangeTypeWeek;
+                self.chooseView.dateRangeString = @"近7天";
             }else {
                 self.finishState = NO;
+                self.chooseView.dateRangeString = nil;
             }
         }
         self.chooseView.finish = self.finishState;
@@ -192,14 +173,24 @@
 }
 
 - (void)chooseViewChooseYear {
-    [self.searchBar resignFirstResponder];
-    STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeDate];
-    pickView.finishBlock = ^(NSString *date){
-        self.year = date;
-        self.chooseView.year = date;
-        [self searchFunc];
-    };
-    [pickView show];
+    if (self.finishState) {
+        [self.searchBar resignFirstResponder];
+        STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeDateRange];
+        pickView.finishBlock = ^(NSString *date){
+            if ([@"近7天" isEqualToString:date]) {
+                self.dateRange = DateRangeTypeWeek;
+            }else if ([@"近15天" isEqualToString:date]){
+                self.dateRange = DateRangeTypeHalfMonth;
+            }else if ([@"近一个月" isEqualToString:date]){
+                self.dateRange = DateRangeTypeMonth;
+            }else{
+                self.dateRange = DateRangeTypeTwoMonth;
+            }
+            self.chooseView.dateRangeString = date;
+            [self searchFunc];
+        };
+        [pickView show];
+    }
 }
 
 - (void)chooseViewChooseName {
@@ -216,7 +207,8 @@
 - (void)chooseNumber:(int)number {
     NSString *string = self.searchBar.text?self.searchBar.text:@"";
     self.searchBar.text = [NSString stringWithFormat:@"%@%d",string,number];
-    self.scanBtn.hidden = YES;
+//    self.scanBtn.hidden = YES;
+    [self searchReaultItems];
 }
 
 - (void)deleteNumber {
@@ -226,8 +218,9 @@
         self.searchBar.text = newStr;
     }
     if (!self.searchBar.text || self.searchBar.text.length == 0) {
-        self.scanBtn.hidden = NO;
+//        self.scanBtn.hidden = NO;
     }
+    [self searchReaultItems];
 }
 
 - (NSDictionary *)searchDictionary {
@@ -240,11 +233,13 @@
     if (self.name) {
         [dict setValue:self.name forKey:@"name"];
     }
-    if (self.year) {
+    if (self.finishState) {
         NSMutableDictionary *timedict = [NSMutableDictionary dictionary];
-        [timedict setValue:self.year forKey:@"$gte"];
-        NSDate *date = [NSDate dateFormDayString:self.year];
-        NSDate *endDate = [date dateByAddingTimeInterval:24*60*60];
+        NSTimeInterval secondsPerDay = 24 * 60 * 60 * self.dateRange;
+        NSDate *endDate = [NSDate date];
+        NSDate *beginDate = [[NSDate alloc] initWithTimeIntervalSinceNow:-secondsPerDay];
+        NSString *beginStr = [beginDate formatOnlyDay];
+        [timedict setValue:beginStr forKey:@"$gte"];
         [timedict setValue:[endDate formatOnlyDay] forKey:@"$lt"];
         if (timedict.count > 0) {
             [dict setObject:timedict forKey:@"createdAt"];
@@ -253,66 +248,79 @@
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 
-- (void)searchFunc {
-    [self.view endEditing:YES];
-    [self keyBoard:NO];
-    NSArray *allValue;
-    if (self.searchBar.text && self.searchBar.text.length > 0) {
-        allValue = [self.searchBar.text componentsSeparatedByString:@"*"];
-    }
-    
-    BOOL canSearch = NO;
-    if (allValue.count > 0 && allValue.count <= 2) {
-        canSearch = YES;
-    }else {
-        if (self.name) {
-            canSearch = YES;
+- (void)searchReaultItems {
+    if (!self.searching) {
+        NSArray *allValue;
+        if (self.searchBar.text && self.searchBar.text.length > 0) {
+            allValue = [self.searchBar.text componentsSeparatedByString:@"*"];
         }
-    }
-    
-    if (!canSearch) {
-        return;
-    }
-
-    __block NSMutableDictionary *searchDict;
-    self.searchItems = [NSMutableArray array];
-    self.finishItems = [NSMutableArray array];
-    searchDict = [NSMutableDictionary dictionary];
-    if (allValue.count == 1) {
-        // 搜索长度
-        searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"length":allValue[0]}];
-    }else if (allValue.count == 2){
-        // 搜索长+宽
-        searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"length":allValue[0],@"width":allValue[1]}];
-    }
-    [searchDict setValuesForKeysWithDictionary:[self searchDictionary]];
-    
-    
-    [[self searchWithDict:searchDict seeSame:NO] onFulfilled:^id(id value) {
+        
+        BOOL canSearch = NO;
+        if (allValue.count > 0 && allValue.count <= 2) {
+            canSearch = YES;
+        }else {
+            if (self.name) {
+                canSearch = YES;
+            }
+        }
+        if (!canSearch) {
+            return;
+        }
+        self.searching = YES;
+        __block NSMutableDictionary *searchDict;
+        self.searchItems = [NSMutableArray array];
+        self.finishItems = [NSMutableArray array];
         searchDict = [NSMutableDictionary dictionary];
         if (allValue.count == 1) {
-            // 搜索宽度
-            searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"width":allValue[0]}];
-        }else if (allValue.count == 2) {
-            // 搜索宽+长
-            searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"width":allValue[0],@"length":allValue[1]}];
+            // 搜索长度
+            searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"length":allValue[0]}];
+        }else if (allValue.count == 2){
+            // 搜索长+宽
+            searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"length":allValue[0],@"width":allValue[1]}];
         }
         [searchDict setValuesForKeysWithDictionary:[self searchDictionary]];
-        return [[self searchWithDict:searchDict seeSame:YES] onFulfilled:^id(id value) {
-            [self.tableView reloadData];
-            return value;
+        
+        
+        [[self searchWithDict:searchDict seeSame:NO] onFulfilled:^id(id value) {
+            searchDict = [NSMutableDictionary dictionary];
+            if (allValue.count == 1) {
+                // 搜索宽度
+                searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"width":allValue[0]}];
+            }else if (allValue.count == 2) {
+                // 搜索宽+长
+                searchDict = [NSMutableDictionary dictionaryWithDictionary:@{@"width":allValue[0],@"length":allValue[1]}];
+            }
+            [searchDict setValuesForKeysWithDictionary:[self searchDictionary]];
+            return [[self searchWithDict:searchDict seeSame:YES] onFulfilled:^id(id value) {
+                self.searching = NO;
+                [self.tableView reloadData];
+                return value;
+            } rejected:^id(NSError *reason) {
+                self.searching = NO;
+                return reason;
+            }];
+        } rejected:^id(NSError *reason) {
+            self.searching = NO;
+            return reason;
         }];
-    }];
+    }
+}
+
+- (void)searchFunc {
+    self.searching = NO;
+    [self.view endEditing:YES];
+    [self keyBoard:NO];
+    [self searchReaultItems];
 }
 
 - (void)addSeparator {
     NSString *string = self.searchBar.text?self.searchBar.text:@"";
     self.searchBar.text = [NSString stringWithFormat:@"%@*",string];
-    self.scanBtn.hidden = YES;
+//    self.scanBtn.hidden = YES;
 }
 
 - (SHXPromise *)searchWithDict:(NSDictionary *)searchDict seeSame:(BOOL)see {
-    return [[[BimService instance] getListSkip:0 limit:200 searchDict:searchDict] onFulfilled:^id(NSArray *value) {
+    return [[[BimService instance] getListSkip:0 limit:0 searchDict:searchDict] onFulfilled:^id(NSArray *value) {
         if (value && value.count > 0) {
             NSArray *ones = [self dealWithResultDicts:value seeSame:see];
             [self.searchItems addObjectsFromArray:ones];
@@ -545,11 +553,11 @@
             make.width.mas_equalTo(kScreenWidth - 80 - 60);
         }];
        
-        [self.searchBar addSubview:self.scanBtn];
-        [self.scanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.top.bottom.mas_equalTo(0);
-            make.width.mas_equalTo(44);
-        }];
+//        [self.searchBar addSubview:self.scanBtn];
+//        [self.scanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.top.bottom.mas_equalTo(0);
+//            make.width.mas_equalTo(44);
+//        }];
         
         [_navView addSubview:self.searchButton];
         [self.searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -571,14 +579,14 @@
     return _searchBar;
 }
 
-- (UIButton *)scanBtn {
-    if (!_scanBtn) {
-        _scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_scanBtn setImage:[UIImage imageNamed:@"scan.png"] forState:UIControlStateNormal];
-        [_scanBtn addTarget:self action:@selector(scan:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _scanBtn;
-}
+//- (UIButton *)scanBtn {
+//    if (!_scanBtn) {
+//        _scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_scanBtn setImage:[UIImage imageNamed:@"scan.png"] forState:UIControlStateNormal];
+//        [_scanBtn addTarget:self action:@selector(scan:) forControlEvents:UIControlEventTouchUpInside];
+//    }
+//    return _scanBtn;
+//}
 
 - (UIButton *)searchButton {
     if (!_searchButton) {
@@ -590,6 +598,18 @@
         [_searchButton addTarget:self action:@selector(searchFunc) forControlEvents:UIControlEventTouchUpInside];
     }
     return _searchButton;
+}
+
+
+- (UITableView *)tableView {
+    if(!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108, kScreenWidth, kScreenHeight - 108 - 49)];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.tableFooterView = [UIView new];
+        [_tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCellID"];
+    }
+    return _tableView;
 }
 
 @end

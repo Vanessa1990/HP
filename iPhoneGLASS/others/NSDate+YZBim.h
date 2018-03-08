@@ -14,6 +14,7 @@
 - (NSString *)format;
 - (NSString *)formatWithoutSec;
 - (NSString *)formatOnlyDay;
+- (NSString *)formatOnlyMonth;
 - (NSString *)formatOnlyTime;
 - (NSString *)formatMonthAndDay;
 - (float)calculateDays;

@@ -65,6 +65,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.view endEditing:YES];
+}
+
 - (void)sure {
     NSMutableDictionary *sendDict = [NSMutableDictionary dictionaryWithDictionary: @{@"deliveryman":@[self.sendPLabel.text],@"billnumber":self.billPLabel.text}];
     NSMutableArray *ps = [NSMutableArray array];

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChooseDateViewController">
+            <connections>
+                <outlet property="CalendarMenuView" destination="iqN-sP-0go" id="lY9-2r-iHh"/>
+                <outlet property="calendarContentView" destination="HN9-5m-H4d" id="aWg-qR-hKP"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HN9-5m-H4d" customClass="JTHorizontalCalendarView">
+                    <rect key="frame" x="0.0" y="347" width="375" height="320"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="320" id="abb-gw-74F"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wX-DA-ion">
+                    <rect key="frame" x="0.0" y="303" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Br-zf-UaT">
+                            <rect key="frame" x="300" y="0.0" width="60" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="9Fv-Rm-g6o"/>
+                                <constraint firstAttribute="width" constant="60" id="Z4E-yA-jTO"/>
+                            </constraints>
+                            <state key="normal" title="确定"/>
+                            <connections>
+                                <action selector="sureClick:" destination="-1" eventType="touchUpInside" id="TPt-K5-7MG"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gqz-HZ-MxH">
+                            <rect key="frame" x="15" y="0.0" width="60" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="3s7-3u-E7P"/>
+                                <constraint firstAttribute="width" constant="60" id="l1u-hA-Bfn"/>
+                            </constraints>
+                            <state key="normal" title="取消"/>
+                            <connections>
+                                <action selector="cancelClick:" destination="-1" eventType="touchUpInside" id="zb8-Iv-Ev3"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqN-sP-0go" customClass="JTCalendarMenuView">
+                            <rect key="frame" x="157.5" y="0.0" width="60" height="44"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="3CG-vS-ISp"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="4Br-zf-UaT" secondAttribute="trailing" constant="15" id="4xb-ik-SYz"/>
+                        <constraint firstItem="iqN-sP-0go" firstAttribute="centerX" secondItem="4wX-DA-ion" secondAttribute="centerX" id="B0f-GA-p2q"/>
+                        <constraint firstAttribute="bottom" secondItem="iqN-sP-0go" secondAttribute="bottom" id="CS7-1X-3B0"/>
+                        <constraint firstAttribute="height" constant="44" id="J3Y-oJ-uLV"/>
+                        <constraint firstItem="4Br-zf-UaT" firstAttribute="centerY" secondItem="4wX-DA-ion" secondAttribute="centerY" id="c2R-bP-7Hh"/>
+                        <constraint firstItem="gqz-HZ-MxH" firstAttribute="centerY" secondItem="4wX-DA-ion" secondAttribute="centerY" id="dla-Je-qCk"/>
+                        <constraint firstItem="iqN-sP-0go" firstAttribute="top" secondItem="4wX-DA-ion" secondAttribute="top" id="lRR-C4-zSC"/>
+                        <constraint firstItem="gqz-HZ-MxH" firstAttribute="leading" secondItem="4wX-DA-ion" secondAttribute="leading" constant="15" id="xzx-Mw-dgx"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="HN9-5m-H4d" firstAttribute="top" secondItem="4wX-DA-ion" secondAttribute="bottom" id="1Yj-uI-6iE"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="HN9-5m-H4d" secondAttribute="bottom" id="GME-J4-IMW"/>
+                <constraint firstItem="4wX-DA-ion" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="HqP-Bq-knA"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="HN9-5m-H4d" secondAttribute="trailing" id="PKt-cf-jQh"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="4wX-DA-ion" secondAttribute="trailing" id="Weh-7N-S0d"/>
+                <constraint firstItem="HN9-5m-H4d" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="w0Z-aB-ejG"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="lku-rr-4jY">
+            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+        </activityIndicatorView>
+    </objects>
+</document>

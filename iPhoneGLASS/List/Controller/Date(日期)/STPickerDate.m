@@ -35,6 +35,8 @@ static NSInteger const yearSum = 200;
 @property (nonatomic, strong)NSArray *thickArray;
 /** 8.完成度 */
 @property (nonatomic, strong)NSArray *finishArray;
+/** 9.日期范围 */
+@property (nonatomic, strong)NSArray *dateRangeArray;// 7,15,30,60
 
 @property (nonatomic, strong)NSString *returnDate;
 
@@ -48,7 +50,7 @@ static NSInteger const yearSum = 200;
     
     self = [self init];
     self.type = type;
-     [self loadData];
+    [self loadData];
     return self;
 }
 
@@ -84,6 +86,9 @@ static NSInteger const yearSum = 200;
     }else if (self.type == PickerTypeFinishTwo) {
         self.returnDate = @"未完成";
         [self.pickerView selectRow:0 inComponent:0 animated:NO];
+    }else if (self.type == PickerTypeDateRange) {
+        self.returnDate = self.dateRangeArray[0];
+        [self.pickerView selectRow:0 inComponent:1 animated:NO];
     }else{
         self.returnDate = @"全部";
         [self.pickerView selectRow:0 inComponent:1 animated:NO];
@@ -120,6 +125,8 @@ static NSInteger const yearSum = 200;
                 return 3;
             }else if (self.type == PickerTypeFinishTwo){
                 return 2;
+            }else if (self.type == PickerTypeDateRange) {
+                return 4;
             }else{
                 return 0;
             }
@@ -170,6 +177,8 @@ static NSInteger const yearSum = 200;
                 text = self.thickArray[row];
             }else if (self.type == PickerTypeFinish || self.type == PickerTypeFinishTwo){
                 text = self.finishArray[row];
+            }else if (self.type == PickerTypeDateRange) {
+                text = self.dateRangeArray[row];
             }else {
                 text = @"";
             }
@@ -188,7 +197,7 @@ static NSInteger const yearSum = 200;
 {
     NSString *date;
     if (self.type == PickerTypeDate) {
-         date = [NSString stringWithFormat:@"%zd-%zd-%zd",self.year,self.month,self.day];
+        date = [NSString stringWithFormat:@"%zd-%zd-%zd",self.year,self.month,self.day];
     }else {
         date = self.returnDate;
     }
@@ -217,6 +226,9 @@ static NSInteger const yearSum = 200;
         self.toolbar.title = [NSString stringWithFormat:@"%d年%d月%d日", self.year, self.month, self.day];
     } else if (self.type == PickerTypeThick) {
         self.returnDate = self.thickArray[[self.pickerView selectedRowInComponent:1]];
+        self.toolbar.title = [NSString stringWithFormat:@"%@",self.returnDate];
+    } else if (self.type == PickerTypeDateRange) {
+        self.returnDate = self.dateRangeArray[[self.pickerView selectedRowInComponent:1]];
         self.toolbar.title = [NSString stringWithFormat:@"%@",self.returnDate];
     } else {
         self.returnDate = self.finishArray[[self.pickerView selectedRowInComponent:1]];
@@ -317,6 +329,13 @@ static NSInteger const yearSum = 200;
         _finishArray = self.type == PickerTypeFinishTwo?@[@"未完成",@"已完成"]:@[@"全部",@"未完成",@"已完成"];
     }
     return _finishArray;
+}
+
+- (NSArray *)dateRangeArray {
+    if (!_dateRangeArray) {
+        _dateRangeArray = @[@"近7天",@"近15天",@"近一个月",@"近两个月"];
+    }
+    return _dateRangeArray;
 }
 
 @end

@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
     Finish,
 } FinishType;
 
-@interface SearchListViewController ()<UITableViewDelegate>
+@interface SearchListViewController ()<UITableViewDelegate,ListHeadViewDelegate>
 // 搜索状态下的搜索值
 @property(nonatomic, strong) NSDictionary *searchDict;
 
@@ -182,6 +182,7 @@ typedef enum : NSUInteger {
     }
     
     SendOrderViewController *sendVC = [[SendOrderViewController alloc] initWithModels:[NSArray arrayWithArray:self.chooseItems]];
+    [self editClick:nil];
     [self.navigationController pushViewController:sendVC animated:YES];
 }
 
@@ -252,17 +253,6 @@ typedef enum : NSUInteger {
     cell.listModel = listModel;
     cell.edit = self.isEdit;
     cell.choose = [self.chooseItems containsObject:listModel];
-//    if (indexPath.row > 0) {
-//        ListModel *preListModel = model.listArray[indexPath.row - 1];
-//        NSString *date1 = [[NSDate dateFromISOString:preListModel.date] formatOnlyDay];
-//        NSString *date2 = [[NSDate dateFromISOString:listModel.date] formatOnlyDay];
-//        if (![date1 isEqualToString:date2]) {
-//            self.colorEven = (self.colorEven + 1) % 2;
-//        }
-//    }else{
-//        self.colorEven = 0;
-//    }
-//    cell.backgroundColor = self.colors[self.colorEven % 2];
     if (self.sort) {// 入库后查看当前用户所有订单(显示日期)
         cell.showDate = YES;
     }
@@ -296,9 +286,26 @@ typedef enum : NSUInteger {
         }
         [self.tableView reloadData];
     }];
+    model.arrived = NO;
     headView.model = model;
+    headView.delgate = self;
     headView.edit = self.isEdit;
     return headView;
+}
+
+#pragma mark - ListHeadViewDelegate
+- (void)listHeadView:(ListHeadView *)view model:(UserListModel *)model open:(BOOL)open {
+    for (int i = 0; i < self.items.count; i++) {
+        UserListModel *oldModel = self.items[i];
+        if ([oldModel.name isEqualToString:model.name]) {
+            model.openList = open;
+            NSMutableArray *array = [NSMutableArray arrayWithArray:self.items];
+            [array replaceObjectAtIndex:i withObject:model];
+            self.items = [NSArray arrayWithArray:array];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:i] withRowAnimation:UITableViewRowAnimationNone];
+            return;
+        }
+    }
 }
 
 

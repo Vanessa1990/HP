@@ -21,6 +21,8 @@
 
 @property(nonatomic, strong) UIImageView *arrivedImageView;
 
+@property(nonatomic, strong) UIButton *openButton;
+
 @end
 
 @implementation ListHeadView
@@ -53,10 +55,21 @@
             make.centerY.mas_equalTo(0);
         }];
         
+        self.openButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.openButton setImage:[UIImage imageNamed:@"list_hidden"] forState:UIControlStateNormal];
+        [self.openButton setImage:[UIImage imageNamed:@"list_open"] forState:UIControlStateSelected];
+        [self addSubview:self.openButton];
+        [self.openButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(0);
+            make.bottom.top.mas_equalTo(0);
+            make.width.mas_equalTo(44);
+        }];
+        [self.openButton addTarget:self action:@selector(openClick:) forControlEvents:UIControlEventTouchUpInside];
+        
         self.totleLable= [[UILabel alloc] init];
         [self addSubview:self.totleLable];
         [self.totleLable mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(-15);
+            make.right.mas_equalTo(self.openButton.mas_left).offset(0);
             make.centerY.mas_equalTo(0);
         }];
         
@@ -75,8 +88,9 @@
 - (void)setModel:(UserListModel *)model {
     _model = model;
     self.nameLable.text = model.name;
-    self.totleLable.text = [NSString stringWithFormat:@"(共%@块)",model.totle];
+    self.totleLable.text = [NSString stringWithFormat:@"(%@)",model.totle];
     self.arrivedImageView.hidden = !model.arrived;
+    self.openButton.selected = model.openList;
 }
 
 - (void)setEdit:(BOOL)edit {
@@ -95,6 +109,13 @@
 - (void)chooseClick:(id)button {
     if (self.blcok) {
         self.blcok(self.model,YES);
+    }
+}
+
+- (void)openClick:(UIButton *)button {
+    button.selected = !button.selected;
+    if ([(id)self.delgate respondsToSelector:@selector(listHeadView:model:open:)]) {
+        [self.delgate listHeadView:self model:self.model open:button.selected];
     }
 }
 

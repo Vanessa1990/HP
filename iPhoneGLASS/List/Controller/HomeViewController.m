@@ -12,7 +12,7 @@
 #import <JTCalendar/JTCalendar.h>
 #import "HPRefreshHeader.h"
 
-@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,CalendarViewDelegate>
+@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,CalendarViewDelegate,ListHeadViewDelegate>
 // 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
 @property (assign, nonatomic) NSUInteger index;
@@ -143,8 +143,6 @@ static NSUInteger const calendarH = 320;
 }
 
 - (void)upAndReload {
-//    [self.tableView scrollsToTop];
-//    [self getNewData];
     [self.tableView.mj_header beginRefreshing];
 }
 
@@ -266,6 +264,7 @@ static NSUInteger const calendarH = 320;
             model.totle = [NSString stringWithFormat:@"%zd",totle];
             model.listArray = lists;
             model.arrived = arrivedGlassCount > 0;
+            model.openList = NO;
             [res addObject:model];
         }
         
@@ -287,6 +286,21 @@ static NSUInteger const calendarH = 320;
     self.calendarView = nil;
     SearchTVC *searchTVC = [[SearchTVC alloc] init];
     [self.navigationController pushViewController:searchTVC animated:YES];
+}
+
+#pragma mark - ListHeadViewDelegate
+- (void)listHeadView:(ListHeadView *)view model:(UserListModel *)model open:(BOOL)open {
+    for (int i = 0; i < self.items.count; i++) {
+        UserListModel *oldModel = self.items[i];
+        if ([oldModel.name isEqualToString:model.name]) {
+            model.openList = open;
+            NSMutableArray *array = [NSMutableArray arrayWithArray:self.items];
+            [array replaceObjectAtIndex:i withObject:model];
+            self.items = [NSArray arrayWithArray:array];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:i] withRowAnimation:UITableViewRowAnimationNone];
+            return;
+        }
+    }
 }
 
 #pragma mark - ListNavViewDelegate
@@ -381,6 +395,7 @@ static NSUInteger const calendarH = 320;
     UserListModel *model = self.items[section];
     ListHeadView *headView = [[ListHeadView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44) ];
     headView.model = model;
+    headView.delgate = self;
     return headView;
 }
 
@@ -393,7 +408,11 @@ static NSUInteger const calendarH = 320;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     UserListModel *model = self.items[section];
-    return model.listArray.count;
+    if (!model.openList) {
+        return model.listArray.count;
+    }else{
+        return 0;
+    }
 }
 
 

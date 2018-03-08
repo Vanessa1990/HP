@@ -17,7 +17,6 @@
 
 - (void)chooseViewChooseName;
 - (void)chooseViewChooseState;
-- (void)chooseViewChooseMonth;
 - (void)chooseViewChooseYear;
 - (void)chooseViewClear;
 
@@ -33,8 +32,7 @@
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, assign) BOOL finish;
-@property(nonatomic, strong) NSString *year;
-@property(nonatomic, strong) NSString *month;
+@property(nonatomic, strong) NSString *dateRangeString;
 
 
 @property(nonatomic, strong) id <HPChooseViewDelegate>delegate;

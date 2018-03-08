@@ -44,6 +44,18 @@
     return date;
 }
 
++ (NSDate *)dateFormMonthString:(NSString *)dateString
+{
+    if (!dateString || (NSNull *)dateString == [NSNull null]) {
+        return nil;
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat: @"yyyy-MM"];
+    [formatter setLocale:[NSLocale currentLocale]];
+    NSDate *date= [formatter dateFromString:dateString];
+    return date;
+}
+
 - (NSString *)formatISO
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -69,6 +81,13 @@
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd";
+    return [formatter stringFromDate:self];
+}
+
+- (NSString *)formatOnlyMonth
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM";
     return [formatter stringFromDate:self];
 }
 
