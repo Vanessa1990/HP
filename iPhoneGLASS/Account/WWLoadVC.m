@@ -89,6 +89,9 @@
 
 - (void)load {
     _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (self.phoneTextField.text.length == 0 || self.pwdTextField.text.length == 0) {
+        return;
+    }
     [[[BimService instance] load:self.phoneTextField.text pwd:self.pwdTextField.text] onFulfilled:^id(id value) {
        
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:value];
