@@ -12,8 +12,10 @@
 #import <JTCalendar/JTCalendar.h>
 #import "HPRefreshHeader.h"
 #import "ChooseDateViewController.h"
+#import "SendOrderViewController.h"
+#import "BasicTableController.h"
 
-@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,ChooseDateViewControllerDelegate,ListHeadViewDelegate>
+@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,ChooseDateViewControllerDelegate,ListHeadViewDelegate,BasicTableControllerDelegate>
 // 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
 @property (assign, nonatomic) NSUInteger index;
@@ -135,11 +137,19 @@ static NSUInteger const calendarH = 320;
         make.bottom.mas_equalTo(-60);
         make.width.height.mas_equalTo(50);
     }];
+    
 }
 
 - (void)initNav {
     self.navigationItem.titleView = self.navView;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+    NSArray *items;
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+    items = @[item1];
+    if ([UserInfo shareInstance].admin) {
+        UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"发货" style:UIBarButtonItemStylePlain target:self action:@selector(sendClick)];
+        items = @[item1,item2];
+    }
+    self.navigationItem.rightBarButtonItems = items;
     [self setShowTabItem];
 }
 
@@ -280,13 +290,36 @@ static NSUInteger const calendarH = 320;
     [self.tableView reloadData];
 }
 
+#pragma mark - BasicTableControllerDelegate
+- (void)basicTableController:(BasicTableController *)vc chooseItem:(NSString *)item {
+    for (UserListModel *model in self.items) {
+        if ([item isEqualToString:model.name]) {
+            SendOrderViewController *sendVC = [[SendOrderViewController alloc] initWithModels:[NSArray arrayWithArray:model.listArray]];
+            [self.navigationController popViewControllerAnimated:NO];
+            [self.navigationController pushViewController:sendVC animated:NO];
+            break;
+        }
+    }
+}
+
 #pragma mark - event
 -(void)search {
-    
-//    SearchTVC *searchTVC = [[UIStoryboard storyboardWithName:@"SearchTVC" bundle:nil] instantiateInitialViewController];
     self.calendarView = nil;
     SearchTVC *searchTVC = [[SearchTVC alloc] init];
     [self.navigationController pushViewController:searchTVC animated:YES];
+}
+
+- (void)sendClick {
+    BasicTableController *vc = [[BasicTableController alloc] init];
+    NSMutableArray *names = [NSMutableArray array];
+    for (UserListModel *model in self.items) {
+        [names addObject:model.name];
+    }
+    if (names.count > 0) {
+        vc.items = names;
+        vc.delegate = self;
+        [self.navigationController pushViewController:vc animated:NO];
+    }
 }
 
 #pragma mark - ListHeadViewDelegate
@@ -302,6 +335,11 @@ static NSUInteger const calendarH = 320;
             return;
         }
     }
+}
+
+- (void)listHeadViewSendOrders:(ListHeadView *)view model:(UserListModel *)model {
+    SendOrderViewController *sendVC = [[SendOrderViewController alloc] initWithModels:[NSArray arrayWithArray:model.listArray]];
+    [self.navigationController pushViewController:sendVC animated:YES];
 }
 
 #pragma mark - ListNavViewDelegate

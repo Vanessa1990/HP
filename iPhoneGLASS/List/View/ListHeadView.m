@@ -23,6 +23,8 @@
 
 @property(nonatomic, strong) UIButton *openButton;
 
+@property(nonatomic, strong) UIButton *sendButton;
+
 @end
 
 @implementation ListHeadView
@@ -55,6 +57,12 @@
             make.centerY.mas_equalTo(0);
         }];
         
+//        [self addSubview:self.sendButton];
+//        [self.sendButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.top.bottom.mas_equalTo(0);
+//            make.width.mas_equalTo(0);
+//        }];
+        
         self.openButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.openButton setImage:[UIImage imageNamed:@"list_hidden"] forState:UIControlStateNormal];
         [self.openButton setImage:[UIImage imageNamed:@"list_open"] forState:UIControlStateSelected];
@@ -81,8 +89,27 @@
             make.centerY.mas_equalTo(0);
             make.width.height.mas_equalTo(30);
         }];
+        
     }
     return self;
+}
+
+- (void)swipeClick:(UISwipeGestureRecognizer *)ges {
+    if (ges.direction != UISwipeGestureRecognizerDirectionRight) {
+        [self sendButtonShow:YES];
+    }else{
+        [self sendButtonShow:NO];
+    }
+}
+
+- (void)tapClick:(UISwipeGestureRecognizer *)ges {
+    [self sendButtonShow:NO];
+}
+
+- (void)sendButtonShow:(BOOL)show {
+    [self.sendButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(show?60:0);
+    }];
 }
 
 - (void)setModel:(UserListModel *)model {
@@ -117,6 +144,22 @@
     if ([(id)self.delgate respondsToSelector:@selector(listHeadView:model:open:)]) {
         [self.delgate listHeadView:self model:self.model open:button.selected];
     }
+}
+
+- (void)sendClick:(UIButton *)button {
+    if ([(id)self.delgate respondsToSelector:@selector(listHeadViewSendOrders:model:)]) {
+        [self.delgate listHeadViewSendOrders:self model:self.model];
+    }
+}
+
+- (UIButton *)sendButton {
+    if(!_sendButton) {
+        _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_sendButton setBackgroundColor:YZ_PinkColor];
+        [_sendButton setTitle:@"发货" forState:UIControlStateNormal];
+        [_sendButton addTarget:self action:@selector(sendClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _sendButton;
 }
 
 @end

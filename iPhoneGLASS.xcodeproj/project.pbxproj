@@ -87,6 +87,7 @@
 		7FA9D27C2050CF55003382B0 /* list_open@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9D2762050CF54003382B0 /* list_open@3x.png */; };
 		7FA9D2802050DBEB003382B0 /* ChooseDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9D27E2050DBEB003382B0 /* ChooseDateViewController.m */; };
 		7FA9D2812050DBEB003382B0 /* ChooseDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9D27F2050DBEB003382B0 /* ChooseDateViewController.xib */; };
+		7FA9D28720528BDE003382B0 /* BasicTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9D28620528BDE003382B0 /* BasicTableController.m */; };
 		7FAD3B491F2AF31400935E48 /* add_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B471F2AF31400935E48 /* add_green.png */; };
 		7FAD3B4A1F2AF31400935E48 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FAD3B481F2AF31400935E48 /* call.png */; };
 		7FB1D1D6201B1E8000C0BD27 /* tab_show@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB1D1D4201B1E7F00C0BD27 /* tab_show@3x.png */; };
@@ -331,6 +332,8 @@
 		7FA9D27D2050DBEB003382B0 /* ChooseDateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseDateViewController.h; sourceTree = "<group>"; };
 		7FA9D27E2050DBEB003382B0 /* ChooseDateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseDateViewController.m; sourceTree = "<group>"; };
 		7FA9D27F2050DBEB003382B0 /* ChooseDateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseDateViewController.xib; sourceTree = "<group>"; };
+		7FA9D28520528BDE003382B0 /* BasicTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicTableController.h; sourceTree = "<group>"; };
+		7FA9D28620528BDE003382B0 /* BasicTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicTableController.m; sourceTree = "<group>"; };
 		7FAD3B471F2AF31400935E48 /* add_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_green.png; sourceTree = "<group>"; };
 		7FAD3B481F2AF31400935E48 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
 		7FB1D1D4201B1E7F00C0BD27 /* tab_show@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_show@3x.png"; sourceTree = "<group>"; };
@@ -749,6 +752,8 @@
 				7FA9D27D2050DBEB003382B0 /* ChooseDateViewController.h */,
 				7FA9D27E2050DBEB003382B0 /* ChooseDateViewController.m */,
 				7FA9D27F2050DBEB003382B0 /* ChooseDateViewController.xib */,
+				7FA9D28520528BDE003382B0 /* BasicTableController.h */,
+				7FA9D28620528BDE003382B0 /* BasicTableController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1425,6 +1430,7 @@
 				7F667A0F1D6AF678009E0105 /* AFURLResponseSerialization.m in Sources */,
 				7F06A6EF1CEAF101006B9CA4 /* WWLoadVC.m in Sources */,
 				7F60CC531D2A35BD00A53799 /* FMDatabase.m in Sources */,
+				7FA9D28720528BDE003382B0 /* BasicTableController.m in Sources */,
 				269ED3DD1F6121820047AF86 /* UserListModel.m in Sources */,
 				7FCDB2A71F2ED5D200759928 /* HomeCollectionCell.m in Sources */,
 				7FEF0BB0202AF46F007AD53D /* CalendarView.m in Sources */,

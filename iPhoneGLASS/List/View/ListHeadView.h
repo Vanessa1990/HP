@@ -15,6 +15,7 @@ typedef void(^ChooseBlock)(UserListModel *model,BOOL choose);
 @protocol ListHeadViewDelegate
 
 - (void)listHeadView:(ListHeadView *)view model:(UserListModel *)model open:(BOOL)open;
+- (void)listHeadViewSendOrders:(ListHeadView *)view model:(UserListModel *)model;
 
 @end
 
