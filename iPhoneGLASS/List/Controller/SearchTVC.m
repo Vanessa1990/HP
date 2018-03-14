@@ -15,11 +15,14 @@
 #import "SearchListViewController.h"
 #import "ContactTableViewController.h"
 #import "ChooseDateViewController.h"
+#import "BasicTableController.h"
 #import "UserInfo.h"
 #import "UserModel.h"
 #import "MBProgressHUD.h"
+#import "NSDate+YZBim.h"
+#import "BimService.h"
 
-@interface SearchTVC ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,ChooseDateViewControllerDelegate>
+@interface SearchTVC ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,ChooseDateViewControllerDelegate,BasicTableControllerDelegate>
 @property(nonatomic, strong) UITableView *tableView;
 @property (strong, nonatomic)  UITextField *beginDate;
 @property (strong, nonatomic)  UITextField *endDate;
@@ -33,9 +36,6 @@
 @property(nonatomic,strong) NSMutableDictionary *searchDic;
 @property (assign, nonatomic) BOOL fuzzySearch;
 @property(nonatomic, strong) UITextField *fuzzy;
-
-//@property(nonatomic, strong) CalendarView *calendarView;
-//@property(nonatomic, strong) UIView *bgView;
 
 @end
 
@@ -238,15 +238,33 @@
         return NO;
     }else if (textField == self.thick){
         [self.view endEditing:YES];
-        STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeThick];
-        pickView.finishBlock = ^(NSString *date){
-            if (!date) {
-                textField.text = @"全部";
-            }else {
-                textField.text = date;
-            }
-        };
-        [pickView show];
+//        [[[BimService instance] getAllThick] onFulfilled:^id(NSArray *value) {
+//            BasicTableController *vc = [[BasicTableController alloc] init];
+//            if ([value isKindOfClass:[NSArray class]]) {
+//                NSArray *newThicks = [value sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+//                    if ([self numberOfString:obj1] < [self numberOfString:obj2]) {
+//                        return NSOrderedAscending;
+//                    }else{
+//                        return NSOrderedDescending;
+//                    }
+//                }];
+//                vc.items = newThicks;
+//            }
+//            vc.delegate = self;
+//            [self.navigationController pushViewController:vc animated:NO];
+//            return value;
+//        }rejected:^id(NSError *reason) {
+            STPickerDate *pickView = [[STPickerDate alloc] initWithType:PickerTypeThick];
+            pickView.finishBlock = ^(NSString *date){
+                if (!date) {
+                    textField.text = @"全部";
+                }else {
+                    textField.text = date;
+                }
+            };
+            [pickView show];
+//            return reason;
+//        }];
         return NO;
     }else if (textField == self.finish){
         [self.view endEditing:YES];
@@ -263,13 +281,39 @@
     }else {
         return YES;
     }
-    
 }
 
+
+- (int)numberOfString:(NSString *)string {
+    int number = 0;
+    int location = 0;
+    for (int i = 0; i < string.length; i++) {
+        unichar a = [string characterAtIndex:i];
+        if (!isdigit(a)) {
+            location = i;
+            break;
+        }
+    }
+    if (location > 0) {
+        number = [[string substringToIndex:location] intValue];
+    }
+    return number;
+}
+
+
 - (void)fuzzyStateChange:(UIButton *)sender {
-//    sender.selected = !sender.selected;
     self.fuzzySearch = !self.fuzzySearch;
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark - BasicTableControllerDelegate
+- (void)basicTableController:(BasicTableController *)vc chooseItem:(NSString *)item {
+    [self.navigationController popViewControllerAnimated:YES];
+    if (!item) {
+        self.thick.text = @"全部";
+    }else {
+        self.thick.text = item;
+    }
 }
 
 #pragma mark - ChooseDateVC delegate
@@ -365,7 +409,6 @@
                 [self.fuzzyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.right.mas_equalTo(-15);
                     make.centerY.mas_equalTo(cell.textLabel);
-//                    make.width.mas_equalTo(100);
                     make.height.width.mas_equalTo(44);
                 }];
             }
@@ -411,7 +454,7 @@
         ContactTableViewController *vc = [[ContactTableViewController alloc] initWithSelectedBlock:^(UserModel *model) {
             self.name.text = model.name;
             [self.navigationController popViewControllerAnimated:YES];
-        }];
+        } add:NO];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

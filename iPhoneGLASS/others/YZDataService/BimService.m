@@ -255,6 +255,18 @@
     return [AFNetworkingHelper getResource:url parameters:@{@"name":name}] ;
 }
 
+
+- (SHXPromise *)getAllClient
+{
+    NSString *url = [NSString stringWithFormat:@"%@order/client", self.baseAPI];
+    return [AFNetworkingHelper getResource:url parameters:nil];
+}
+
+- (SHXPromise *)getAllThick {
+    NSString *url = [NSString stringWithFormat:@"%@order/thick", self.baseAPI];
+    return [AFNetworkingHelper getResource:url parameters:nil];
+}
+
 // 更新数据
 - (SHXPromise *)updateGlassInfo:(NSString *)glassId newDict:(NSDictionary *)newDict {
     NSString *url = [NSString stringWithFormat:@"%@order/%@", self.baseAPI,glassId];

@@ -16,10 +16,11 @@
 #import "BasicTableController.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource,ListNavViewDelegate,JTCalendarDelegate,ChooseDateViewControllerDelegate,ListHeadViewDelegate,BasicTableControllerDelegate>
+
+@property (assign, nonatomic) NSUInteger skip;
 // 普通用户用到
 @property (nonatomic, strong) NSArray *allDates;
 @property (assign, nonatomic) NSUInteger index;
-// 普通用户用到
 
 @property (nonatomic, strong) NSMutableDictionary *dateItems;
 
@@ -43,45 +44,8 @@
 @end
 
 static NSUInteger const secondsPerDay = 24 * 60 * 60;
-static NSUInteger const calendarH = 320;
 
 @implementation HomeViewController
-
-- (JTCalendarMenuView *)calendarMenuView {
-    if (!_calendarMenuView) {
-        _calendarMenuView = [[JTCalendarMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
-    }
-    return _calendarMenuView;
-}
-
-- (JTHorizontalCalendarView *)calendarContentView
-{
-    if (!_calendarContentView) {
-        _calendarContentView = [[JTHorizontalCalendarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
-    }
-    return _calendarContentView;
-}
-
-- (JTCalendarManager *)calendarManager
-{
-    if (!_calendarManager) {
-        _calendarManager = [[JTCalendarManager alloc] init];
-        [_calendarManager setMenuView:self.calendarMenuView];
-        [_calendarManager setContentView:self.calendarContentView];
-        _calendarManager.delegate = self;
-    }
-    return _calendarManager;
-}
-
-- (UIButton *)reloadButton {
-    if (!_reloadButton) {
-        _reloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_reloadButton setImage:[UIImage imageNamed:@"reload.png"] forState:UIControlStateNormal];
-        _reloadButton.backgroundColor = [UIColor clearColor];
-        [_reloadButton addTarget:self action:@selector(upAndReload) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _reloadButton;
-}
 
 
 - (void)viewDidLoad {
@@ -115,16 +79,9 @@ static NSUInteger const calendarH = 320;
 }
 
 - (void)initView {
-    self.tableView = [[UITableView alloc] init];
-    [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.bottom.mas_equalTo(0);
-    }];
+
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    //tableview设置
-    [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     HPRefreshHeader *header =  [HPRefreshHeader headerWithRefreshingBlock:^{
         [self getNewData];
     }];
@@ -200,23 +157,6 @@ static NSUInteger const calendarH = 320;
     [self chooseDate:NO];
 }
 
-// 取出所有的分组
-- (NSArray *)getAllSections:(NSArray *)items {
-    NSMutableArray *resIDs = [NSMutableArray array];
-
-    // 取出组
-    for (ListModel *m in items) {
-        NSMutableString *section = [NSMutableString stringWithFormat:@"%@",m.name];
-        if (m.mark) {
-            [section appendFormat:@"+%@",m.mark];
-        }
-        if (![resIDs containsObject:section]) {
-            [resIDs addObject:section];
-        }
-    }
-    return resIDs;
-}
-
 - (SHXPromise *)getDateItems:(NSDate *)date
 {
     SHXPromise *promise = [SHXPromise new];
@@ -249,39 +189,6 @@ static NSUInteger const calendarH = 320;
     }
 }
 
-
-- (NSArray *)dealItems:(NSArray *)items
-{
-    NSMutableArray *res = [NSMutableArray array];
-    NSArray *resIDs = [NSArray arrayWithArray:[self getAllSections:items]];
-    // 分组
-    for (NSString *section in resIDs) {
-        UserListModel *model = [UserListModel new];
-        model.name = section;
-        NSUInteger totle = 0;
-        NSMutableArray *lists = [NSMutableArray array];
-        int arrivedGlassCount = 0;
-        for (ListModel *m in items) {
-            NSString *middle = m.mark?[NSMutableString stringWithFormat:@"%@+%@",m.name,m.mark]:m.name;
-            if ([section isEqualToString:middle]) {
-                totle += m.totalNumber;
-                [lists addObject:m];
-                if (m.deliverymans && m.deliverymans.count > 0) {
-                    arrivedGlassCount++;
-                }
-            }
-        }
-        if (totle > 0){
-            model.totle = [NSString stringWithFormat:@"%zd",totle];
-            model.listArray = lists;
-            model.arrived = arrivedGlassCount > 0;
-            model.openList = NO;
-            [res addObject:model];
-        }
-        
-    }
-    return res;
-}
 
 - (void)reloadDataAndUI {
     NSString *dayString = [self.currentDate formatOnlyDay];
@@ -398,31 +305,6 @@ static NSUInteger const calendarH = 320;
             [self.chooseVC dismissViewControllerAnimated:NO completion:nil];
         }
     }
-//    return;
-//    CGFloat top = IOS11_OR_LATER?0:64;
-//    if (!self.calendarView) {
-//        self.calendarView = [[CalendarView alloc] initWithDelegate:self];
-//        [self.view addSubview:self.calendarView];
-//        [self.calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.right.mas_equalTo(0);
-//            make.top.mas_equalTo(-calendarH);
-//            make.height.mas_equalTo(calendarH);
-//        }];
-//        self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-//        self.bgView.backgroundColor = YZ_Color(33, 33, 33, 0.3);
-//        UITapGestureRecognizer *tapges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeCalendar)];
-//        [self.bgView addGestureRecognizer:tapges];
-//    }
-//    [self.calendarView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(open?top:-calendarH);
-//    }];
-//    if (open) {
-//        self.calendarView.currentDate = self.currentDate;
-//        self.calendarView.dates = [UserInfo shareInstance].admin?nil:self.allDates;
-//        [self.view insertSubview:self.bgView belowSubview:self.calendarView];
-//    }else{
-//        [self.bgView removeFromSuperview];
-//    }
 }
 
 - (void)closeCalendar {
@@ -448,15 +330,6 @@ static NSUInteger const calendarH = 320;
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 44;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 44;
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UserListModel *model = self.items[section];
@@ -465,23 +338,6 @@ static NSUInteger const calendarH = 320;
     headView.delgate = self;
     return headView;
 }
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return self.items.count;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    UserListModel *model = self.items[section];
-    if (!model.openList) {
-        return model.listArray.count;
-    }else{
-        return 0;
-    }
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -501,7 +357,7 @@ static NSUInteger const calendarH = 320;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-
+#pragma mark - set && get
 - (NSArray *)currentDateItems {
     NSString *string = [self.currentDate formatOnlyDay];
     if (self.dateItems[string] && [self.dateItems[string] isKindOfClass:[NSArray class]]) {
@@ -518,12 +374,42 @@ static NSUInteger const calendarH = 320;
 }
 
 
-- (NSArray *)items {
-    if (!_items) {
-        _items = [NSArray array];
+- (JTCalendarMenuView *)calendarMenuView {
+    if (!_calendarMenuView) {
+        _calendarMenuView = [[JTCalendarMenuView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
     }
-    return _items;
+    return _calendarMenuView;
 }
+
+- (JTHorizontalCalendarView *)calendarContentView
+{
+    if (!_calendarContentView) {
+        _calendarContentView = [[JTHorizontalCalendarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200)];
+    }
+    return _calendarContentView;
+}
+
+- (JTCalendarManager *)calendarManager
+{
+    if (!_calendarManager) {
+        _calendarManager = [[JTCalendarManager alloc] init];
+        [_calendarManager setMenuView:self.calendarMenuView];
+        [_calendarManager setContentView:self.calendarContentView];
+        _calendarManager.delegate = self;
+    }
+    return _calendarManager;
+}
+
+- (UIButton *)reloadButton {
+    if (!_reloadButton) {
+        _reloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_reloadButton setImage:[UIImage imageNamed:@"reload.png"] forState:UIControlStateNormal];
+        _reloadButton.backgroundColor = [UIColor clearColor];
+        [_reloadButton addTarget:self action:@selector(upAndReload) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _reloadButton;
+}
+
 
 
 

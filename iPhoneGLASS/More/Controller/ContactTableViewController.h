@@ -13,6 +13,8 @@ typedef void(^SelecteBlock)(UserModel *model);
 
 @interface ContactTableViewController : UIViewController
 
+- (instancetype)initWithSelectedBlock:(SelecteBlock)selecteBlock add:(BOOL)addEnable;
+
 - (instancetype)initWithSelectedBlock:(SelecteBlock)selecteBlock;
 
 @property(nonatomic, strong) NSArray *contacts;

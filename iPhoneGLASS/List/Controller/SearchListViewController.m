@@ -12,6 +12,11 @@
 #import "NSDate+YZBim.h"
 #import "SendOrderViewController.h"
 #import "MBProgressHUD.h"
+#import "MJRefresh.h"
+#import "BimService.h"
+#import "ListHeadView.h"
+#import "ListCell.h"
+#import "HPRefreshHeader.h"
 
 typedef enum : NSUInteger {
     All,
@@ -19,7 +24,9 @@ typedef enum : NSUInteger {
     Finish,
 } FinishType;
 
-@interface SearchListViewController ()<UITableViewDelegate,ListHeadViewDelegate>
+#define limitCount 20
+
+@interface SearchListViewController ()<UITableViewDelegate,ListHeadViewDelegate,UITableViewDataSource>
 // 搜索状态下的搜索值
 @property(nonatomic, strong) NSDictionary *searchDict;
 
@@ -43,6 +50,8 @@ typedef enum : NSUInteger {
 
 @property(nonatomic, strong) MJRefreshAutoNormalFooter *footView;
 
+@property (assign, nonatomic) NSUInteger skip;
+
 
 @end
 
@@ -65,6 +74,7 @@ typedef enum : NSUInteger {
 - (void)initNav{
     self.navigationItem.title = @"搜索结果";
     self.navigationItem.titleView = nil;
+   
     if ([UserInfo shareInstance].admin) {
         self.navigationItem.rightBarButtonItem = self.editButtonItem;
         self.edit = NO;
@@ -75,8 +85,17 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initNav];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    HPRefreshHeader *header =  [HPRefreshHeader headerWithRefreshingBlock:^{
+        self.skip = 0;
+        self.tableView.mj_footer = self.footView;
+        [self getSearchData];
+    }];
+    
+    self.tableView.mj_header = header;
     [self.view addSubview:self.deleteButton];
     [self.view addSubview:self.sendButton];
     [self.deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -91,13 +110,36 @@ typedef enum : NSUInteger {
         make.width.bottom.mas_equalTo(self.deleteButton);
     }];
     self.colors = @[YZ_WhiteColor, YZ_ThemeAlphaC];
-    
+    [self.tableView.mj_header beginRefreshing];
 }
 
-- (void)getTableViewData {
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+
+- (void)getSearchData {
     NSMutableDictionary *searchDict = [NSMutableDictionary dictionaryWithDictionary:self.searchDict];
     NSMutableArray *itemArray = [NSMutableArray array];
     
+    [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *value) {
+        if (value.count == 0) {
+            self.tableView.mj_footer = nil;
+        }
+        [itemArray addObjectsFromArray:value];
+        [self relaodData:itemArray];
+//        if (itemArray.count >= 200) {
+//            self.tableView.mj_footer = self.footView;
+//        }else{
+//            self.tableView.mj_footer = nil;
+//        }
+        return itemArray;
+    } rejected:^id(NSError *reason) {
+        [self.tableView.mj_header endRefreshing];
+        return reason;
+    }];
+    
+    /*
     if (!self.searchDict[@"finish"]) {// 1 完成 0 未完成
         [searchDict setValue:@0 forKey:@"finish"];
         [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *unfinishs) {
@@ -137,27 +179,60 @@ typedef enum : NSUInteger {
             [self.tableView.mj_header endRefreshing];
             return reason;
         }];
-    }
+    }*/
 }
 
 - (SHXPromise *)searchDataFromNetDB:(NSDictionary *)searchDict {
-    return [[[BimService instance] getListSkip:0 limit:200 searchDict:searchDict] onFulfilled:^id(id value) {
+    return [[[BimService instance] getListSkip:(self.skip*limitCount) limit:limitCount searchDict:searchDict] onFulfilled:^id(id value) {
+        self.skip++;
         NSMutableArray *itemArray = [NSMutableArray array];
         for (NSDictionary *dict in value) {
             ListModel *model = [ListModel modelWithDict:dict];
             [itemArray addObject:model];
         }
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         return itemArray;
     } rejected:^id(NSError *reason) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         return reason;
     }];
 }
 
 - (void)relaodData:(NSArray *)items {
-    self.items = [self dealItems:items];
+    if (self.skip == 1) {
+        self.items = [NSArray array];
+    }
+    NSArray *resArr = [self dealItems:items];
+    NSMutableArray *newItems = [NSMutableArray arrayWithArray:self.items];
+    for (UserListModel *newM in resArr) {
+        int index = 0;
+        for (UserListModel *oldM in self.items) {
+            if ([newM.name isEqualToString:oldM.name]) {
+                UserListModel *model = [UserListModel new];
+                model.name = oldM.name;
+                NSUInteger totle = [oldM.totle integerValue] + [newM.totle integerValue];
+                model.totle = [NSString stringWithFormat:@"%zd",totle];
+                NSMutableArray *lists = [NSMutableArray arrayWithArray:oldM.listArray];
+                [lists addObjectsFromArray:newM.listArray];
+                model.listArray = [NSArray arrayWithArray:lists];
+                [newItems removeObject:oldM];
+                [newItems insertObject:model atIndex:index];
+                break;
+            }
+            index++;
+        }
+        if (self.items.count == 0 || index == self.items.count) {
+            [newItems addObject:newM];
+        }
+    }
+    
+    self.items = [NSArray arrayWithArray:newItems];
     [self.tableView reloadData];
     [self.tableView.mj_header endRefreshing];
 }
+
 
 - (void)sendClick:(UIButton *)button {
     // 同一用户下发货
@@ -353,10 +428,11 @@ typedef enum : NSUInteger {
 - (MJRefreshAutoNormalFooter *)footView {
     if (!_footView) {
         _footView = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-            [self.tableView.mj_footer endRefreshing];
+//            [self.tableView.mj_footer endRefreshing];
+            [self getSearchData];
         }];
-        [_footView setTitle:@"最多显示200条\n未完成数据/已完成数据" forState:MJRefreshStateNoMoreData];
-        [_footView setTitle:@"最多显示200条\n未完成数据/已完成数据" forState:MJRefreshStateIdle];
+        [_footView setTitle:@"上拉获取更多" forState:MJRefreshStateNoMoreData];
+        [_footView setTitle:@"上拉获取更多" forState:MJRefreshStateIdle];
         [_footView setTitle:@"加载..." forState:MJRefreshStateRefreshing];
     }
     return _footView;

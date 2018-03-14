@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HomeViewController.h"
+#import "MasterViewController.h"
 
-@interface SearchListViewController : HomeViewController
+@interface SearchListViewController : MasterViewController
 
 - (instancetype)initWithSearchDict:(NSDictionary *)searchDict sort:(BOOL)sort;
 

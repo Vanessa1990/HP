@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HomeCollectionCell.h"
+#import "MasterViewController.h"
 #import "SearchTVC.h"
 #import "MoreTVC.h"
 #import "NSDate+YZBim.h"
 #import "BimService.h"
-#import "UserListModel.h"
 #import "ListNavView.h"
 #import "ListCell.h"
 #import "Utils.h"
@@ -21,20 +20,6 @@
 #import "ListHeadView.h"
 #import "MJRefresh.h"
 
-@interface HomeViewController : UIViewController
-
-- (void)initNav;
-
-- (void)getTableViewData;
-
-- (NSArray *)dealItems:(NSArray *)items;
-
-- (NSArray *)getAllSections:(NSArray *)items;
-
-@property(nonatomic, strong) NSArray *items;
-
-@property(nonatomic, strong) UITableView *tableView;
-
-@property (assign, nonatomic) NSUInteger skip;
+@interface HomeViewController : MasterViewController
 
 @end

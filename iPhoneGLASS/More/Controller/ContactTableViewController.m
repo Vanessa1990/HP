@@ -19,6 +19,7 @@
 @property(nonatomic, strong) NSArray *indexs;
 @property(nonatomic, strong) UserModel *resetModel;
 @property(nonatomic, copy) SelecteBlock block;
+@property (assign, nonatomic) BOOL addEnable;
 
 @end
 
@@ -31,25 +32,45 @@
 }
 
 - (instancetype)initWithSelectedBlock:(void (^)(UserModel *model))selecteBlock {
+    return [self initWithSelectedBlock:selecteBlock add:YES];
+}
+
+- (instancetype)initWithSelectedBlock:(SelecteBlock)selecteBlock add:(BOOL)addEnable {
     if (self = [super init]) {
         self.block = selecteBlock;
+        self.addEnable = addEnable;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"所有客户";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(add:)];
+    self.title = @"客户列表";
     [self setBackItem];
+    if (self.addEnable) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(add:)];
+    }
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
-//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"contactCellID"];
-    [self getData];
+    self.tableView.allowsSelection = YES;
+
+    if (!self.contacts || self.contacts.count == 0) {
+        [self getData];
+    }else{
+        NSMutableArray *newContacts = [NSMutableArray array];
+        for (NSString *name in self.contacts) {
+            UserModel *model = [UserModel new];
+            model.name = name;
+            [newContacts addObject:model];
+        }
+        self.contacts = [self sortObjectsAccordingToInitialWith:newContacts];
+        [self.tableView reloadData];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,17 +85,34 @@
 }
 
 - (SHXPromise *)getData {
-    return [[[BimService instance] getAllUsers] onFulfilled:^id(id value) {
-        NSMutableArray *array = [NSMutableArray array];
-        for (NSDictionary *dict in value) {
-            UserModel *model = [UserModel new];
-            [model setValuesForKeysWithDictionary:dict];
-            [array addObject:model];
-        }
-        self.contacts = [self sortObjectsAccordingToInitialWith:array];
-        [self.tableView reloadData];
-        return value;
-    }];
+    if (self.addEnable) {
+        return [[[BimService instance] getAllUsers] onFulfilled:^id(id value) {
+            NSMutableArray *array = [NSMutableArray array];
+            for (NSDictionary *dict in value) {
+                UserModel *model = [UserModel new];
+                [model setValuesForKeysWithDictionary:dict];
+                [array addObject:model];
+            }
+            self.contacts = [self sortObjectsAccordingToInitialWith:array];
+            [self.tableView reloadData];
+            return value;
+        }];
+    }else{
+        return [[[BimService instance] getAllClient] onFulfilled:^id(id value) {
+            NSMutableArray *newContacts = [NSMutableArray array];
+            if ([value isKindOfClass:[NSArray class]]) {
+                for (NSString *name in value) {
+                    UserModel *model = [UserModel new];
+                    model.name = name;
+                    [newContacts addObject:model];
+                }
+                self.contacts = [self sortObjectsAccordingToInitialWith:newContacts];
+                [self.tableView reloadData];
+            }
+            return value;
+        }];
+    }
+    
 }
 
 // 按首字母分组排序数组
@@ -193,21 +231,29 @@
  */
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *arr = self.contacts[indexPath.section];
-    UserModel *model = arr[indexPath.row];
-    
-    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"修改" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+    if (self.addEnable) {
+        NSArray *arr = self.contacts[indexPath.section];
+        UserModel *model = arr[indexPath.row];
         
-        [self reset:model];
-    }];
-    UITableViewRowAction *deletedAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        [[[BimService instance] deleteUser:model.userID] onFulfilled:^id(id value) {
-            [self getData];
-            return value;
+        UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"修改" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+            
+            [self reset:model];
         }];
-    }];
-    
-    return @[deletedAction,action];
+        UITableViewRowAction *deletedAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+            [[[BimService instance] deleteUser:model.userID] onFulfilled:^id(id value) {
+                [self getData];
+                return value;
+            }];
+        }];
+        
+        return @[deletedAction,action];
+    }else{
+        return @[];
+    }
+}
+
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return self.indexs;
 }
 
 - (void)reset:(UserModel *)model {

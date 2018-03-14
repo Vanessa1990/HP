@@ -79,6 +79,9 @@
 // 获取用户下单日期
 - (SHXPromise *)getAllDate:(NSString *)name;
 
+- (SHXPromise *)getAllClient;
+- (SHXPromise *)getAllThick;
+
 // 更新数据
 - (SHXPromise *)updateGlassInfo:(NSString *)glassId newDict:(NSDictionary *)newDict;
 

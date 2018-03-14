@@ -17,6 +17,7 @@
 #import "ContactTableViewController.h"
 #import "STPickerDate.h"
 #import <Masonry.h>
+#import "NSDate+YZBim.h"
 
 typedef enum : NSUInteger {
     DateRangeTypeWeek = 7,
@@ -199,7 +200,7 @@ typedef enum : NSUInteger {
         self.chooseView.name = model.name;
         [self.navigationController popViewControllerAnimated:YES];
         [self searchFunc];
-    }];
+    } add:NO];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -349,12 +350,11 @@ typedef enum : NSUInteger {
 }
 
 - (void)seeMore:(id)sender {
-    HomeViewController *VC;
     if (self.writeInModel) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:self.writeInModel.name forKey:@"name"];
         [dict setObject:self.writeInModel.date forKey:@"createdAt"];
-        VC = [[SearchListViewController alloc] initWithSearchDict:dict sort:YES];
+        SearchListViewController *VC = [[SearchListViewController alloc] initWithSearchDict:dict sort:YES];
         [self.navigationController pushViewController:VC animated:YES];
     }
 }
