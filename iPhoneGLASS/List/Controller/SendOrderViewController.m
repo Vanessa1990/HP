@@ -30,7 +30,7 @@
     if (self = [super init]) {
         NSMutableArray *array = [NSMutableArray array];
         for (ListModel *model in models) {
-            model.sendCount = model.totalNumber;
+            model.sendCount = model.totalNumber - model.sendTo;
             [array addObject:model];
         }
         self.models = [NSArray arrayWithArray:array];
@@ -81,12 +81,22 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     for (ListModel *model in self.models) {
         if (model.sendCount > 0) {
+            NSUInteger sendTo = 0;
+            sendTo = model.sendCount + model.sendTo;
             if (!model.deliverymans || model.deliverymans.count == 0) {
                 [sendDict setObject:@[[NSString stringWithFormat:@"%@:%zd",self.sendPLabel.text,model.sendCount]] forKey:@"deliveryman"];
             }else{
                 NSMutableArray *ds = [NSMutableArray arrayWithArray:model.deliverymans];
                 [ds addObject:[NSString stringWithFormat:@"%@:%zd",self.sendPLabel.text,model.sendCount]];
                 [sendDict setObject:ds forKey:@"deliveryman"];
+            }
+            
+            [sendDict setObject:@(sendTo) forKey:@"sendTo"];
+            if (sendTo > model.number) {
+                [sendDict setObject:@(sendTo) forKey:@"stockIn"];
+            }
+            if (sendTo >= model.totalNumber) {
+                [sendDict setObject:@(YES) forKey:@"finish"];
             }
             [ps addObject:[[BimService instance] updateGlassInfo:model.glassID newDict:sendDict]];
         }

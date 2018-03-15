@@ -33,7 +33,7 @@
     self.name.text = [NSString stringWithFormat:@"%@%@",self.model.name,self.model.mark?self.model.mark:@""];
     self.size.text = [NSString stringWithFormat:@"%@ : %@ * %@",self.model.thick,self.model.height,self.model.width];
     self.totle.text = [NSString stringWithFormat:@"总数 : %zd",self.model.totalNumber];
-    self.exsit.text = [NSString stringWithFormat:@"已出库 : %zd",self.model.number];
+    self.exsit.text = [NSString stringWithFormat:@"产出 : %zd",self.model.number];
     self.date.text = [NSString stringWithFormat:@"日期 : %@",[[NSDate dateFromISOString:self.model.date] formatOnlyDay]];
     NSString *delivery = [self.model.deliverymans componentsJoinedByString:@","];
     self.send.text = [NSString stringWithFormat:@"配送 : %@",delivery.length > 0?delivery:@"暂无"];

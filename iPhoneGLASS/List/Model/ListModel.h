@@ -24,6 +24,8 @@
 
 @property (nonatomic ,assign) NSUInteger totalNumber;
 
+@property (nonatomic ,assign) NSUInteger sendTo;
+
 @property (nonatomic ,strong) NSString *width;
 
 @property (nonatomic ,strong) NSString *height;

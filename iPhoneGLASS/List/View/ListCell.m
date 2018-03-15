@@ -103,22 +103,11 @@
     self.sizeLabel.text = [NSString stringWithFormat:@"%@ * %@",listModel.height,listModel.width];
     self.countLabel.text = listModel.isFinish?[NSString stringWithFormat:@"%zd",listModel.totalNumber]:[NSString stringWithFormat:@"%zd/%zd",listModel.number,listModel.totalNumber];
     self.countLabel.textColor = listModel.isFinish?[UIColor redColor]:[UIColor blackColor];
-    if (listModel.isFinish) {
-        if (listModel.deliverymans && [listModel.deliverymans isKindOfClass:[NSArray class]]) {
-            int count = 0;
-            for (NSString *str in listModel.deliverymans) {
-                NSArray *array = [str componentsSeparatedByString:@":"];
-                if (array.count == 2 && [array[1] intValue] > 0) {
-                    count+=[array[1] intValue];
-                }
-            }
-            if (count > 0) {
-                self.countLabel.text = [NSString stringWithFormat:@"%d/%zd出库",count,listModel.totalNumber];
-                self.countLabel.textColor = YZ_Color(73, 152, 137, 1);
-                if (count == listModel.totalNumber) {
-                    self.countLabel.text = @"出库";
-                }
-            }
+    if (listModel.sendTo > 0) {
+        self.countLabel.text = [NSString stringWithFormat:@"%zd/%zd出库",listModel.sendTo,listModel.totalNumber];
+        self.countLabel.textColor = YZ_Color(73, 152, 137, 1);
+        if (listModel.sendTo >= listModel.totalNumber) {
+            self.countLabel.text = @"出库";
         }
     }
 }

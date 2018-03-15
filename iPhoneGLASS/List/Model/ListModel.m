@@ -36,6 +36,7 @@
         model.isFinish = false;
     }
     model.deliverymans = dict[@"deliveryman"];
+    model.sendTo = dict[@"sendTo"]?[dict[@"sendTo"] integerValue]:0;
     
     return model;
 }
