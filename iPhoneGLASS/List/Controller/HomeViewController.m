@@ -43,6 +43,7 @@
 
 @property(nonatomic, strong) NSMutableDictionary *nameIndexs;// 索引
 
+
 @end
 
 static NSUInteger const secondsPerDay = 24 * 60 * 60;
@@ -65,17 +66,23 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     if ([UserInfo shareInstance].admin) {
         [self.tableView.mj_header beginRefreshing];
     }else{
-        [[self getAllDates] onFulfilled:^id(id value) {
-            NSString *dateString = self.allDates[self.index];
-            self.currentDate = [NSDate dateFormDayString:dateString];
+        [[self getAllDates] onFulfilled:^id(NSArray *value) {
+            if (value && value.count > 0) {
+                NSString *dateString = self.allDates[self.index];
+                self.currentDate = [NSDate dateFormDayString:dateString];
+            }
             [self.tableView.mj_header beginRefreshing];
             return value;
         }];
     }
-    UISwipeGestureRecognizer *swipeGes = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
-    [swipeGes setDirection:UISwipeGestureRecognizerDirectionRight];
-    [swipeGes setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.tableView addGestureRecognizer:swipeGes];
+    if ([UserInfo shareInstance].admin) {
+        UISwipeGestureRecognizer *swipeGes1 = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+        [swipeGes1 setDirection:UISwipeGestureRecognizerDirectionRight];
+        UISwipeGestureRecognizer *swipeGes2 = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+        [swipeGes2 setDirection:UISwipeGestureRecognizerDirectionLeft];
+        [self.tableView addGestureRecognizer:swipeGes1];
+        [self.tableView addGestureRecognizer:swipeGes2];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,14 +101,17 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     }];
     
     self.tableView.mj_header = header;
+//    self.tableView.allowsSelection = YES;
     
-    [self.view addSubview:self.reloadButton];
-    [self.reloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-30);
-        make.bottom.mas_equalTo(-60);
-        make.width.height.mas_equalTo(50);
-    }];
-    
+    if ([UserInfo shareInstance].admin) {
+        [self.view addSubview:self.reloadButton];
+        [self.reloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(-30);
+            make.bottom.mas_equalTo(-60);
+            make.width.height.mas_equalTo(50);
+        }];
+        
+    }
 }
 
 - (void)initNav {
@@ -122,17 +132,19 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 }
 
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)sender {
+    BOOL pre = YES;
     switch (sender.direction) {
         case UISwipeGestureRecognizerDirectionLeft:
-            
+            pre = NO;
             break;
-        case UISwipeGestureRecognizerDirectionRight:
-            
-            break;
-            
         default:
             break;
     }
+    NSDate *newDate = [NSDate dateWithTimeInterval:pre?-(60*60*24):(60*60*24) sinceDate:self.currentDate];
+    self.currentDate = newDate;
+    self.skip = 0;
+    [self getTableViewData];
+    [self.tableView scrollsToTop];
 }
 
 - (SHXPromise *)getAllDates {
@@ -145,9 +157,11 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
                 [array addObject:newDateString];
             }
         }
-        self.allDates = [NSArray arrayWithArray:array];
-        self.index = self.allDates.count - 1;
-        return value;
+        if (array.count > 0) {
+            self.allDates = [NSArray arrayWithArray:array];
+            self.index = self.allDates.count - 1;
+        }
+        return array;
     }];
 }
 
@@ -195,17 +209,17 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         }
         return [[[BimService instance] getListSkip:0 limit:0 searchDict:searchDict] onFulfilled:^id(id value) {
             NSMutableArray *itemArray = [NSMutableArray array];
-            NSMutableArray *nameIndexs = [NSMutableArray array];
             for (NSDictionary *dict in value) {
                 ListModel *model = [ListModel modelWithDict:dict];
                 [itemArray addObject:model];
             }
             NSArray *array = [self dealItems:itemArray];
-            for (UserListModel *um in array) {
-                [nameIndexs addObject:[um.name substringToIndex:1]];
-            }
+//            NSMutableArray *nameIndexs = [NSMutableArray array];
+//            for (UserListModel *um in array) {
+//                [nameIndexs addObject:[um.name substringToIndex:1]];
+//            }
+//            [self.nameIndexs setObject:nameIndexs forKey:todayString];
             [self.dateItems setObject:array forKey:todayString];
-            [self.nameIndexs setObject:nameIndexs forKey:todayString];
             return self.dateItems;
         } rejected:^id(NSError *reason) {
             return reason;
@@ -252,6 +266,8 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     if (names.count > 0) {
         vc.items = names;
         vc.delegate = self;
+        NSString *title = [NSString stringWithFormat:@"%@所有客户名单",[self.currentDate formatOnlyDay]];
+        vc.title = title;
         [self.navigationController pushViewController:vc animated:NO];
     }
 }
@@ -383,6 +399,12 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
 }
+
+//-(NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+//    NSString *tody = [self.currentDate formatOnlyDay];
+//    NSArray *names = [self.nameIndexs objectForKey:tody];
+//    return names;
+//}
 
 #pragma mark - set && get
 - (NSArray *)currentDateItems {

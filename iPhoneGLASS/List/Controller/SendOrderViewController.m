@@ -74,6 +74,15 @@
 }
 
 - (void)sure {
+    
+    if (self.sendPLabel.text.length == 0) {
+        MBProgressHUD *hud = [MBProgressHUD HUDForView:self.view];
+        hud.label.text = @"配送员必须填写";
+        hud.mode = MBProgressHUDModeText;
+        [hud hideAnimated:YES afterDelay:1.0];
+        return;
+    }
+    
     NSMutableDictionary *sendDict = [NSMutableDictionary dictionaryWithDictionary: @{@"deliveryman":@[self.sendPLabel.text],@"billnumber":self.billPLabel.text}];
     NSMutableArray *ps = [NSMutableArray array];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

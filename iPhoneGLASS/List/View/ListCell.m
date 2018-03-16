@@ -66,7 +66,7 @@
     
     self.typeLabel = [[UILabel alloc] init];
     self.typeLabel.numberOfLines = 0;
-    self.typeLabel.font = YZ_Font_M;
+    self.typeLabel.font = YZ_Font_L;
     [self.contentView addSubview:self.typeLabel];
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.editImageView.mas_right).offset(10);
@@ -85,7 +85,7 @@
     
     self.sizeLabel = [[UILabel alloc] init];
     self.sizeLabel.numberOfLines = 0;
-    self.sizeLabel.font = YZ_Font_M;
+    self.sizeLabel.font = YZ_Font_L;
     [self.contentView addSubview:self.sizeLabel];
     self.sizeLabel.textAlignment = NSTextAlignmentCenter;
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {

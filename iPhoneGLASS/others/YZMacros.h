@@ -12,11 +12,11 @@
 //-----------------------------------------------------------------------------------
 #pragma mark - Font Size
 
-#define YZ_FontSize_S 12
-#define YZ_FontSize_M 15
-#define YZ_FontSize_L 17
-#define YZ_FontSize_XL 19
-#define YZ_FontSize_XXL 22
+#define YZ_FontSize_S IS_IPHONE5?10:12
+#define YZ_FontSize_M IS_IPHONE5?13:15
+#define YZ_FontSize_L IS_IPHONE5?15:17
+#define YZ_FontSize_XL IS_IPHONE5?17:19
+#define YZ_FontSize_XXL IS_IPHONE5?19:22
 
 
 //-----------------------------------------------------------------------------------
