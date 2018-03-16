@@ -29,7 +29,8 @@
     //tableview设置
     [self.tableView registerClass:[ListCell class] forCellReuseIdentifier:@"ListCellID"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    self.tableView.estimatedRowHeight = 44;
+    self.tableView.rowHeight = UITableViewAutomaticDimension; 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,46 +44,22 @@
     NSArray *resIDs = [NSArray arrayWithArray:[self getAllSections:items]];
     // 分组
     for (NSString *section in resIDs) {
-        UserListModel *model;
-//        for (UserListModel *oldUM in self.items) {
-//            if ([oldUM.name isEqualToString:section]) {
-//                model = oldUM;
-//                NSUInteger totle = [model.totle integerValue];
-//                NSMutableArray *lists = [NSMutableArray arrayWithArray:oldUM.listArray];
-//                for (ListModel *m in items) {
-//                    NSString *middle = m.mark?[NSMutableString stringWithFormat:@"%@+%@",m.name,m.mark]:m.name;
-//                    if ([section isEqualToString:middle]) {
-//                        totle += m.totalNumber;
-//                        [lists addObject:m];
-//                    }
-//                }
-//                if (totle > 0){
-//                    model.totle = [NSString stringWithFormat:@"%zd",totle];
-//                    model.listArray = lists;
-//                    model.openList = NO;
-//                    [res addObject:model];
-//                }
-//                break;
-//            }
-//        }
-        if (!model) {
-            model = [UserListModel new];
-            model.name = section;
-            NSUInteger totle = 0;
-            NSMutableArray *lists = [NSMutableArray array];
-            for (ListModel *m in items) {
-                NSString *middle = m.mark?[NSMutableString stringWithFormat:@"%@+%@",m.name,m.mark]:m.name;
-                if ([section isEqualToString:middle]) {
-                    totle += m.totalNumber;
-                    [lists addObject:m];
-                }
+        UserListModel *model = [UserListModel new];
+        model.name = section;
+        NSUInteger totle = 0;
+        NSMutableArray *lists = [NSMutableArray array];
+        for (ListModel *m in items) {
+            NSString *middle = m.mark?[NSMutableString stringWithFormat:@"%@+%@",m.name,m.mark]:m.name;
+            if ([section isEqualToString:middle]) {
+                totle += m.totalNumber;
+                [lists addObject:m];
             }
-            if (totle > 0){
-                model.totle = [NSString stringWithFormat:@"%zd",totle];
-                model.listArray = lists;
-                model.openList = NO;
-                [res addObject:model];
-            }
+        }
+        if (totle > 0){
+            model.totle = [NSString stringWithFormat:@"%zd",totle];
+            model.listArray = lists;
+            model.openList = NO;
+            [res addObject:model];
         }
     }
     return res;
@@ -117,10 +94,10 @@
     return 44;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 44;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    return 44;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     

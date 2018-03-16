@@ -54,7 +54,7 @@
         NSDictionary *userDict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         if (userDict && userDict[LOAD_DATE]) {
             NSDate *loadDate = userDict[LOAD_DATE];
-            NSTimeInterval time = [loadDate timeIntervalSinceNow];
+            NSTimeInterval time = -[loadDate timeIntervalSinceDate:[NSDate date]];
             if (time < 60 * 60 * 24 * 3) {
                 // 进去主页面
                 UserModel *model = [UserModel mj_objectWithKeyValues:userDict];

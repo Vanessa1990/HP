@@ -130,7 +130,7 @@
     
     if (indexPath.row == 0) {
         if ([UserInfo shareInstance].admin) {
-            ContactTableViewController *contactVC = [[ContactTableViewController alloc]init];
+            ContactTableViewController *contactVC = [[ContactTableViewController alloc] initWithSelectedBlock:nil add:YES];
             [self.navigationController pushViewController:contactVC animated:YES];
         }else{
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];

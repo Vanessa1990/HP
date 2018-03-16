@@ -61,6 +61,13 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)adminYesClick:(UIButton *)sender {
+    // 只提供非管理员注册
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.label.text = @"如需注册管理员,请联系公司负责人";
+    hud.mode = MBProgressHUDModeText;
+    [hud hideAnimated:YES afterDelay:1];
+
+    /*
     NSUInteger index = sender.tag / 100;
     if (index == 1 || index == 2) {
         self.adminY.selected = index == 1;
@@ -69,6 +76,7 @@
         self.jsY.selected = index == 3;
         self.jsN.selected = index == 4;
     }
+     */
 }
 
 - (void)regist {

@@ -66,11 +66,12 @@
     
     self.typeLabel = [[UILabel alloc] init];
     self.typeLabel.numberOfLines = 0;
+    self.typeLabel.font = YZ_Font_M;
     [self.contentView addSubview:self.typeLabel];
     [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.editImageView.mas_right).offset(10);
-        make.height.mas_equalTo(self.contentView.bounds.size.height);
-        make.top.mas_equalTo(0);
+        make.top.mas_equalTo(10);
+        make.bottom.mas_equalTo(-10);
     }];
     
     self.countLabel = [[UILabel alloc] init];
@@ -78,20 +79,21 @@
     self.countLabel.textAlignment = NSTextAlignmentRight;
     [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.dataLabel.mas_left).offset(-10);
-        make.height.mas_equalTo(self.contentView.bounds.size.height);
-        make.top.mas_equalTo(0);
         make.width.mas_equalTo(80);
+        make.centerY.mas_equalTo(0);
     }];
     
     self.sizeLabel = [[UILabel alloc] init];
+    self.sizeLabel.numberOfLines = 0;
+    self.sizeLabel.font = YZ_Font_M;
     [self.contentView addSubview:self.sizeLabel];
     self.sizeLabel.textAlignment = NSTextAlignmentCenter;
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.typeLabel.mas_right);
         make.right.mas_equalTo(self.countLabel.mas_left);
-        make.top.mas_equalTo(0);
-        make.width.mas_equalTo(self.typeLabel).offset(0);
-        make.height.mas_equalTo(self.contentView.bounds.size.height);
+        make.width.mas_equalTo(self.typeLabel.mas_width).multipliedBy(1.5);
+        make.top.mas_equalTo(10);
+        make.bottom.mas_equalTo(-10);
     }];
 }
 
@@ -138,7 +140,7 @@
     }
     [self.dataLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(showDate?-3:0);
-        make.width.mas_equalTo(showDate?35:0);
+        make.width.mas_equalTo(showDate?44:0);
     }];
 }
 

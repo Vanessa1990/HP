@@ -41,6 +41,8 @@
 @property(nonatomic, strong) UIView *bgView;
 @property(nonatomic, strong) ChooseDateViewController *chooseVC;
 
+@property(nonatomic, strong) NSMutableDictionary *nameIndexs;// 索引
+
 @end
 
 static NSUInteger const secondsPerDay = 24 * 60 * 60;
@@ -52,6 +54,7 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.automaticallyAdjustsScrollViewInsets = YES;
+    self.nameIndexs = [NSMutableDictionary dictionary];
     
     [self initNav];
     self.allDates = [NSArray array];
@@ -69,6 +72,10 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
             return value;
         }];
     }
+    UISwipeGestureRecognizer *swipeGes = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [swipeGes setDirection:UISwipeGestureRecognizerDirectionRight];
+    [swipeGes setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.tableView addGestureRecognizer:swipeGes];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -112,6 +119,20 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
 
 - (void)upAndReload {
     [self.tableView.mj_header beginRefreshing];
+}
+
+- (void)handleSwipeFrom:(UISwipeGestureRecognizer *)sender {
+    switch (sender.direction) {
+        case UISwipeGestureRecognizerDirectionLeft:
+            
+            break;
+        case UISwipeGestureRecognizerDirectionRight:
+            
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (SHXPromise *)getAllDates {
@@ -174,11 +195,17 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
         }
         return [[[BimService instance] getListSkip:0 limit:0 searchDict:searchDict] onFulfilled:^id(id value) {
             NSMutableArray *itemArray = [NSMutableArray array];
+            NSMutableArray *nameIndexs = [NSMutableArray array];
             for (NSDictionary *dict in value) {
                 ListModel *model = [ListModel modelWithDict:dict];
                 [itemArray addObject:model];
             }
-            [self.dateItems setObject:[self dealItems:itemArray] forKey:todayString];
+            NSArray *array = [self dealItems:itemArray];
+            for (UserListModel *um in array) {
+                [nameIndexs addObject:[um.name substringToIndex:1]];
+            }
+            [self.dateItems setObject:array forKey:todayString];
+            [self.nameIndexs setObject:nameIndexs forKey:todayString];
             return self.dateItems;
         } rejected:^id(NSError *reason) {
             return reason;
