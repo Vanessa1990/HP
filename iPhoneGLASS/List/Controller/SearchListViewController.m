@@ -109,7 +109,7 @@ typedef enum : NSUInteger {
         make.left.mas_equalTo(self.deleteButton.mas_right);
         make.width.bottom.mas_equalTo(self.deleteButton);
     }];
-    self.colors = @[YZ_WhiteColor, YZ_ThemeAlphaC];
+    self.colors = @[YZ_WhiteColor, YZ_GrayColorDE];
     [self.tableView.mj_header beginRefreshing];
 }
 
@@ -138,48 +138,6 @@ typedef enum : NSUInteger {
         [self.tableView.mj_header endRefreshing];
         return reason;
     }];
-    
-    /*
-    if (!self.searchDict[@"finish"]) {// 1 完成 0 未完成
-        [searchDict setValue:@0 forKey:@"finish"];
-        [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *unfinishs) {
-            [itemArray addObjectsFromArray:unfinishs];
-            if (itemArray.count < 200) {
-                [searchDict setValue:@1 forKey:@"finish"];
-                return [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *finishs) {
-                    [itemArray addObjectsFromArray:finishs];
-                    [self relaodData:itemArray];
-                    if (itemArray.count >= 200) {
-                        self.tableView.mj_footer = self.footView;
-                    }else{
-                        self.tableView.mj_footer = nil;
-                    }
-                    return itemArray;
-                }];
-            }else{
-                [self relaodData:itemArray];
-                self.tableView.mj_footer = self.footView;
-            }
-            return itemArray;
-        } rejected:^id(NSError *reason) {
-            [self.tableView.mj_header endRefreshing];
-            return reason;
-        }];
-    }else{
-        [[self searchDataFromNetDB:searchDict] onFulfilled:^id(NSArray *value) {
-            [itemArray addObjectsFromArray:value];
-            [self relaodData:itemArray];
-            if (itemArray.count >= 200) {
-                self.tableView.mj_footer = self.footView;
-            }else{
-                self.tableView.mj_footer = nil;
-            }
-            return itemArray;
-        } rejected:^id(NSError *reason) {
-            [self.tableView.mj_header endRefreshing];
-            return reason;
-        }];
-    }*/
 }
 
 - (SHXPromise *)searchDataFromNetDB:(NSDictionary *)searchDict {
@@ -331,18 +289,32 @@ typedef enum : NSUInteger {
     if (self.sort) {// 入库后查看当前用户所有订单(显示日期)
         cell.showDate = YES;
     }
+    if (indexPath.row == 0) {
+        self.colorEven = 0;
+    }else{
+        ListModel *listModel1 = model.listArray[indexPath.row - 1];
+        NSString *date1 = [[NSDate dateFromISOString:listModel1.date] formatMonthAndDay];
+        NSString *date2 = [[NSDate dateFromISOString:listModel.date] formatMonthAndDay];
+        if (![date1 isEqualToString:date2]) {
+            self.colorEven+=1;
+        }
+    }
+    UIColor *bgColor = self.colors[self.colorEven%2];
+    cell.backgroundColor = bgColor;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UserListModel *model = self.items[indexPath.section];
-    ListModel *listModel = model.listArray[indexPath.row];
-    if ([self.chooseItems containsObject:listModel]) {
-        [self.chooseItems removeObject:listModel];
-    }else{
-        [self.chooseItems addObject:listModel];
+    if (self.isEdit){
+        UserListModel *model = self.items[indexPath.section];
+        ListModel *listModel = model.listArray[indexPath.row];
+        if ([self.chooseItems containsObject:listModel]) {
+            [self.chooseItems removeObject:listModel];
+        }else{
+            [self.chooseItems addObject:listModel];
+        }
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

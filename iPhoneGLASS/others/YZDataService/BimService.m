@@ -241,9 +241,9 @@
     NSString *string = [Utils jsonString:searchDict];
 //    url = [url stringByAppendingString:[NSString stringWithFormat:@"&where=%@",string]];
     if (limit == 0) {
-        url = [url stringByAppendingString:[NSString stringWithFormat:@"?where=%@",string]];
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"?order=%@&where=%@",@"-createdAt",string]];
     }else{
-        url = [url stringByAppendingString:[NSString stringWithFormat:@"?limit=%zd&skip=%zd&where=%@",limit,skip,string]];
+        url = [url stringByAppendingString:[NSString stringWithFormat:@"?limit=%zd&skip=%zd&order=%@&where=%@",limit,skip,@"-createdAt",string]];
     }
     return [AFNetworkingHelper getResource:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:nil];
 }

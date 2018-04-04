@@ -11,6 +11,7 @@
 #import "UserModel.h"
 #import "BimService.h"
 #import "MBProgressHUD.h"
+#import "HPRefreshHeader.h"
 
 
 @interface ContactTableViewController ()<UITableViewDelegate, UITableViewDataSource,RegistViewControllerDelegate,UITextFieldDelegate>
@@ -58,19 +59,22 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.allowsSelection = YES;
 
-    if (!self.contacts || self.contacts.count == 0) {
-        [self getData];
-    }else{
-        NSMutableArray *newContacts = [NSMutableArray array];
-        for (NSString *name in self.contacts) {
-            UserModel *model = [UserModel new];
-            model.name = name;
-            [newContacts addObject:model];
+    HPRefreshHeader *header =  [HPRefreshHeader headerWithRefreshingBlock:^{
+        if (!self.contacts || self.contacts.count == 0) {
+            [self getData];
+        }else{
+            NSMutableArray *newContacts = [NSMutableArray array];
+            for (NSString *name in self.contacts) {
+                UserModel *model = [UserModel new];
+                model.name = name;
+                [newContacts addObject:model];
+            }
+            self.contacts = [self sortObjectsAccordingToInitialWith:newContacts];
+            [self.tableView reloadData];
         }
-        self.contacts = [self sortObjectsAccordingToInitialWith:newContacts];
-        [self.tableView reloadData];
-    }
-    
+    }];
+    self.tableView.mj_header = header;
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,6 +99,7 @@
             }
             self.contacts = [self sortObjectsAccordingToInitialWith:array];
             [self.tableView reloadData];
+            [self.tableView.mj_header endRefreshing];
             return value;
         }];
     }else{
@@ -108,6 +113,7 @@
                 }
                 self.contacts = [self sortObjectsAccordingToInitialWith:newContacts];
                 [self.tableView reloadData];
+                [self.tableView.mj_header endRefreshing];
             }
             return value;
         }];
