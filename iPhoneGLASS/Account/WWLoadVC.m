@@ -44,42 +44,94 @@
     [self.view endEditing:YES];
 }
 
-
 -(void)viewDidLoad{
     [super viewDidLoad];
-    
+    self.navigationController.navigationBar.hidden = YES;
     // 获取本地数据
-    NSData *data = HS_PERSISTENT_GET_OBJECT(USER_INFO);
-    if (data) {
-        NSDictionary *userDict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        if (userDict && userDict[LOAD_DATE]) {
-            NSDate *loadDate = userDict[LOAD_DATE];
-            NSTimeInterval time = -[loadDate timeIntervalSinceDate:[NSDate date]];
-            if (time < 60 * 60 * 24 * 3) {
-                // 进去主页面
-                UserModel *model = [UserModel mj_objectWithKeyValues:userDict];
-                [[UserInfo shareInstance] setUserInfoWithModel:model];
-                MainTabBarController *mainVC = [[MainTabBarController alloc] init];
-                HP_Delegate.window.rootViewController = mainVC;
-                return;
-            }
-        }
-    }
+//    NSData *data = HS_PERSISTENT_GET_OBJECT(USER_INFO);
+//    if (data) {
+//        NSDictionary *userDict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//        if (userDict && userDict[LOAD_DATE]) {
+//            NSDate *loadDate = userDict[LOAD_DATE];
+//            NSTimeInterval time = -[loadDate timeIntervalSinceDate:[NSDate date]];
+//            if (time < 60 * 60 * 24 * 3) {
+//                // 进去主页面
+//                UserModel *model = [UserModel mj_objectWithKeyValues:userDict];
+//                [[UserInfo shareInstance] setUserInfoWithModel:model];
+//                [self pushInHomeVC];
+//                return;
+//            }
+//        }
+//    }
     
     self.navigationItem.title = @"登录";
-    self.view.backgroundColor = [UIColor whiteColor];
-    // 设置文本和按钮的圆角
-    self.loadBtn.layer.cornerRadius = 10;
-    self.loadBtn.clipsToBounds = YES;
-
-//    // test
-//    self.phoneTextField.text = @"13852689266";
-//    self.pwdTextField.text = @"888888";
+    [self initViewSurface];
+    [self initHead];
+    // test
+    self.phoneTextField.text = @"13852689266";
+    self.pwdTextField.text = @"409724";
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+}
+
+- (void)initHead {
+    UIView *headView = [[UIView alloc] init];
+    [self.view addSubview:headView];
+    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(self.phoneTextField.mas_top).mas_equalTo(-20);
+    }];
+    [self createCircleColor:YZ_PinkColor endColor:YZ_Color(255, 240, 245, 1) radius:50 center:CGPointMake(0, 150) parentView:headView];
+    [self createCircleColor:YZ_Color(255, 182, 193, 1) endColor:YZ_Color(171, 130, 255, 1) radius:25 center:CGPointMake(kScreenWidth*0.3, 70) parentView:headView];
+    [self createCircleColor:YZ_Color(255, 20, 147, 1) endColor:YZ_Color(238, 130, 238, 1) radius:20 center:CGPointMake(kScreenWidth*0.7, 150) parentView:headView];
+    [self createCircleColor:YZ_Color(245, 222, 179, 1) endColor:YZ_Color(255, 165, 0, 1) radius:35 center:CGPointMake(kScreenWidth, 200) parentView:headView];
+}
+
+- (void)createCircleColor:(UIColor *)color endColor:(UIColor *)endColor radius:(CGFloat)radius center:(CGPoint)center parentView:(UIView *)parentView{
+    UIView *circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, radius*2,  radius*2)];
+    [parentView addSubview:circleView];
+    
+    CAGradientLayer * gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = circleView.bounds;
+    gradientLayer.colors = @[(__bridge id)color.CGColor,(__bridge id)endColor.CGColor];
+    gradientLayer.startPoint = CGPointMake(0, 0);
+    gradientLayer.endPoint = CGPointMake(0, 1);
+    gradientLayer.locations = @[@0,@1];
+    [circleView.layer addSublayer:gradientLayer];
+    
+    CAShapeLayer *mask = [CAShapeLayer new];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:circleView.bounds cornerRadius:radius];
+    mask.path = path.CGPath;
+    circleView.layer.mask = mask;
+   
+    [circleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(parentView.mas_left).mas_offset(center.x);
+        make.centerY.mas_equalTo(parentView.mas_top).mas_offset(center.y);
+        make.width.height.mas_equalTo(radius*2);
+    }];
+    
+}
+
+- (void)initViewSurface {
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    // 设置文本和按钮的圆角
+    self.loadBtn.layer.cornerRadius = 22;
+    self.loadBtn.clipsToBounds = YES;
+    self.loadBtn.backgroundColor = YZ_ThemeColor;
+    NSString *title = @"登  录";
+    NSMutableAttributedString *attriString = [[NSMutableAttributedString alloc] initWithString:title];
+    [attriString addAttribute:NSFontAttributeName
+                        value:[UIFont boldSystemFontOfSize:22]
+                        range:NSMakeRange(0, title.length)];
+    [attriString addAttribute:NSForegroundColorAttributeName
+                        value:YZ_WhiteColor
+                        range:NSMakeRange(0, title.length)];
+    [self.loadBtn setAttributedTitle:attriString forState:UIControlStateNormal];
+
 }
 
 
@@ -104,8 +156,7 @@
         HS_PERSISTENT_SET_OBJECT(data, USER_INFO);
         
         //进入主界面
-        MainTabBarController *mainVC = [[MainTabBarController alloc] init];
-        HP_Delegate.window.rootViewController = mainVC;
+        [self pushInHomeVC];
         
         return value;
     }rejected:^id(NSError *reason) {
@@ -113,6 +164,15 @@
         [_hud hideAnimated:YES afterDelay:0.5];
         return reason;
     }];
+}
+
+- (void)pushInHomeVC {
+    
+    //        MainTabBarController *mainVC = [[MainTabBarController alloc] init];
+    //        HP_Delegate.window.rootViewController = mainVC;
+    MainHomeViewController *homeVC = [[MainHomeViewController alloc] init];
+    UINavigationController *navc = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    HP_Delegate.window.rootViewController = navc;
 }
 
 

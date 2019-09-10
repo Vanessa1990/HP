@@ -15,8 +15,9 @@
 }
 
 - (void)setShowTabItem {
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tab_show"] style:UIBarButtonItemStyleDone target:self action:@selector(showTab)];
-    self.navigationItem.leftBarButtonItem = item;
+    [self setBackItem];
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tab_show"] style:UIBarButtonItemStyleDone target:self action:@selector(showTab)];
+//    self.navigationItem.leftBarButtonItem = item;
 }
 
 - (void)back {

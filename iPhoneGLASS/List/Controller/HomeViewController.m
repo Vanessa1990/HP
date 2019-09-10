@@ -102,16 +102,17 @@ static NSUInteger const secondsPerDay = 24 * 60 * 60;
     
     self.tableView.mj_header = header;
 //    self.tableView.allowsSelection = YES;
-    
-    if ([UserInfo shareInstance].admin) {
-        [self.view addSubview:self.reloadButton];
-        [self.reloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(-30);
-            make.bottom.mas_equalTo(-60);
-            make.width.height.mas_equalTo(50);
-        }];
-        
-    }
+
+    //    回顶部刷新按钮
+//    if ([UserInfo shareInstance].admin) {
+//        [self.view addSubview:self.reloadButton];
+//        [self.reloadButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.mas_equalTo(-30);
+//            make.bottom.mas_equalTo(-60);
+//            make.width.height.mas_equalTo(50);
+//        }];
+//
+//    }
 }
 
 - (void)initNav {

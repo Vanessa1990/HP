@@ -9,12 +9,16 @@
 @implementation WWLoadTextField
 
 -(void)awakeFromNib{
-    
+    [super awakeFromNib];
     //1.设置光标颜色
     self.tintColor = [UIColor lightGrayColor];
     
     //2.设置字体颜色
-    self.textColor = [UIColor blackColor];
+    self.textColor = YZ_GrayColor61;
+    
+    self.font = [UIFont boldSystemFontOfSize:18];
+    
+//    self.borderStyle = UITextBorderStyleNone;
     
     /***=====****======***设置提示文字的属性方式二:***======***======***/
     //3.设置提示文本的文字属性

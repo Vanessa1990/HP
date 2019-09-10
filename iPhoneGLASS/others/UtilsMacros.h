@@ -44,6 +44,11 @@
 #define IS_IPHONE6 (fabs((IsPortrait?kScreenHeight:kScreenWidth) - 667)<0.1)
 #define IS_IPHONE6plus (fabs((IsPortrait?kScreenHeight:kScreenWidth) - 736)<0.1)
 
+//宏定义常用的导航栏，tabbar，状态栏高度
+#define TabBarH ((kheight == 812) ? 83 : 49)
+#define NavH ((kScreenHeight == 812) ? 88 : 64)//这个包含状态栏在内
+#define StuBarH ((kheight == 812) ? 44 : 20)
+
 
 //-----------------------------------------------------------------------------------------------------------------
 #pragma mark -

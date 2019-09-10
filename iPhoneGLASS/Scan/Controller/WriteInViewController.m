@@ -81,8 +81,8 @@ typedef enum : NSUInteger {
     [self.view addSubview:chooseView];
     [chooseView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
-        make.height.mas_equalTo(35);
-        make.top.mas_equalTo(64);
+        make.height.mas_equalTo(40);
+        make.top.mas_equalTo(NavH);
     }];
     
    
